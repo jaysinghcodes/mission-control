@@ -7,17 +7,30 @@ import {
 import { Server, Socket } from 'socket.io';
 
 /**
+ * Event types the gateway may broadcast. Union type so callers can't
+ * invent arbitrary event names (GLM review 🟡 #4).
+ */
+export type ActivityEventType =
+  | 'run.started'
+  | 'run.completed'
+  | 'run.failed'
+  | 'health.tick'
+  | 'hello';
+
+/**
  * LiveActivityGateway — realtime event bus for Mission Control.
  *
  * Clients (the web dashboard) connect over Socket.IO and receive activity
  * events (scheduled run status, agent state changes, health ticks) without
  * polling. This is the transport PR 3 wires the frontend into.
  *
- * Security notes (vibe-dev-workflow red lines):
- *  - No auth on the socket yet: this is dev-stage. Before anything leaves
- *    localhost, the handshake must require a token (see PR roadmap / LOG.md).
- *  - No room/namespace manipulation, no raw event echoing — the gateway only
- *    emits server-authored events, never client-supplied payloads.
+ * Security (vibe-dev-workflow red lines — GLM review 🔴 #2):
+ *  - In production (NODE_ENV=production), connections WITHOUT a valid
+ *    SOCKET_TOKEN in the handshake are rejected at connect time. This guard
+ *    makes it impossible to accidentally ship an open socket.
+ *  - In dev, connections are allowed freely (localhost only by default).
+ *  - The gateway only emits server-authored events; it never echoes
+ *    client-supplied payloads.
  */
 @WebSocketGateway({
   cors: {
@@ -30,15 +43,27 @@ export class LiveActivityGateway implements OnGatewayConnection, OnGatewayDiscon
   @WebSocketServer()
   server!: Server;
 
-  /** Track connected clients for observability (the OBSERVE lane in the UI). */
-  private readonly connectedClients = new Map<string, string>(); // socketId -> lastKnownState
+  /** Connected client ids — a Set is enough; per-client state comes later. */
+  private readonly connectedClients = new Set<string>();
 
   /**
-   * Fired on every new socket connection.
+   * Fired on every new socket connection. Rejects unauthenticated clients in
+   * production; otherwise registers and greets the client.
    * @param client the connecting socket
    */
   handleConnection(client: Socket): void {
-    this.connectedClients.set(client.id, 'idle');
+    // Production guard: require SOCKET_TOKEN in the handshake auth payload.
+    if (process.env.NODE_ENV === 'production') {
+      const token = client.handshake.auth?.token;
+      if (!token || token !== process.env.SOCKET_TOKEN) {
+        // eslint-disable-next-line no-console
+        console.warn('[socket] rejected unauthenticated connection in production');
+        client.disconnect(true);
+        return;
+      }
+    }
+
+    this.connectedClients.add(client.id);
     // Tell the new client we're alive; heartbeat pattern for the UI's status dot.
     client.emit('hello', { ts: Date.now(), message: 'mission-control api connected' });
   }
@@ -53,10 +78,10 @@ export class LiveActivityGateway implements OnGatewayConnection, OnGatewayDiscon
 
   /**
    * Broadcast an activity event to every connected dashboard.
-   * @param type   stable event type, e.g. 'run.started' | 'run.completed'
+   * @param type   one of the typed event names (no arbitrary strings)
    * @param payload event payload (must be JSON-serializable)
    */
-  broadcast(type: string, payload: Record<string, unknown>): void {
+  broadcast(type: ActivityEventType, payload: Record<string, unknown>): void {
     this.server.emit(type, { ...payload, ts: Date.now() });
   }
 

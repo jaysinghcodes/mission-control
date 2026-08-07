@@ -3,15 +3,26 @@ import { defineConfig } from 'prisma/config';
 /**
  * Prisma 7 config — connection details live here, not in schema.prisma.
  * URL comes from DATABASE_URL (see ~/.openclaw/.env / deploy env).
- * PrismaClient at runtime receives the same URL via the pg adapter
- * (see src/prisma/prisma.service.ts).
+ *
+ * Production refuses the localhost fallback (GLM review 🔴 #3): a missing
+ * DATABASE_URL in production throws a clear error instead of silently
+ * targeting a local database.
  */
+function resolveDbUrl(): string {
+  const url = process.env.DATABASE_URL;
+  if (url) return url;
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error('DATABASE_URL is required in production');
+  }
+  return 'postgresql://postgres:***@localhost:5432/mission_control';
+}
+
 export default defineConfig({
   schema: 'prisma/schema.prisma',
   migrations: {
     path: 'prisma/migrations',
   },
   datasource: {
-    url: process.env.DATABASE_URL ?? 'postgresql://postgres:postgres@localhost:5432/mission_control',
+    url: resolveDbUrl(),
   },
 });
