@@ -1,4 +1,10 @@
 {
   "extends": "./tsconfig.json",
+  "compilerOptions": {
+    // Keep nest build output flat (dist/main.js). Without rootDir, the
+    // root-level prisma.config.ts (loaded by the Prisma CLI, not the app)
+    // drags output to dist/src/main.js and breaks `node dist/main`.
+    "rootDir": "./src"
+  },
   "exclude": ["node_modules", "test", "dist", "**/*spec.ts"]
 }
