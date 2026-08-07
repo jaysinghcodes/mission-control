@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 
 /**
@@ -7,7 +7,7 @@ import { io, Socket } from 'socket.io-client';
  */
 export interface ActivityEvent {
   type: string; // e.g. 'run.started' | 'run.completed' | 'hello'
-  ts: number; // server timestamp (ms epoch)
+  ts: number; // server timestamp (ms epoch) — client falls back to Date.now()
   [key: string]: unknown; // event-specific fields
 }
 
@@ -20,11 +20,19 @@ export interface ActivityEvent {
  *  - surfaces connection state so the UI can show an honest status dot
  *    (green = connected, red = disconnected — no fake "online")
  *
+ * GLM review fixes (🟡 #5, #6):
+ *  - Server ts is preserved (payload.ts wins; Date.now() is only a fallback)
+ *  - maxEvents is read via ref so the socket never reconnects on re-render
+ *
  * @returns { events, connected } — recent activity events + connection state
  */
 export function useLiveActivity(maxEvents = 50): { events: ActivityEvent[]; connected: boolean } {
   const [events, setEvents] = useState<ActivityEvent[]>([]);
   const [connected, setConnected] = useState(false);
+
+  // Ref keeps the cap stable without re-triggering the effect on re-renders.
+  const maxEventsRef = useRef(maxEvents);
+  maxEventsRef.current = maxEvents;
 
   useEffect(() => {
     // VITE_API_URL lets the deploy env point at a real API; local dev
@@ -37,21 +45,21 @@ export function useLiveActivity(maxEvents = 50): { events: ActivityEvent[]; conn
     socket.on('disconnect', () => setConnected(false));
 
     // Any server-authored event type lands here; keep the most recent N.
-    const onEvent = (payload: ActivityEvent) => {
-      setEvents((prev) => [payload, ...prev].slice(0, maxEvents));
-    };
-
-    // Subscribe to every event the gateway can emit. The gateway only
-    // emits server-authored payloads (no client echo), so a catch-all
-    // listener is safe here.
+    // Shape: prefer the server's ts if present (it is authoritative), only
+    // fall back to the client clock for events without one.
     socket.onAny((type: string, payload: unknown) => {
-      onEvent({ type, ts: Date.now(), ...(typeof payload === 'object' && payload !== null ? (payload as Record<string, unknown>) : {}) });
+      const data =
+        typeof payload === 'object' && payload !== null
+          ? (payload as Record<string, unknown>)
+          : {};
+      const ts = typeof data.ts === 'number' ? data.ts : Date.now();
+      setEvents((prev) => [{ type, ts, ...data }, ...prev].slice(0, maxEventsRef.current));
     });
 
     return () => {
       socket.disconnect();
     };
-  }, [maxEvents]);
+  }, []);
 
   return { events, connected };
 }

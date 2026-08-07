@@ -55,14 +55,20 @@ const FALLBACK_ACTIVITY = [
   { t: 'Weekly', d: '9:30a', c: 'bg-mc-blue' },
 ]
 
-/** Stable color per event type — new types default to blue. */
+/**
+ * Stable color per event type (GLM review 🟡 #10: exact map, no substring
+ * matching that could collide as event types grow). Unknown types → blue.
+ */
+const EVENT_COLORS: Record<string, string> = {
+  'run.started': 'bg-mc-blue',
+  'run.completed': 'bg-mc-green',
+  'run.failed': 'bg-mc-red',
+  'health.tick': 'bg-mc-blue',
+  hello: 'bg-mc-amber',
+}
+
 function eventColor(type: string): string {
-  if (type.includes('error') || type.includes('failed')) return 'bg-mc-red'
-  if (type.includes('completed') || type.includes('done')) return 'bg-mc-green'
-  if (type.includes('radar') || type.includes('trend')) return 'bg-mc-orange'
-  if (type.includes('brief')) return 'bg-mc-amber'
-  if (type.includes('scan')) return 'bg-mc-green'
-  return 'bg-mc-blue'
+  return EVENT_COLORS[type] ?? 'bg-mc-blue'
 }
 
 function App() {
