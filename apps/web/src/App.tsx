@@ -1,17 +1,17 @@
 import './App.css'
+import { useLiveActivity } from './hooks/useLiveActivity'
 
 /**
- * Mission Control — Overview screen (v0.1 shell)
+ * Mission Control — Overview screen (v0.2: live feed)
  *
  * Layout follows the design system locked in #design (see design-studio skill):
  *   - Sidebar: WORKSPACE / TEAM / OBSERVE groups, agent color-coding
  *   - Topbar: minimal, no duplicated info
  *   - KPI tiles: real values only, wrapped in cards (never bare text)
- *   - Live Activity band: scheduled runs incl. Trend Radar (Jay's pick)
+ *   - Live Activity band: **real events over WebSocket** (PR 3), with
+ *     hardcoded wireframe rows as fallback until the API emits events.
  *
  * Dark-first tokens live in src/index.css (Tailwind v4 @theme).
- * This is a static shell — the live WebSocket feed replaces the hardcoded
- * activity rows in a later PR (feat/2-live-feed).
  */
 
 /** Sidebar navigation groups — drives the left rail sections. */
@@ -45,16 +45,42 @@ const KPIS = [
   { label: 'Health', value: '74ms', color: 'text-mc-text' },
 ]
 
-/** Live Activity band rows — mirrors the calendar wireframe (05-calendar). */
-const ACTIVITY = [
+/** Fallback activity rows — shown until the first real socket event arrives.
+ *  Mirrors the calendar wireframe (05-calendar); Trend Radar stays prominent (Jay's pick). */
+const FALLBACK_ACTIVITY = [
   { t: 'Morning Brief', d: '6:30a', c: 'bg-mc-amber' },
-  { t: 'Trend Radar', d: '9:00a', c: 'bg-mc-orange' }, // Jay's favorite — keep prominent
+  { t: 'Trend Radar', d: '9:00a', c: 'bg-mc-orange' },
   { t: 'Scout Scan', d: '6:55a', c: 'bg-mc-green' },
   { t: 'Quill Writer', d: '8:00a', c: 'bg-mc-teal' },
   { t: 'Weekly', d: '9:30a', c: 'bg-mc-blue' },
 ]
 
+/** Stable color per event type — new types default to blue. */
+function eventColor(type: string): string {
+  if (type.includes('error') || type.includes('failed')) return 'bg-mc-red'
+  if (type.includes('completed') || type.includes('done')) return 'bg-mc-green'
+  if (type.includes('radar') || type.includes('trend')) return 'bg-mc-orange'
+  if (type.includes('brief')) return 'bg-mc-amber'
+  if (type.includes('scan')) return 'bg-mc-green'
+  return 'bg-mc-blue'
+}
+
 function App() {
+  // Live WebSocket feed from the API (PR 3). `connected` drives the honest
+  // status dot in the topbar — no fake "online" when the socket is down.
+  const { events, connected } = useLiveActivity()
+
+  // Show real events once they arrive; fall back to the wireframe rows so
+  // the screen never looks broken during development without an API.
+  const activity =
+    events.length > 0
+      ? events.map((ev) => ({
+          t: ev.type,
+          d: new Date(ev.ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          c: eventColor(ev.type),
+        }))
+      : FALLBACK_ACTIVITY
+
   return (
     <div className="flex h-screen bg-mc-bg text-mc-text">
       {/* ── Sidebar (13.5px labels, muted active state = subtle bg) ────────── */}
@@ -84,8 +110,10 @@ function App() {
         <header className="h-[42px] shrink-0 bg-mc-topbar border-b border-white/5 flex items-center px-4 justify-between text-[12.5px]">
           <div className="text-mc-sub">mission-control</div>
           <div className="flex items-center gap-4">
-            {/* No redundant info: connection state lives here, not in sidebar */}
-            <span className="text-mc-green">● online</span>
+            {/* Real socket state — green when the feed is live, red when down */}
+            <span className={connected ? 'text-mc-green' : 'text-mc-red'}>
+              {connected ? '● live' : '● offline'}
+            </span>
             <span className="w-7 h-7 rounded-full bg-mc-blue/20 text-mc-blue flex items-center justify-center text-[11px]">J</span>
           </div>
         </header>
@@ -103,12 +131,12 @@ function App() {
             ))}
           </div>
 
-          {/* Live Activity band — becomes WebSocket-driven in feat/2 */}
+          {/* Live Activity band — real socket events, wireframe rows as fallback */}
           <div className="bg-mc-card rounded-xl border border-white/5 p-4 mb-6">
             <div className="text-[12px] text-mc-sub mb-3 font-semibold tracking-wide">LIVE ACTIVITY</div>
             <div className="space-y-2">
-              {ACTIVITY.map((ev) => (
-                <div key={ev.t} className="flex items-center gap-3 text-[12.5px]">
+              {activity.map((ev, i) => (
+                <div key={`${ev.t}-${i}`} className="flex items-center gap-3 text-[12.5px]">
                   <span className={`w-2 h-2 rounded-full ${ev.c}`} />
                   <span className="text-mc-text">{ev.t}</span>
                   <span className="text-mc-tert ml-auto">{ev.d}</span>
