@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1010" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748B"/>
+    </marker>
+    <marker id="arrD" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94A3B8"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1440" height="1010" fill="#F2F4F6"/>
+
+  <!-- Title -->
+  <text x="40" y="42" font-size="24" font-weight="600" fill="#161A1F">Mission Control — User Flow</text>
+  <text x="40" y="66" font-size="13" fill="#57606B">How Jay (operator) moves through the dashboard: monitor, direct, gate, and observe your agent fleet.</text>
+
+  <!-- Global controls note -->
+  <rect x="1080" y="24" width="320" height="52" rx="10" fill="#FFFFFF" stroke="#CDD3DA"/>
+  <text x="1100" y="45" font-size="12.5" font-weight="600" fill="#161A1F">⚙ Global shell controls (every screen)</text>
+  <text x="1100" y="63" font-size="11.5" fill="#57606B">Theme toggle (sun/moon) · search · pause · connected status</text>
+
+  <!-- Settings node (was a dead-end) -->
+  <rect x="1080" y="92" width="320" height="48" rx="10" fill="#E2E8F0" stroke="#94A3B8" stroke-dasharray="5 4"/>
+  <text x="1100" y="114" font-size="13" font-weight="600" fill="#161A1F">⚙ Settings</text>
+  <text x="1100" y="131" font-size="11" fill="#57606B">pairing · permissions · model config</text>
+  <line x1="1240" y1="76" x2="1240" y2="90" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrD)"/>
+
+  <!-- ============ ENTRY ============ -->
+  <rect x="610" y="100" width="220" height="52" rx="26" fill="#E2E8F0" stroke="#64748B"/>
+  <text x="720" y="124" font-size="14.5" font-weight="600" fill="#161A1F" text-anchor="middle">Open Mission Control</text>
+  <text x="720" y="141" font-size="11" fill="#57606B" text-anchor="middle">loopback · token auth</text>
+
+  <line x1="720" y1="152" x2="720" y2="178" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="560" y="180" width="320" height="74" rx="12" fill="#C7D2FE" stroke="#6366F1"/>
+  <text x="720" y="208" font-size="16" font-weight="600" fill="#161A1F" text-anchor="middle">Overview Dashboard</text>
+  <text x="720" y="230" font-size="11.5" fill="#3B4149" text-anchor="middle">KPI tiles · live activity · approvals needed · spend</text>
+
+  <!-- ============ LANE HEADERS ============ -->
+  <text x="80" y="300" font-size="12" font-weight="600" fill="#57606B" letter-spacing="1.5">LANE A · MANAGE WORK</text>
+  <text x="580" y="300" font-size="12" font-weight="600" fill="#57606B" letter-spacing="1.5">LANE B · REVIEW &amp; GATE</text>
+  <text x="1060" y="300" font-size="12" font-weight="600" fill="#57606B" letter-spacing="1.5">LANE C · OBSERVE</text>
+
+  <!-- Overview -> lanes -->
+  <line x1="720" y1="254" x2="260" y2="318" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="720" y1="254" x2="740" y2="318" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="720" y1="254" x2="1180" y2="318" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- ============ LANE A ============ -->
+  <!-- Calendar feeds Tasks -->
+  <rect x="60" y="330" width="200" height="56" rx="10" fill="#E2E8F0" stroke="#94A3B8"/>
+  <text x="160" y="354" font-size="13.5" font-weight="600" fill="#161A1F" text-anchor="middle">Calendar / Cron</text>
+  <text x="160" y="372" font-size="10.5" fill="#57606B" text-anchor="middle">scheduled runs</text>
+  <line x1="260" y1="358" x2="318" y2="358" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrD)"/>
+
+  <rect x="320" y="330" width="180" height="56" rx="10" fill="#C7D2FE" stroke="#6366F1"/>
+  <text x="410" y="354" font-size="13.5" font-weight="600" fill="#161A1F" text-anchor="middle">Tasks</text>
+  <text x="410" y="372" font-size="10.5" fill="#3B4149" text-anchor="middle">in flight · queued · done</text>
+  <line x1="410" y1="386" x2="410" y2="418" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="300" y="420" width="220" height="56" rx="10" fill="#C7D2FE" stroke="#6366F1"/>
+  <text x="410" y="444" font-size="13.5" font-weight="600" fill="#161A1F" text-anchor="middle">Tickets / Backlog</text>
+  <text x="410" y="462" font-size="10.5" fill="#3B4149" text-anchor="middle">ranked · tagged · pull to start</text>
+  <line x1="410" y1="476" x2="410" y2="508" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="280" y="510" width="260" height="56" rx="10" fill="#C7D2FE" stroke="#6366F1"/>
+  <text x="410" y="534" font-size="13.5" font-weight="600" fill="#161A1F" text-anchor="middle">Factory</text>
+  <text x="410" y="552" font-size="10.5" fill="#3B4149" text-anchor="middle">agents move BUILD → QA → REVIEW → SHIP</text>
+  <line x1="410" y1="566" x2="410" y2="598" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="330" y="600" width="160" height="56" rx="10" fill="#99F6E4" stroke="#0F766E"/>
+  <text x="410" y="624" font-size="13.5" font-weight="600" fill="#134E4A" text-anchor="middle">Shipped ✓</text>
+  <text x="410" y="642" font-size="10.5" fill="#134E4A" text-anchor="middle">done · updates activity</text>
+  <line x1="410" y1="656" x2="410" y2="712" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Tasks -> Approvals drill-down (cross-lane) -->
+  <line x1="500" y1="358" x2="558" y2="358" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrD)"/>
+  <text x="529" y="349" font-size="10" fill="#64748B" text-anchor="middle">needs approval</text>
+
+  <!-- ============ LANE B ============ -->
+  <rect x="560" y="330" width="360" height="56" rx="10" fill="#FDE68A" stroke="#B45309"/>
+  <text x="740" y="354" font-size="13.5" font-weight="600" fill="#161A1F" text-anchor="middle">Approval Request</text>
+  <text x="740" y="372" font-size="10.5" fill="#57534E" text-anchor="middle">exec · pairing · message · session fork</text>
+  <line x1="740" y1="386" x2="740" y2="418" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Approve? diamond -->
+  <polygon points="740,420 810,468 740,516 670,468" fill="#FECACA" stroke="#DC2626"/>
+  <text x="740" y="464" font-size="13" font-weight="600" fill="#7F1D1D" text-anchor="middle">Approve?</text>
+  <text x="740" y="480" font-size="10" fill="#7F1D1D" text-anchor="middle">1-click</text>
+
+  <!-- yes -->
+  <line x1="670" y1="468" x2="610" y2="510" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="648" y="488" font-size="11" font-weight="600" fill="#15803D">yes</text>
+  <rect x="520" y="512" width="180" height="56" rx="10" fill="#C7D2FE" stroke="#6366F1"/>
+  <text x="610" y="536" font-size="13.5" font-weight="600" fill="#161A1F" text-anchor="middle">Execute</text>
+  <text x="610" y="554" font-size="10.5" fill="#3B4149" text-anchor="middle">gateway / sandbox</text>
+  <line x1="610" y1="568" x2="610" y2="712" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- no -->
+  <line x1="810" y1="468" x2="870" y2="510" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="838" y="488" font-size="11" font-weight="600" fill="#B91C1C">no</text>
+  <rect x="780" y="512" width="180" height="56" rx="10" fill="#FECACA" stroke="#DC2626"/>
+  <text x="870" y="536" font-size="13.5" font-weight="600" fill="#7F1D1D" text-anchor="middle">Rejected</text>
+  <text x="870" y="554" font-size="10.5" fill="#7F1D1D" text-anchor="middle">agent notified · logged</text>
+  <line x1="870" y1="568" x2="870" y2="712" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- ============ LANE C ============ -->
+  <rect x="1060" y="330" width="240" height="56" rx="10" fill="#C7D2FE" stroke="#6366F1"/>
+  <text x="1180" y="354" font-size="13.5" font-weight="600" fill="#161A1F" text-anchor="middle">Agents</text>
+  <text x="1180" y="372" font-size="10.5" fill="#3B4149" text-anchor="middle">team tree · status · sub-agents</text>
+  <line x1="1180" y1="386" x2="1180" y2="418" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="1060" y="420" width="240" height="56" rx="10" fill="#C7D2FE" stroke="#6366F1"/>
+  <text x="1180" y="444" font-size="13.5" font-weight="600" fill="#161A1F" text-anchor="middle">Sessions</text>
+  <text x="1180" y="462" font-size="10.5" fill="#3B4149" text-anchor="middle">context pressure · last activity</text>
+  <line x1="1180" y1="476" x2="1180" y2="508" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="1060" y="510" width="240" height="56" rx="10" fill="#C7D2FE" stroke="#6366F1"/>
+  <text x="1180" y="534" font-size="13.5" font-weight="600" fill="#161A1F" text-anchor="middle">Health</text>
+  <text x="1180" y="552" font-size="10.5" fill="#3B4149" text-anchor="middle">cpu · mem · disk · provider</text>
+  <line x1="1180" y1="566" x2="1180" y2="598" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="1060" y="600" width="240" height="56" rx="10" fill="#C7D2FE" stroke="#6366F1"/>
+  <text x="1180" y="624" font-size="13.5" font-weight="600" fill="#161A1F" text-anchor="middle">Usage &amp; Cost</text>
+  <text x="1180" y="642" font-size="10.5" fill="#3B4149" text-anchor="middle">per provider/model · peak alerts</text>
+  <line x1="1180" y1="656" x2="1180" y2="688" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="1060" y="690" width="240" height="56" rx="10" fill="#C7D2FE" stroke="#6366F1"/>
+  <text x="1180" y="714" font-size="13.5" font-weight="600" fill="#161A1F" text-anchor="middle">Logs</text>
+  <text x="1180" y="732" font-size="10.5" fill="#3B4149" text-anchor="middle">filter INFO / WARN / ERROR</text>
+  <line x1="1180" y1="746" x2="1180" y2="790" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Agents -> Sessions drill is the chain; Sessions -> Logs drill-down (skip Health/Usage) -->
+  <line x1="1300" y1="448" x2="1340" y2="448" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <line x1="1340" y1="448" x2="1340" y2="712" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrD)"/>
+  <text x="1348" y="580" font-size="10" fill="#64748B">drill: session → logs</text>
+
+  <!-- ============ LIVE ACTIVITY BAND ============ -->
+  <rect x="60" y="794" width="1340" height="70" rx="12" fill="#0F172A" stroke="#0F172A"/>
+  <text x="80" y="822" font-size="15" font-weight="600" fill="#E2E8F0">Live Activity — event stream</text>
+  <text x="80" y="842" font-size="11.5" fill="#94A3B8">every action lands here: tool calls · deployments · approvals · errors · build log · streaming via WebSocket</text>
+  <text x="1280" y="828" font-size="12" fill="#E2E8F0" text-anchor="end">pause · 1x/2x/4x · zone filters</text>
+
+  <!-- feedback loop to Overview -->
+  <line x1="720" y1="794" x2="720" y2="254" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="6 5" marker-end="url(#arrD)"/>
+  <text x="734" y="500" font-size="10.5" fill="#94A3B8">feeds KPIs</text>
+
+  <!-- ============ LEGEND ============ -->
+  <rect x="60" y="896" width="1340" height="98" rx="12" fill="#FFFFFF" stroke="#CDD3DA"/>
+  <text x="80" y="922" font-size="12.5" font-weight="600" fill="#161A1F">Legend — where you spend your time</text>
+  <rect x="80" y="936" width="16" height="16" rx="4" fill="#C7D2FE"/><text x="104" y="949" font-size="12" fill="#3B4149">direct / act (Tasks, Tickets, Factory, Agents, Sessions, Health, Usage, Logs)</text>
+  <rect x="80" y="958" width="16" height="16" rx="4" fill="#FDE68A"/><text x="104" y="971" font-size="12" fill="#3B4149">gate / review — human-in-the-loop (Approvals)</text>
+  <line x1="80" y1="984" x2="96" y2="984" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="5 4"/><text x="104" y="988" font-size="12" fill="#3B4149">dashed = drill-down / cross-lane jump</text>
+  <text x="1040" y="949" font-size="12" fill="#57606B">Theme toggle in the topbar switches the entire app</text>
+  <text x="1040" y="967" font-size="12" fill="#57606B">between light and dark palettes — verified on all 13 screens.</text>
+  <text x="1040" y="985" font-size="12" fill="#57606B">Spacing rule: 16px+ padding inside cards, 24px+ between</text>
+  <text x="1040" y="1003" font-size="12" fill="#57606B">blocks, no text ever touches a border (audited all screens).</text>
+</svg>

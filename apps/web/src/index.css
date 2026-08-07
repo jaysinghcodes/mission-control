@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+/* Mission Control design tokens — dark-first (from design-studio skill) */
+@theme {
+  --color-mc-bg: #0E1114;
+  --color-mc-sidebar: #14181D;
+  --color-mc-topbar: #15191D;
+  --color-mc-card: #161A20;
+  --color-mc-text: #E6E9ED;
+  --color-mc-sub: #96A0AA;
+  --color-mc-tert: #6B7681;
+  --color-mc-green: #3FB950;
+  --color-mc-red: #F85149;
+  --color-mc-blue: #58A6FF;
+  --color-mc-purple: #BC8CFF;
+  --color-mc-amber: #E3B341;
+  --color-mc-teal: #2DD4BF;
+  --color-mc-orange: #F0883E;
+  --font-mono: "SF Mono", "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+}

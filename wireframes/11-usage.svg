@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="820" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<rect x="0" y="0" width="1280" height="820" fill="#F2F4F6"/>
+<rect x="0" y="0" width="220" height="820" rx="0" fill="#E4E6E8" opacity="1"/>
+<line x1="220" y1="0" x2="220" y2="820" stroke="#D5D9DE" stroke-width="1" opacity="1"/>
+<rect x="20" y="22" width="26" height="26" rx="7" fill="#1D4ED8" opacity="1"/>
+<text x="22" y="40" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#FFFFFF" text-anchor="middle" opacity="1">◈</text>
+<text x="56" y="40" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#161A1F" text-anchor="start" opacity="1">Mission Control</text>
+<text x="20" y="78" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#4E565F" text-anchor="start" opacity="1" letter-spacing="0.08em">WORKSPACE</text>
+<text x="42" y="114" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#161A1F" text-anchor="start" opacity="1">Overview</text>
+<rect x="19" y="103" width="12" height="12" rx="3.5" fill="none" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<line x1="22" y1="109.0" x2="28" y2="109.0" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<line x1="25.0" y1="106" x2="25.0" y2="112" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<text x="42" y="156" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#161A1F" text-anchor="start" opacity="1">Tasks</text>
+<line x1="19.5" y1="147.0" x2="30.5" y2="147.0" stroke="#4E565F" stroke-width="1.8" opacity="1"/>
+<line x1="19.5" y1="151.5" x2="30.5" y2="151.5" stroke="#4E565F" stroke-width="1.8" opacity="1"/>
+<line x1="19.5" y1="156.0" x2="30.5" y2="156.0" stroke="#4E565F" stroke-width="1.8" opacity="1"/>
+<line x1="19.5" y1="147" x2="22.5" y2="147" stroke="#4E565F" stroke-width="1.8" opacity="1"/>
+<line x1="19.5" y1="151.5" x2="22.5" y2="151.5" stroke="#4E565F" stroke-width="1.8" opacity="1"/>
+<line x1="19.5" y1="156" x2="22.5" y2="156" stroke="#4E565F" stroke-width="1.8" opacity="1"/>
+<text x="42" y="198" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#161A1F" text-anchor="start" opacity="1">Tickets</text>
+<rect x="19.5" y="187.5" width="11" height="11" rx="3" fill="none" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<line x1="22" y1="191.5" x2="28" y2="191.5" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<line x1="22" y1="195.5" x2="28" y2="195.5" stroke="#4E565F" stroke-width="1.4" opacity="0.5"/>
+<text x="42" y="240" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#161A1F" text-anchor="start" opacity="1">Backlog</text>
+<line x1="20" y1="230" x2="30" y2="230" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<line x1="20" y1="235" x2="30" y2="235" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<line x1="20" y1="240" x2="30" y2="240" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<line x1="20" y1="230" x2="20" y2="240" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<text x="42" y="282" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#161A1F" text-anchor="start" opacity="1">Calendar</text>
+<rect x="19.5" y="272" width="11" height="11" rx="3" fill="none" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<line x1="19.5" y1="276.5" x2="30.5" y2="276.5" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<line x1="22.5" y1="270.5" x2="22.5" y2="273.5" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<line x1="27.5" y1="270.5" x2="27.5" y2="273.5" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<text x="42" y="324" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#161A1F" text-anchor="start" opacity="1">Approvals</text>
+<path d="M19.5,319.0 l3.5,3.5 l7.5,-8" stroke="#4E565F" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="20" y="360" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#4E565F" text-anchor="start" opacity="1" letter-spacing="0.08em">TEAM</text>
+<text x="42" y="396" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#161A1F" text-anchor="start" opacity="1">Agents</text>
+<line x1="24.2" y1="385" x2="24.2" y2="387.88" stroke="#4E565F" stroke-width="1.2" opacity="1"/>
+<circle cx="24.2" cy="384" r="1.1700000000000002" fill="#4E565F" opacity="1"/>
+<rect x="19.7" y="387.88" width="9.0" height="6.84" rx="2.3400000000000003" fill="#4E565F" opacity="1"/>
+<circle cx="22.490000000000002" cy="390.76" r="1.215" fill="#FFFFFF" opacity="1"/>
+<circle cx="25.91" cy="390.76" r="1.215" fill="#FFFFFF" opacity="1"/>
+<rect x="21.68" y="396.34" width="5.04" height="5.9399999999999995" rx="1.71" fill="#4E565F" opacity="0.72"/>
+<text x="42" y="438" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#161A1F" text-anchor="start" opacity="1">Factory</text>
+<line x1="24.2" y1="427" x2="24.2" y2="429.88" stroke="#4E565F" stroke-width="1.2" opacity="1"/>
+<circle cx="24.2" cy="426" r="1.1700000000000002" fill="#4E565F" opacity="1"/>
+<rect x="19.7" y="429.88" width="9.0" height="6.84" rx="2.3400000000000003" fill="#4E565F" opacity="1"/>
+<circle cx="22.490000000000002" cy="432.76" r="1.215" fill="#FFFFFF" opacity="1"/>
+<circle cx="25.91" cy="432.76" r="1.215" fill="#FFFFFF" opacity="1"/>
+<rect x="21.68" y="438.34" width="5.04" height="5.9399999999999995" rx="1.71" fill="#4E565F" opacity="0.72"/>
+<text x="42" y="480" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#161A1F" text-anchor="start" opacity="1">Live Activity</text>
+<path d="M18.5,475.0 L21,475.0 L23,470.0 L26,480.0 L28,475.0 L31.5,475.0" stroke="#4E565F" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="20" y="516" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#4E565F" text-anchor="start" opacity="1" letter-spacing="0.08em">OBSERVE</text>
+<text x="42" y="552" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#161A1F" text-anchor="start" opacity="1">Health</text>
+<path d="M25.0,541.5 l-6,7 l4,0 l-2,6 l7,-8 l-4,0 z" stroke="#4E565F" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="42" y="594" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#161A1F" text-anchor="start" opacity="1">Sessions</text>
+<rect x="19" y="584.5" width="11" height="11" rx="3" fill="none" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<rect x="21.5" y="587" width="11" height="11" rx="3" fill="none" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<rect x="12" y="614" width="196" height="34" rx="8" fill="#1D4ED8" opacity="1"/>
+<text x="42" y="636" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="600" fill="#FFFFFF" text-anchor="start" opacity="1">Usage &amp; Cost</text>
+<rect x="19.5" y="631" width="3.2" height="5" rx="1" fill="#FFFFFF" opacity="1"/>
+<rect x="24.0" y="628" width="3.2" height="8" rx="1" fill="#FFFFFF" opacity="1"/>
+<rect x="28.5" y="625" width="3.2" height="11" rx="1" fill="#FFFFFF" opacity="1"/>
+<line x1="19" y1="637.5" x2="31" y2="637.5" stroke="#FFFFFF" stroke-width="1.6" opacity="1"/>
+<text x="42" y="678" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#161A1F" text-anchor="start" opacity="1">Logs</text>
+<line x1="19.5" y1="669.0" x2="30.5" y2="669.0" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<line x1="19.5" y1="672.6" x2="30.5" y2="672.6" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<line x1="19.5" y1="676.2" x2="30.5" y2="676.2" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<line x1="19.5" y1="679.8" x2="30.5" y2="679.8" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<circle cx="28.5" cy="669" r="1.6" fill="#4E565F" opacity="1"/>
+<line x1="20" y1="728" x2="200" y2="728" stroke="#D5D9DE" stroke-width="1" opacity="1"/>
+<rect x="12" y="744" width="196" height="40" rx="10" fill="#D8DBDE" opacity="1"/>
+<text x="24" y="767" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="500" fill="#161A1F" text-anchor="start" opacity="1">⚙  Settings</text>
+<circle cx="26" cy="796" r="5" fill="#15803D" opacity="1"/>
+<text x="38" y="800" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#4E565F" text-anchor="start" opacity="1">Connected · 74ms</text>
+<text x="120" y="800" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#57606B" text-anchor="start" opacity="1">ws://…:18789</text>
+<rect x="220" y="0" width="1060" height="56" rx="0" fill="#FFFFFF" opacity="1"/>
+<line x1="220" y1="56" x2="1280" y2="56" stroke="#DDE1E6" stroke-width="1" opacity="1"/>
+<text x="244" y="35" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="17" font-weight="600" fill="#161A1F" text-anchor="start" opacity="1">Usage &amp; Cost</text>
+<rect x="860" y="12" width="200" height="32" rx="16.0" fill="#E9ECEF" stroke="#CDD3DA" stroke-width="1" opacity="1"/>
+<circle cx="876" cy="28.0" r="4" fill="none" stroke="#57606B" stroke-width="1.5" opacity="1"/>
+<line x1="879" y1="31.5" x2="883" y2="35.5" stroke="#57606B" stroke-width="1.5" opacity="1"/>
+<text x="892" y="32.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#57606B" text-anchor="start" opacity="1">Search</text>
+<circle cx="1090" cy="28" r="5" fill="#15803D" opacity="1"/>
+<text x="1100" y="32" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="500" fill="#3B4149" text-anchor="start" opacity="1">Connected</text>
+<line x1="1148" y1="16" x2="1148" y2="40" stroke="#DDE1E6" stroke-width="1" opacity="1"/>
+<rect x="1148" y="12" width="40" height="32" rx="16" fill="#EEF0F3" stroke="#CDD3DA" stroke-width="1" opacity="1"/>
+<circle cx="1165" cy="27" r="5.6" fill="none" stroke="#4E565F" stroke-width="1.7" opacity="1"/>
+<circle cx="1168.5" cy="30.5" r="5.1" fill="#EEF0F3" opacity="1"/>
+<rect x="1196" y="12" width="32" height="32" rx="16" fill="#161A1F" opacity="1"/>
+<text x="1212" y="33" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#FFFFFF" text-anchor="middle" opacity="1">J</text>
+<text x="244" y="92" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="22" font-weight="600" fill="#161A1F" text-anchor="start" opacity="1">Usage &amp; Cost</text>
+<text x="244" y="114" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#3B4149" text-anchor="start" opacity="1">Token spend per provider and model.</text>
+<rect x="244" y="128" width="56" height="32" rx="16.0" fill="#161A1F" stroke="none" stroke-width="1" opacity="1"/>
+<text x="272.0" y="148.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#FFFFFF" text-anchor="middle" opacity="1">24h</text>
+<rect x="312" y="128" width="48" height="32" rx="16.0" fill="#FFFFFF" stroke="#CDD3DA" stroke-width="1" opacity="1"/>
+<text x="336.0" y="148.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="500" fill="#3B4149" text-anchor="middle" opacity="1">7d</text>
+<rect x="372" y="128" width="56" height="32" rx="16.0" fill="#FFFFFF" stroke="#CDD3DA" stroke-width="1" opacity="1"/>
+<text x="400.0" y="148.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="500" fill="#3B4149" text-anchor="middle" opacity="1">30d</text>
+<rect x="440" y="128" width="112" height="32" rx="16.0" fill="#FFFFFF" stroke="#CDD3DA" stroke-width="1" opacity="1"/>
+<text x="496.0" y="148.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="500" fill="#3B4149" text-anchor="middle" opacity="1">This month</text>
+<rect x="244" y="176" width="780" height="98" rx="14" fill="#FFFFFF" stroke="#CDD3DA" stroke-width="1" opacity="1"/>
+<text x="262" y="206" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#57606B" text-anchor="start" opacity="1" letter-spacing="0.08em">TOTAL ESTIMATED SPEND</text>
+<text x="262" y="240" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="30" font-weight="600" fill="#161A1F" text-anchor="start" opacity="1">$4.82</text>
+<text x="262" y="262" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#3B4149" text-anchor="start" opacity="1">last 24h · 1.2M tokens in · 340K tokens out</text>
+<rect x="850" y="216" width="189.6" height="24" rx="12.0" fill="#FBEEDD" opacity="1"/>
+<text x="944.8" y="232.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="600" fill="#9A4A0B" text-anchor="middle" opacity="1">PEAK WINDOW 01:00–07:00 CT</text>
+<rect x="244" y="296" width="248" height="172" rx="14" fill="#FFFFFF" stroke="#CDD3DA" stroke-width="1" opacity="1"/>
+<circle cx="266" cy="324" r="8" fill="#1D4ED8" opacity="1"/>
+<text x="282" y="329" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14.5" font-weight="600" fill="#161A1F" text-anchor="start" opacity="1">DeepSeek</text>
+<text x="260" y="358" font-family="SF Mono, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#3B4149" text-anchor="start" opacity="1">deepseek-v4-flash</text>
+<text x="260" y="390" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="24" font-weight="600" fill="#161A1F" text-anchor="start" opacity="1">$1.05</text>
+<text x="260" y="410" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11" font-weight="400" fill="#3B4149" text-anchor="start" opacity="1">input 980K · output 260K</text>
+<rect x="260" y="424" width="216" height="6" rx="3.0" fill="#D8DDE3" opacity="1"/>
+<rect x="260" y="424" width="177.12" height="6" rx="3.0" fill="#1D4ED8" opacity="1"/>
+<text x="476" y="428" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="400" fill="#57606B" text-anchor="end" opacity="1">82%</text>
+<rect x="510" y="296" width="248" height="172" rx="14" fill="#FFFFFF" stroke="#CDD3DA" stroke-width="1" opacity="1"/>
+<circle cx="532" cy="324" r="8" fill="#6D28D9" opacity="1"/>
+<text x="548" y="329" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14.5" font-weight="600" fill="#161A1F" text-anchor="start" opacity="1">Z.AI (GLM)</text>
+<text x="526" y="358" font-family="SF Mono, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#3B4149" text-anchor="start" opacity="1">glm-5.2</text>
+<text x="526" y="390" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="24" font-weight="600" fill="#161A1F" text-anchor="start" opacity="1">$0.31</text>
+<text x="526" y="410" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11" font-weight="400" fill="#3B4149" text-anchor="start" opacity="1">input 210K · output 68K</text>
+<rect x="526" y="424" width="216" height="6" rx="3.0" fill="#D8DDE3" opacity="1"/>
+<rect x="526" y="424" width="32.4" height="6" rx="3.0" fill="#6D28D9" opacity="1"/>
+<text x="742" y="428" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="400" fill="#57606B" text-anchor="end" opacity="1">15%</text>
+<rect x="776" y="296" width="248" height="172" rx="14" fill="#FFFFFF" stroke="#CDD3DA" stroke-width="1" opacity="1"/>
+<circle cx="798" cy="324" r="8" fill="#57606B" opacity="1"/>
+<text x="814" y="329" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14.5" font-weight="600" fill="#161A1F" text-anchor="start" opacity="1">Other / fallback</text>
+<text x="792" y="358" font-family="SF Mono, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#3B4149" text-anchor="start" opacity="1">—</text>
+<text x="792" y="390" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="24" font-weight="600" fill="#161A1F" text-anchor="start" opacity="1">$0.12</text>
+<text x="792" y="410" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11" font-weight="400" fill="#3B4149" text-anchor="start" opacity="1">input 18K · output 4K</text>
+<rect x="792" y="424" width="216" height="6" rx="3.0" fill="#D8DDE3" opacity="1"/>
+<rect x="792" y="424" width="6.48" height="6" rx="3.0" fill="#57606B" opacity="1"/>
+<text x="1008" y="428" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="400" fill="#57606B" text-anchor="end" opacity="1">3%</text>
+<text x="244" y="500" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#3B4149" text-anchor="start" opacity="1">Peak-pricing alert: DeepSeek charges 2× during 01:00–07:00 CT — cron alerts are already wired.</text>
+</svg>

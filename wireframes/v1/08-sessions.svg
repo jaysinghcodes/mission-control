@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="820" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<rect x="0" y="0" width="220" height="820" rx="0" fill="#ffffff" stroke="#e5e5ea" stroke-width="1" opacity="1"/>
+<rect x="20" y="22" width="26" height="26" rx="7" fill="#0071e3" opacity="1"/>
+<text x="22" y="40" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#ffffff" text-anchor="middle" opacity="1">◈</text>
+<text x="56" y="40" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#1d1d1f" text-anchor="start" opacity="1">Mission Control</text>
+<text x="20" y="78" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#aeaeb2" text-anchor="start" opacity="1" letter-spacing="0.08em">WORKSPACE</text>
+<text x="42" y="114" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1d1d1f" text-anchor="start" opacity="1">Tasks</text>
+<line x1="19.5" y1="105.0" x2="30.5" y2="105.0" stroke="#86868b" stroke-width="1.8" opacity="1"/>
+<line x1="19.5" y1="109.5" x2="30.5" y2="109.5" stroke="#86868b" stroke-width="1.8" opacity="1"/>
+<line x1="19.5" y1="114.0" x2="30.5" y2="114.0" stroke="#86868b" stroke-width="1.8" opacity="1"/>
+<line x1="19.5" y1="105" x2="22.5" y2="105" stroke="#86868b" stroke-width="1.8" opacity="1"/>
+<line x1="19.5" y1="109.5" x2="22.5" y2="109.5" stroke="#86868b" stroke-width="1.8" opacity="1"/>
+<line x1="19.5" y1="114" x2="22.5" y2="114" stroke="#86868b" stroke-width="1.8" opacity="1"/>
+<text x="42" y="156" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1d1d1f" text-anchor="start" opacity="1">Agents</text>
+<circle cx="25.0" cy="147.5" r="3.4" fill="none" stroke="#86868b" stroke-width="1.6" opacity="1"/>
+<path d="M19.5,157.5 a5.5,5.5 0 0 1 11,0" stroke="#86868b" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="42" y="198" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1d1d1f" text-anchor="start" opacity="1">Calendar</text>
+<rect x="19.5" y="188" width="11" height="11" rx="3" fill="none" stroke="#86868b" stroke-width="1.6" opacity="1"/>
+<line x1="19.5" y1="192.5" x2="30.5" y2="192.5" stroke="#86868b" stroke-width="1.6" opacity="1"/>
+<line x1="22.5" y1="186.5" x2="22.5" y2="189.5" stroke="#86868b" stroke-width="1.6" opacity="1"/>
+<line x1="27.5" y1="186.5" x2="27.5" y2="189.5" stroke="#86868b" stroke-width="1.6" opacity="1"/>
+<text x="42" y="240" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1d1d1f" text-anchor="start" opacity="1">Pipeline</text>
+<rect x="20.0" y="234" width="3.2" height="6" rx="1" fill="#86868b" opacity="1"/>
+<rect x="24.5" y="228" width="3.2" height="12" rx="1" fill="#86868b" opacity="1"/>
+<rect x="29.0" y="231" width="3.2" height="9" rx="1" fill="#86868b" opacity="1"/>
+<text x="42" y="282" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1d1d1f" text-anchor="start" opacity="1">Approvals</text>
+<path d="M19.5,277.0 l3.5,3.5 l7.5,-8" stroke="#86868b" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="20" y="318" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#aeaeb2" text-anchor="start" opacity="1" letter-spacing="0.08em">OBSERVE</text>
+<text x="42" y="354" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1d1d1f" text-anchor="start" opacity="1">Live Activity</text>
+<path d="M18.5,349.0 L21,349.0 L23,344.0 L26,354.0 L28,349.0 L31.5,349.0" stroke="#86868b" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="42" y="396" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1d1d1f" text-anchor="start" opacity="1">Health</text>
+<path d="M25.0,385.5 l-6,7 l4,0 l-2,6 l7,-8 l-4,0 z" stroke="#86868b" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="12" y="416" width="196" height="34" rx="8" fill="#e8f1fd" opacity="1"/>
+<text x="42" y="438" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="500" fill="#0071e3" text-anchor="start" opacity="1">Sessions</text>
+<rect x="19" y="428.5" width="11" height="11" rx="3" fill="none" stroke="#0071e3" stroke-width="1.6" opacity="1"/>
+<rect x="21.5" y="431" width="11" height="11" rx="3" fill="none" stroke="#0071e3" stroke-width="1.6" opacity="1"/>
+<text x="42" y="480" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1d1d1f" text-anchor="start" opacity="1">Usage &amp; Cost</text>
+<rect x="19.5" y="475" width="3.2" height="5" rx="1" fill="#86868b" opacity="1"/>
+<rect x="24.0" y="472" width="3.2" height="8" rx="1" fill="#86868b" opacity="1"/>
+<rect x="28.5" y="469" width="3.2" height="11" rx="1" fill="#86868b" opacity="1"/>
+<line x1="19" y1="481.5" x2="31" y2="481.5" stroke="#86868b" stroke-width="1.6" opacity="1"/>
+<text x="42" y="522" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#1d1d1f" text-anchor="start" opacity="1">Logs</text>
+<line x1="19.5" y1="513.0" x2="30.5" y2="513.0" stroke="#86868b" stroke-width="1.6" opacity="1"/>
+<line x1="19.5" y1="516.6" x2="30.5" y2="516.6" stroke="#86868b" stroke-width="1.6" opacity="1"/>
+<line x1="19.5" y1="520.2" x2="30.5" y2="520.2" stroke="#86868b" stroke-width="1.6" opacity="1"/>
+<line x1="19.5" y1="523.8" x2="30.5" y2="523.8" stroke="#86868b" stroke-width="1.6" opacity="1"/>
+<circle cx="28.5" cy="513" r="1.6" fill="#86868b" opacity="1"/>
+<line x1="20" y1="728" x2="200" y2="728" stroke="#e5e5ea" stroke-width="1" opacity="1"/>
+<rect x="12" y="744" width="196" height="40" rx="10" fill="#f5f5f7" opacity="1"/>
+<text x="24" y="767" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="500" fill="#1d1d1f" text-anchor="start" opacity="1">⚙  Settings</text>
+<circle cx="26" cy="796" r="5" fill="#34c759" opacity="1"/>
+<text x="38" y="800" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#86868b" text-anchor="start" opacity="1">Connected · 74ms</text>
+<text x="120" y="800" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#aeaeb2" text-anchor="start" opacity="1">ws://…:18789</text>
+<rect x="220" y="0" width="1060" height="56" rx="0" fill="#f5f5f7" opacity="1"/>
+<text x="244" y="35" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="17" font-weight="600" fill="#1d1d1f" text-anchor="start" opacity="1">Sessions</text>
+<rect x="860" y="12" width="200" height="32" rx="16.0" fill="#f5f5f7" stroke="#e5e5ea" stroke-width="1" opacity="1"/>
+<circle cx="876" cy="28.0" r="4" fill="none" stroke="#aeaeb2" stroke-width="1.5" opacity="1"/>
+<line x1="879" y1="31.5" x2="883" y2="35.5" stroke="#aeaeb2" stroke-width="1.5" opacity="1"/>
+<text x="892" y="32.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#aeaeb2" text-anchor="start" opacity="1">Search</text>
+<circle cx="1122" cy="28" r="5" fill="#34c759" opacity="1"/>
+<text x="1132" y="32" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="500" fill="#86868b" text-anchor="start" opacity="1">Connected</text>
+<line x1="1150" y1="16" x2="1150" y2="40" stroke="#d2d2d7" stroke-width="1" opacity="1"/>
+<text x="1162" y="33" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#86868b" text-anchor="start" opacity="1">ws://127.0.0.1:18789</text>
+<rect x="1196" y="12" width="32" height="32" rx="16" fill="#d8d8dd" opacity="1"/>
+<text x="1212" y="33" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#ffffff" text-anchor="middle" opacity="1">J</text>
+<text x="244" y="92" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="20" font-weight="600" fill="#1d1d1f" text-anchor="start" opacity="1">Sessions</text>
+<text x="244" y="112" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#86868b" text-anchor="start" opacity="1">Active agent sessions, context pressure, and last activity.</text>
+<filter id="sd" x="-10%" y="-10%" width="130%" height="130%"><feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#000" flood-opacity="0.05"/></filter>
+<rect x="244" y="128" width="780" height="480" rx="14" fill="#ffffff" stroke="#e5e5ea" stroke-width="1" opacity="1"/>
+<rect x="244" y="128" width="780" height="480" rx="14" fill="none" filter="url(#sd)"/>
+<text x="262" y="152" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="600" fill="#aeaeb2" text-anchor="start" opacity="1" letter-spacing="0.08em">SESSION</text>
+<text x="492" y="152" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="600" fill="#aeaeb2" text-anchor="start" opacity="1" letter-spacing="0.08em">AGENT</text>
+<text x="622" y="152" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="600" fill="#aeaeb2" text-anchor="start" opacity="1" letter-spacing="0.08em">MODEL</text>
+<text x="782" y="152" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="600" fill="#aeaeb2" text-anchor="start" opacity="1" letter-spacing="0.08em">CONTEXT</text>
+<text x="922" y="152" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="600" fill="#aeaeb2" text-anchor="start" opacity="1" letter-spacing="0.08em">LAST ACTIVITY</text>
+<line x1="262" y1="168" x2="1004" y2="168" stroke="#e5e5ea" stroke-width="1" opacity="1"/>
+<text x="262" y="200" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="500" fill="#1d1d1f" text-anchor="start" opacity="1">main · discord</text>
+<circle cx="491.0" cy="193.0" r="11.0" fill="#0071e3" opacity="1"/>
+<text x="491.0" y="200.7" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="9.24" font-weight="600" fill="#ffffff" text-anchor="middle" opacity="1">ma</text>
+<text x="510" y="200" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="500" fill="#1d1d1f" text-anchor="start" opacity="1">main</text>
+<text x="650" y="200" font-family="SF Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#86868b" text-anchor="start" opacity="1">deepseek-v4-flash</text>
+<rect x="830" y="190" width="90" height="5" rx="2.5" fill="#e9e9ec" opacity="1"/>
+<rect x="830" y="190" width="37.8" height="5" rx="2.5" fill="#0071e3" opacity="1"/>
+<text x="930" y="200" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11" font-weight="400" fill="#86868b" text-anchor="start" opacity="1">42%</text>
+<text x="955" y="200" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#aeaeb2" text-anchor="start" opacity="1">1m ago</text>
+<line x1="262" y1="234" x2="1004" y2="234" stroke="#e5e5ea" stroke-width="1" opacity="1"/>
+<text x="262" y="266" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="500" fill="#1d1d1f" text-anchor="start" opacity="1">mission-control · dev</text>
+<circle cx="491.0" cy="259.0" r="11.0" fill="#af52de" opacity="1"/>
+<text x="491.0" y="266.7" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="9.24" font-weight="600" fill="#ffffff" text-anchor="middle" opacity="1">he</text>
+<text x="510" y="266" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="500" fill="#1d1d1f" text-anchor="start" opacity="1">henry</text>
+<text x="650" y="266" font-family="SF Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#86868b" text-anchor="start" opacity="1">deepseek-v4-flash</text>
+<rect x="830" y="256" width="90" height="5" rx="2.5" fill="#e9e9ec" opacity="1"/>
+<rect x="830" y="256" width="16.2" height="5" rx="2.5" fill="#0071e3" opacity="1"/>
+<text x="930" y="266" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11" font-weight="400" fill="#86868b" text-anchor="start" opacity="1">18%</text>
+<text x="955" y="266" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#aeaeb2" text-anchor="start" opacity="1">2m ago</text>
+<line x1="262" y1="300" x2="1004" y2="300" stroke="#e5e5ea" stroke-width="1" opacity="1"/>
+<text x="262" y="332" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="500" fill="#1d1d1f" text-anchor="start" opacity="1">research · wireframes</text>
+<circle cx="462" cy="326" r="5" fill="#0071e3" opacity="1"/>
+<circle cx="491.0" cy="325.0" r="11.0" fill="#0071e3" opacity="1"/>
+<text x="491.0" y="332.7" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="9.24" font-weight="600" fill="#ffffff" text-anchor="middle" opacity="1">ma</text>
+<text x="510" y="332" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="500" fill="#1d1d1f" text-anchor="start" opacity="1">main</text>
+<text x="650" y="332" font-family="SF Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#86868b" text-anchor="start" opacity="1">deepseek-v4-flash</text>
+<rect x="830" y="322" width="90" height="5" rx="2.5" fill="#e9e9ec" opacity="1"/>
+<rect x="830" y="322" width="60.3" height="5" rx="2.5" fill="#ff9500" opacity="1"/>
+<text x="930" y="332" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11" font-weight="400" fill="#86868b" text-anchor="start" opacity="1">67%</text>
+<text x="955" y="332" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#aeaeb2" text-anchor="start" opacity="1">12m ago</text>
+<line x1="262" y1="366" x2="1004" y2="366" stroke="#e5e5ea" stroke-width="1" opacity="1"/>
+<text x="262" y="398" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="500" fill="#1d1d1f" text-anchor="start" opacity="1">qa · review</text>
+<circle cx="491.0" cy="391.0" r="11.0" fill="#ff9500" opacity="1"/>
+<text x="491.0" y="398.7" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="9.24" font-weight="600" fill="#ffffff" text-anchor="middle" opacity="1">ra</text>
+<text x="510" y="398" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="500" fill="#1d1d1f" text-anchor="start" opacity="1">ralph</text>
+<text x="650" y="398" font-family="SF Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#86868b" text-anchor="start" opacity="1">zai/glm-5.2</text>
+<rect x="830" y="388" width="90" height="5" rx="2.5" fill="#e9e9ec" opacity="1"/>
+<rect x="830" y="388" width="7.2" height="5" rx="2.5" fill="#0071e3" opacity="1"/>
+<text x="930" y="398" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11" font-weight="400" fill="#86868b" text-anchor="start" opacity="1">8%</text>
+<text x="955" y="398" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#aeaeb2" text-anchor="start" opacity="1">24m ago</text>
+<line x1="262" y1="432" x2="1004" y2="432" stroke="#e5e5ea" stroke-width="1" opacity="1"/>
+<text x="262" y="464" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="500" fill="#1d1d1f" text-anchor="start" opacity="1">content · launch</text>
+<circle cx="462" cy="458" r="5" fill="#0071e3" opacity="1"/>
+<circle cx="491.0" cy="457.0" r="11.0" fill="#ffcc00" opacity="1"/>
+<text x="491.0" y="464.7" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="9.24" font-weight="600" fill="#ffffff" text-anchor="middle" opacity="1">ec</text>
+<text x="510" y="464" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="500" fill="#1d1d1f" text-anchor="start" opacity="1">echo</text>
+<text x="650" y="464" font-family="SF Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#86868b" text-anchor="start" opacity="1">deepseek-v4-flash</text>
+<rect x="830" y="454" width="90" height="5" rx="2.5" fill="#e9e9ec" opacity="1"/>
+<rect x="830" y="454" width="81.9" height="5" rx="2.5" fill="#ff3b30" opacity="1"/>
+<text x="930" y="464" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11" font-weight="400" fill="#86868b" text-anchor="start" opacity="1">91%</text>
+<text x="955" y="464" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#aeaeb2" text-anchor="start" opacity="1">1h ago</text>
+</svg>
