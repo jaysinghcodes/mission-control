@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { NAV_GROUPS } from '../data/mock'
 import { Glyph, type GlyphKind } from '../components/glyphs'
-import { Dot, SearchField } from '../components/ui'
+import { Dot } from '../components/ui'
+import SearchBox from '../components/SearchBox'
 import { useLiveActivity } from '../hooks/useLiveActivity'
 
 /**
@@ -99,7 +100,7 @@ export default function AppLayout() {
         <header className="h-14 shrink-0 bg-mc-topbar border-b border-mc-border2 flex items-center px-6 justify-between">
           <div className="text-[17px] font-semibold">{title}</div>
           <div className="flex items-center gap-4">
-            <SearchField w={200} h={32} />
+            <SearchBox w={200} />
             <span className="flex items-center gap-2 text-[12px] text-mc-sub">
               <Dot color={connected ? 'var(--mc-green)' : 'var(--mc-red)'} size={5} />
               Connected

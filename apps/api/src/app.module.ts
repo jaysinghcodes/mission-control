@@ -15,6 +15,7 @@ import { UsageController } from './usage/usage.controller';
 import { ActivityController } from './activity/activity.controller';
 import { LogsController } from './logs/logs.controller';
 import { ApprovalsController } from './approvals/approvals.controller';
+import { SearchController } from './search/search.controller';
 import { PrismaService } from './prisma/prisma.service';
 
 /**
@@ -40,6 +41,7 @@ import { PrismaService } from './prisma/prisma.service';
     ActivityController,
     LogsController,
     ApprovalsController,
+    SearchController,
   ],
   providers: [
     AppService,
