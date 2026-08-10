@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 
@@ -16,16 +17,22 @@ export class SnapshotsService {
   /** Replace the agent roster (family tree: main on top, sub-agents below). */
   async applyAgents(payload: Record<string, unknown>): Promise<void> {
     const agents = Array.isArray(payload.agents) ? (payload.agents as Record<string, unknown>[]) : [];
+    // Bridge sends parent as a NAME; the FK column needs an id, so resolve names first.
+    const ids = new Map<string, string>();
+    for (const a of agents) {
+      ids.set(String(a.name ?? 'unknown'), randomUUID());
+    }
     await this.prisma.$transaction([
       this.prisma.agent.deleteMany({}),
       ...agents.map((a) =>
         this.prisma.agent.create({
           data: {
+            id: ids.get(String(a.name ?? 'unknown'))!,
             name: String(a.name ?? 'unknown'),
             color: String(a.color ?? '#58A6FF'),
             role: a.role ? String(a.role) : null,
             status: String(a.status ?? 'idle'),
-            parentId: a.parent ? String(a.parent) : null,
+            parentId: a.parent ? ids.get(String(a.parent)) ?? null : null,
           },
         }),
       ),

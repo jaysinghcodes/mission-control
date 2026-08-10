@@ -1,56 +1,90 @@
 import { useEffect, useState } from 'react'
-import { HEALTH_ACCESS, HEALTH_METRICS } from '../data/mock'
+import { useApi } from '../hooks/useApi'
 import { Card, Chip, Progress, SectionLabel } from '../components/ui'
 
 /**
- * Health (wireframe 09) — gateway vitals. Prefers the real API's /health
- * (status, uptime, db, connected clients) when reachable; wireframe metric
- * cards otherwise. Never fakes values (GLM MUST-2).
+ * Health — ONLY live, tangible data. Real OS metrics from GET /system
+ * (measured on the OpenClaw host), real API state from GET /health, and the
+ * provider balance from /usage. No hardcoded wireframe values (Jay fix #5).
+ * The OS shown is the host's; SSH setup steps adapt to YOUR machine below.
  */
-interface ApiHealth { status: string; uptimeSeconds: number; connectedClients: number; database: string; ts: number }
+
+interface SystemResp {
+  cpu: { cores: number; model: string; load1: number; pct: number }
+  memory: { totalGb: number; freeGb: number; pct: number }
+  disk: { usedGb: number; totalGb: number; pct: number }
+  os: { platform: string; release: string; arch: string; hostname: string; node: string }
+  uptimeSeconds: number
+  apiUptimeSeconds: number
+}
+interface HealthResp { status: string; uptimeSeconds: number; connectedClients: number; database: string }
+interface UsageResp { usage: { providers: { name?: string; balance?: number; cost?: number }[] | Record<string, { name?: string; balance?: number; cost?: number }> | null } | null }
+
+const fmtUptime = (s: number): string => `${Math.floor(s / 86400)}d ${Math.floor((s % 86400) / 3600)}h ${Math.floor((s % 3600) / 60)}m`
+
+function clientOS(): string {
+  const p = navigator.platform.toLowerCase()
+  if (p.includes('win')) return 'windows'
+  if (p.includes('mac')) return 'mac'
+  if (p.includes('linux')) return 'linux'
+  return 'other'
+}
+
+const SSH_STEPS: Record<string, string> = {
+  mac: 'Open Terminal, then run:\nssh -L 5173:127.0.0.1:5173 -L 3000:127.0.0.1:3000 ubuntu@<your-server-ip>',
+  linux: 'Open a terminal, then run:\nssh -L 5173:127.0.0.1:5173 -L 3000:127.0.0.1:3000 ubuntu@<your-server-ip>',
+  windows: 'Open PowerShell (built-in OpenSSH), then run:\nssh -L 5173:127.0.0.1:5173 -L 3000:127.0.0.1:3000 ubuntu@<your-server-ip>',
+  other: 'Open a terminal, then run:\nssh -L 5173:127.0.0.1:5173 -L 3000:127.0.0.1:3000 ubuntu@<your-server-ip>',
+}
 
 export default function Health() {
-  const [api, setApi] = useState<ApiHealth | null>(null)
-  const [failed, setFailed] = useState(false)
+  const sys = useApi<SystemResp>('/system', { pollMs: 10000 })
+  const health = useApi<HealthResp>('/health', { pollMs: 10000 })
+  const usage = useApi<UsageResp>('/usage?period=24h', { pollMs: 30000 })
+  const [client, setClient] = useState('other')
+  useEffect(() => setClient(clientOS()), [])
 
-  useEffect(() => {
-    const ctrl = new AbortController()
-    fetch(`${import.meta.env.VITE_API_URL ?? 'http://localhost:3000'}/health`, { signal: ctrl.signal })
-      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
-      .then((d: ApiHealth) => setApi(d))
-      .catch(() => setFailed(true))
-    return () => ctrl.abort()
-  }, [])
+  const s = sys.data
+  const h = health.data
+  const providers = Array.isArray(usage.data?.usage?.providers)
+    ? usage.data!.usage!.providers
+    : usage.data?.usage?.providers
+      ? Object.values(usage.data.usage.providers)
+      : []
+  const provider = providers[0]
 
-  const uptime = api ? `${Math.floor(api.uptimeSeconds / 86400)}d ${Math.floor((api.uptimeSeconds % 86400) / 3600)}h` : null
-  const statusOk = api?.status === 'ok'
+  const metrics = [
+    { label: 'CPU', big: s ? `${s.cpu.pct}%` : '—', pct: s?.cpu.pct ?? 0, color: s && s.cpu.pct > 80 ? 'var(--mc-red)' : 'var(--mc-green)', sub: s ? `load ${s.cpu.load1} · ${s.cpu.cores} core(s)` : 'loading…' },
+    { label: 'Memory', big: s ? `${s.memory.pct}%` : '—', pct: s?.memory.pct ?? 0, color: s && s.memory.pct > 80 ? 'var(--mc-red)' : 'var(--mc-green)', sub: s ? `${s.memory.totalGb - s.memory.freeGb} / ${s.memory.totalGb} GB` : 'loading…' },
+    { label: 'Disk', big: s ? `${s.disk.pct}%` : '—', pct: s?.disk.pct ?? 0, color: s && s.disk.pct > 80 ? 'var(--mc-red)' : 'var(--mc-green)', sub: s ? `${s.disk.usedGb} / ${s.disk.totalGb} GB` : 'loading…' },
+    { label: 'Provider', big: provider?.balance != null ? `$${Number(provider.balance).toFixed(2)}` : '—', pct: 100, color: 'var(--mc-blue)', sub: provider?.name ?? 'balance via bridge' },
+  ]
 
   return (
     <div className="p-6">
       <div className="text-[22px] font-semibold">System Health</div>
-      <div className="mt-1 text-[13px] text-mc-sub">Gateway vitals for your instance — VPS or local.</div>
+      <div className="mt-1 text-[13px] text-mc-sub">Live vitals from the machine running your OpenClaw instance — nothing hardcoded.</div>
 
-      {/* Gateway running banner */}
+      {/* Gateway/API banner — real */}
       <Card className="mt-6 px-5 py-4 flex items-center gap-4">
-        <span className="w-[20px] h-[20px] rounded-full" style={{ backgroundColor: statusOk || !failed ? 'var(--mc-green)' : 'var(--mc-red)' }} />
+        <span className="w-[20px] h-[20px] rounded-full" style={{ backgroundColor: h ? (h.status === 'ok' ? 'var(--mc-green)' : 'var(--mc-red)') : 'var(--mc-faint)' }} />
         <div className="flex-1">
-          <div className="text-[18px] font-semibold">{api ? `API ${statusOk ? 'Running' : 'Degraded'}` : failed ? 'API unreachable' : 'Checking API…'}</div>
+          <div className="text-[18px] font-semibold">
+            {h ? `API ${h.status === 'ok' ? 'Running' : 'Degraded'}` : 'Contacting API…'}
+          </div>
           <div className="text-[12.5px] text-mc-sub">
-            {api
-              ? `pid local · uptime ${uptime} · ${api.database} · ${api.connectedClients} dashboard client(s)`
-              : failed
-                ? 'No response from localhost:3000 — showing wireframe vitals'
-                : 'contacting localhost:3000/health'}
+            {h
+              ? `uptime ${fmtUptime(h.uptimeSeconds)} · database ${h.database} · ${h.connectedClients} dashboard client(s)`
+              : 'probe failed — check your SSH tunnel'}
           </div>
         </div>
-        <Chip label="AUTH · TOKEN" bg="var(--mc-inner)" fg="var(--mc-sub)" h={24} fs="text-[11px]" />
-        <Chip label="LOOPBACK ONLY" bg="var(--mc-inner)" fg="var(--mc-sub)" h={24} fs="text-[11px]" />
-        <Chip label="TAILSCALE OFF" bg="var(--mc-inner)" fg="var(--mc-sub)" h={24} fs="text-[11px]" />
+        <Chip label={`HOST · ${s?.os.platform ?? '?'} ${s?.os.arch ?? ''}`} bg="var(--mc-inner)" fg="var(--mc-sub)" h={24} fs="text-[11px]" />
+        <Chip label={h?.database === 'connected' ? 'DB · OK' : 'DB · DOWN'} bg={h?.database === 'connected' ? 'var(--mc-greenbg)' : 'var(--mc-redbg)'} fg={h?.database === 'connected' ? 'var(--mc-greentext)' : 'var(--mc-redtext)'} h={24} fs="text-[11px]" />
       </Card>
 
-      {/* Metric cards */}
-      <div className="flex gap-[10px] mt-5">
-        {HEALTH_METRICS.map((m) => (
+      {/* Real metric cards */}
+      <div className="flex gap-[10px] mt-5 flex-wrap">
+        {metrics.map((m) => (
           <Card key={m.label} className="w-[148px] px-3 py-2.5">
             <SectionLabel>{m.label}</SectionLabel>
             <div className="mt-2 text-[22px] font-semibold">{m.big}</div>
@@ -60,17 +94,33 @@ export default function Health() {
         ))}
       </div>
 
-      {/* Gateway access */}
+      {/* Host details — real */}
       <Card className="mt-6 px-4 py-4">
-        <SectionLabel>Gateway Access</SectionLabel>
+        <SectionLabel>Host</SectionLabel>
         <div className="mt-3">
-          {HEALTH_ACCESS.map((r) => (
+          {[
+            { k: 'Hostname', v: s?.os.hostname ?? '—' },
+            { k: 'OS', v: s ? `${s.os.platform} ${s.os.release} (${s.os.arch})` : '—' },
+            { k: 'Node', v: s?.os.node ?? '—' },
+            { k: 'Host uptime', v: s ? fmtUptime(s.uptimeSeconds) : '—' },
+            { k: 'CPU', v: s?.cpu.model ?? '—' },
+          ].map((r) => (
             <div key={r.k} className="flex py-[6px] text-[12.5px]">
               <span className="w-[150px] text-mc-sub">{r.k}</span>
               <span className="font-medium text-mc-text">{r.v}</span>
             </div>
           ))}
         </div>
+      </Card>
+
+      {/* Access — real + per-OS steps */}
+      <Card className="mt-6 px-4 py-4">
+        <SectionLabel>Access · Your Machine ({client})</SectionLabel>
+        <pre className="mt-3 whitespace-pre-wrap font-mono text-[12px] text-mc-sub bg-mc-inner rounded-lg p-3">{SSH_STEPS[client]}</pre>
+        <p className="mt-3 text-[12px] text-mc-faint">
+          Mission Control binds to loopback only. The SSH tunnel forwards ports 5173 (dashboard) and 3000 (API) to your machine;
+          keep the session open while you browse.
+        </p>
       </Card>
     </div>
   )

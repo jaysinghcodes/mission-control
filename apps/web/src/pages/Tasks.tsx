@@ -1,14 +1,17 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useApi, apiPost } from '../hooks/useApi'
+import { useLiveActivity } from '../hooks/useLiveActivity'
 import { Bot, Card, Chip, PillButton, Progress } from '../components/ui'
 
 /**
- * Tasks — REAL runs from the API. Create a task from the "+ New task" field;
- * the OpenClaw bridge picks up queued runs and executes them, so tasks move
- * queued → running → done live via Socket.IO broadcasts (page polls too).
+ * Tasks — REAL runs with a visible stage trail. Every run shows its
+ * queued → running → done timestamps (persisted by the API on each
+ * transition), so even a 3-second task visibly moves through stages
+ * (Jay fix #3). Socket events trigger an instant refetch, plus a flash
+ * on the row whose stage just changed.
  */
 
-interface Run { id: string; name: string; agent: string | null; status: string; progress: number; createdAt: string }
+interface Run { id: string; name: string; agent: string | null; status: string; progress: number; createdAt: string; startedAt: string | null; finishedAt: string | null }
 interface RunsResp { runs: Run[] }
 
 const STATUS_CHIP: Record<string, { bg: string; fg: string; label: string }> = {
@@ -19,10 +22,42 @@ const STATUS_CHIP: Record<string, { bg: string; fg: string; label: string }> = {
   needs_approval: { bg: 'var(--mc-yellowbg)', fg: 'var(--mc-orangetext)', label: 'NEEDS APPROVAL' },
 }
 
+const STAGES = ['queued', 'running', 'done'] as const
+const t = (iso: string | null): string => (iso ? new Date(iso).toLocaleTimeString([], { hour12: false }) : '—')
+
 export default function Tasks() {
-  const { data, refetch } = useApi<RunsResp>('/runs', { pollMs: 15000 })
+  const { data, refetch } = useApi<RunsResp>('/runs', { pollMs: 10000 })
+  const { events } = useLiveActivity()
   const [title, setTitle] = useState('')
   const [busy, setBusy] = useState(false)
+  const [flashId, setFlashId] = useState<string | null>(null)
+  const prevStatus = useRef<Record<string, string>>({})
+
+  // Instant updates: any run.* event → refetch; flash the changed row.
+  useEffect(() => {
+    const runEvents = events.filter((e) => e.type.startsWith('run.'))
+    if (runEvents.length === 0) return
+    const changedId = runEvents[0].payload && typeof runEvents[0].payload === 'object' && 'id' in runEvents[0].payload
+      ? String((runEvents[0].payload as { id: unknown }).id)
+      : null
+    if (changedId) {
+      setFlashId(changedId)
+      setTimeout(() => setFlashId(null), 1800)
+    }
+    void refetch()
+  }, [events, refetch])
+
+  // Flash rows whose status changed since last render.
+  useEffect(() => {
+    for (const run of data?.runs ?? []) {
+      const prev = prevStatus.current[run.id]
+      if (prev && prev !== run.status) {
+        setFlashId(run.id)
+        setTimeout(() => setFlashId(null), 1800)
+      }
+      prevStatus.current[run.id] = run.status
+    }
+  }, [data])
 
   async function create() {
     const name = title.trim()
@@ -42,14 +77,9 @@ export default function Tasks() {
 
   return (
     <div className="p-6">
-      <div className="flex items-start justify-between">
-        <div>
-          <div className="text-[22px] font-semibold">Tasks</div>
-          <div className="mt-1 text-[13px] text-mc-sub">Real runs from OpenClaw — in flight, queued, and done.</div>
-        </div>
-      </div>
+      <div className="text-[22px] font-semibold">Tasks</div>
+      <div className="mt-1 text-[13px] text-mc-sub">Real runs from OpenClaw — watch them move queued → running → done live.</div>
 
-      {/* Create task — always available */}
       <div className="flex items-center gap-3 mt-6">
         <input
           value={title}
@@ -73,23 +103,43 @@ export default function Tasks() {
                 </Card>
               ) : (
                 <Card className="px-0 py-1">
-                  {rows.map((row, i) => {
+                  {rows.map((row) => {
                     const chip = STATUS_CHIP[row.status] ?? STATUS_CHIP.queued
+                    const stageIdx = STAGES.indexOf(row.status as (typeof STAGES)[number])
                     return (
-                      <div key={row.id} className={`flex items-center gap-4 px-4 h-[50px] ${i < rows.length - 1 ? 'border-b border-mc-border2' : ''}`}>
-                        <span className="text-[13px] font-medium w-[300px] truncate">{row.name}</span>
-                        <Bot color={row.agent ? `var(--mc-${row.agent.toLowerCase() === 'jarvis singh' ? 'primary' : 'blue'})` : 'var(--mc-faint)'} scale={0.8} />
-                        <span className="text-[12px] text-mc-sub w-[90px] truncate">{row.agent ?? '—'}</span>
+                      <div
+                        key={row.id}
+                        className={`flex items-center gap-4 px-4 h-[52px] border-b border-mc-border2 last:border-0 transition-colors ${
+                          flashId === row.id ? 'bg-mc-bluebg/40' : ''
+                        }`}
+                      >
+                        <span className="text-[13px] font-medium w-[240px] truncate">{row.name}</span>
+                        <Bot color={row.agent && row.agent.toLowerCase().includes('jarvis') ? 'var(--mc-primary)' : 'var(--mc-blue)'} scale={0.8} />
+                        <span className="text-[12px] text-mc-sub w-[80px] truncate">{row.agent ?? '—'}</span>
                         <Chip label={chip.label} bg={chip.bg} fg={chip.fg} h={20} />
                         {row.status === 'running' ? (
-                          <span className="flex items-center gap-2 flex-1">
-                            <Progress pct={row.progress} color="var(--mc-blue)" w="w-[100px]" />
+                          <span className="flex items-center gap-2 w-[120px]">
+                            <Progress pct={row.progress} color="var(--mc-blue)" w="w-[80px]" />
                             <span className="text-[11.5px] text-mc-sub">{row.progress}%</span>
                           </span>
                         ) : (
-                          <span className="flex-1" />
+                          <span className="w-[120px]" />
                         )}
-                        <span className="text-[11.5px] text-mc-faint w-[90px] text-right">{new Date(row.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                        {/* Stage trail — proves the movement even when fast */}
+                        <div className="flex items-center gap-1.5 font-mono text-[10px] text-mc-faint">
+                          {STAGES.map((s, i) => {
+                            const when = s === 'queued' ? row.createdAt : s === 'running' ? row.startedAt : row.finishedAt
+                            const reached = stageIdx >= i
+                            return (
+                              <span key={s} className="flex items-center gap-1.5">
+                                {i > 0 && <span className="text-mc-border">→</span>}
+                                <span className={reached ? 'text-mc-bluetext' : ''}>
+                                  {s} {reached ? t(when) : ''}
+                                </span>
+                              </span>
+                            )
+                          })}
+                        </div>
                       </div>
                     )
                   })}
