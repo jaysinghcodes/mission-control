@@ -19,8 +19,8 @@ async function bootstrap() {
     origin: process.env.WEB_ORIGIN ?? 'http://localhost:5173',
   });
 
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(process.env.PORT ?? 3000, process.env.HOST ?? '127.0.0.1');
   // eslint-disable-next-line no-console
-  console.log(`mission-control api listening on :${process.env.PORT ?? 3000}`);
+  console.log(`mission-control api listening on ${process.env.HOST ?? '127.0.0.1'}:${process.env.PORT ?? 3000}`);
 }
 bootstrap();

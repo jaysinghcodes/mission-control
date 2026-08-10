@@ -1,50 +1,186 @@
-# mission-control
 # Mission Control
 
 Command center for agent orchestration — manage work, review & gate, and observe live activity.
+Mission Control is the dashboard layer for Jay's OpenClaw setup ("the empire"): scheduled runs,
+agents, approvals, and real-time activity, rendered as a dark-first, design-token-driven web app.
 
-## Stack
+**Status:** foundation live — Overview screen with a real WebSocket activity feed fed by OpenClaw itself.
 
-- **Monorepo**: Turborepo + npm workspaces
-- **Web**: React 19 + Vite + Tailwind CSS v4 (`apps/web`)
-- **API**: NestJS + Socket.IO + Prisma (`apps/api`) — incoming
-- **Infra (planned)**: Postgres, Redis/BullMQ, k8s-ready
+---
+
+## What this is
+
+Mission Control is a **Turborepo monorepo** with two apps:
+
+| App | Path | Stack | What it does |
+| --- | --- | --- | --- |
+| `web` | `apps/web` | React 19 + Vite 8 + Tailwind CSS v4 | Dashboard UI (Overview + Live Activity band today; Tasks, Agents, Approvals, Health… on the roadmap) |
+| `api` | `apps/api` | NestJS 11 + Socket.IO + Prisma 7 (pg adapter) | Backend: health probe, WebSocket event bus, external event intake, Postgres persistence |
+
+The wiring is deliberately simple at this stage: **the web app connects to the API over a
+Socket.IO WebSocket and renders whatever typed events the API broadcasts.** OpenClaw pushes
+real activity into the API through a small token-protected ingest endpoint, so the dashboard
+shows genuinely live events (scheduled runs, agent work, health ticks) — never fake data.
+
+---
+
+## Architecture
+
+```
+┌─────────────────────────────┐         ┌──────────────────────────────────────────┐
+│         OpenClaw            │         │              Mission Control             │
+│  (agent runtime, cron jobs) │         │                                          │
+│                             │         │  ┌──────────────┐   Socket.IO (WS)   ┌───┴───────┐
+│  Cron bridge job (every 5m) │────────▶│  │   api :3000  │──────────────────▶ │  web:5173 │
+│  digests real session/run   │  POST   │  │              │  broadcast events  │  React UI │
+│  activity                  │  /events│  │  ingest →     │                    │           │
+└─────────────────────────────┘  token  │  │  gateway →    │◀── hello / health  │  Overview │
+                                        │  │  socket.io    │    tick (30s)      │  Live Feed│
+                                        │  │               │                    └──────────┘
+                                        │  │  /health      │  (honest: db state,│
+                                        │  │  Prisma 7 +   │   client count,    │
+                                        │  │  Postgres     │   uptime)          │
+                                        │  └──────────────┘                     │
+                                        └────────────────────────────────────────┘
+```
+
+### Event flow (the Live Activity feed)
+
+1. **Producers** — OpenClaw (via the cron bridge job) POSTs a typed event to
+   `POST http://127.0.0.1:3000/events` with an `x-ingest-token` header.
+2. **Ingest** — `IngestController` validates the token and the event type against a
+   closed union (`run.started`, `run.completed`, `run.failed`, `health.tick`, `hello`);
+   unknown types are rejected (400), unauthenticated requests fail closed (401).
+3. **Gateway** — `LiveActivityGateway` broadcasts the event to every connected socket
+   client with a server timestamp.
+4. **Dashboard** — `useLiveActivity` (a React hook in `apps/web`) subscribes with
+   `socket.io-client`, keeps the most recent 50 events, and renders them in the
+   Live Activity band with a stable per-type color map. Connection state drives an
+   honest green/red status dot in the topbar — no fake "online".
+5. **Heartbeat** — `HealthTickerService` broadcasts `health.tick` every 30 s
+   (`HEALTH_TICK_MS`, `0` disables) so the feed always has current, real data.
+
+### API surface
+
+| Endpoint | Transport | Purpose |
+| --- | --- | --- |
+| `GET /health` | HTTP | Liveness + readiness: `status` (`ok`/`degraded`), uptime, connected socket clients, real DB connectivity. Never fakes 100%. |
+| `POST /events` | HTTP | Event intake for trusted producers (OpenClaw). Guarded by `INGEST_TOKEN` (fail-closed in production). |
+| Socket.IO `/` | WS | Live feed: server-authoritative typed events with `ts` timestamps. Production requires `SOCKET_TOKEN` in the handshake. |
+
+### Data model (Prisma 7, Postgres)
+
+- **`Run`** — scheduled runs / jobs the dashboard observes (`Morning Brief`, `Trend Radar`, …):
+  `name`, `status` (`queued | running | done | failed`), `startedAt`, `finishedAt`.
+- **`Agent`** — the agent roster with color-coding used across the UI: `name` (unique), `color`
+  (design-token values: `purple | amber | green | teal`).
+
+Migrations are a security red line in this project: schema changes are human-reviewed and
+never auto-applied by the app. In dev, `npx prisma db push` syncs the schema.
+
+### Security posture (hard requirement)
+
+- **Loopback only** — the API binds `127.0.0.1` by default (`HOST` env overrides); it is never
+  exposed publicly without explicit intent. The Vite dev server is loopback too.
+- **Fail-closed auth** — production refuses to boot without `DATABASE_URL`; the socket rejects
+  handshakes without a valid `SOCKET_TOKEN`; ingest rejects requests without a valid `INGEST_TOKEN`.
+- **Locked CORS** — both the HTTP layer and the WebSocket handshake are locked to `WEB_ORIGIN`
+  (default `http://localhost:5173`); never a wildcard.
+- **No secrets in code** — all env values come from `.env` (git-ignored) / deploy env. See
+  `apps/api/.env.example` for the shape.
+
+---
 
 ## Layout
 
 ```
-apps/web    React dashboard (Overview, Tasks, Live Activity…)
-apps/api    NestJS backend (REST + WebSocket feed) — coming in PR 2
-design/     IA flow, wireframes, design tokens (source of truth)
+apps/web/                  React dashboard
+  src/App.tsx              Overview shell: sidebar, KPIs, Live Activity band
+  src/hooks/useLiveActivity.ts   Socket.IO subscription hook
+  src/index.css            Design tokens (Tailwind v4 @theme) — dark-first
+apps/api/                  NestJS backend
+  src/main.ts              Bootstrap: CORS lock, loopback bind
+  src/app.module.ts        Root module wiring
+  src/health/              GET /health + HealthTickerService (30s health.tick)
+  src/live-activity/       Socket.IO gateway (typed broadcast bus)
+  src/ingest/              POST /events intake (OpenClaw feed door)
+  src/prisma/              PrismaService (pg adapter, honest dbReady)
+  prisma/schema.prisma     Postgres schema (Run, Agent)
+  prisma.config.ts         Prisma 7 config (DATABASE_URL resolution)
+design/                    IA flow, wireframes, design tokens (source of truth)
+logos/                     Brand explorations
 ```
 
-## Design system
+---
 
-Dark-first tokens live in `apps/web/src/index.css` (`@theme`). Full rules in the
-design-studio skill: 3-lane IA (Manage Work / Review & Gate / Observe), agent
-color coding, KPI cards, Live Activity band. Trend Radar stays prominent.
+## Running locally
+
+Prereqs: Node 20+ (tested on 26), npm, Postgres 16.
+
+```bash
+# 1. Install + generate Prisma client
+npm install
+cd apps/api && npx prisma generate
+
+# 2. Postgres: create the dev database
+sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'postgres';"
+sudo -u postgres psql -c "CREATE DATABASE mission_control;"
+
+# 3. Sync schema (dev only; migrations stay human-reviewed)
+cd apps/api && npx prisma db push
+
+# 4. Env files (see apps/api/.env.example; never commit real values)
+#    apps/api/.env ← DATABASE_URL, PORT, WEB_ORIGIN, SOCKET_TOKEN, INGEST_TOKEN, HEALTH_TICK_MS
+#    apps/web/.env  ← optional VITE_API_URL (default http://localhost:3000)
+
+# 5. Run both apps
+npm run dev        # turbo: api (nest start --watch) + web (vite) in parallel
+```
+
+Verify: `curl http://127.0.0.1:3000/health` → `{"status":"ok",...,"database":"connected"}`,
+then open **http://localhost:5173** — the topbar dot should be green and the Live Activity
+band fills with `hello`, periodic `health.tick`, and OpenClaw-run events.
+
+### Build / test / lint
+
+```bash
+npm run build      # turbo build (tsc + vite + nest)
+npm test           # jest (api)
+npm run lint
+```
+
+---
+
+## OpenClaw integration
+
+Mission Control is fed by the OpenClaw instance on the same box. A cron job (isolated agent
+turn, every 5 minutes) summarizes recent real activity — sessions, scheduled runs, notable
+tool work — and POSTs it to the ingest endpoint:
+
+```bash
+curl -s -X POST http://127.0.0.1:3000/events \
+  -H "content-type: application/json" -H "x-ingest-token: $INGEST_TOKEN" \
+  -d '{"type":"run.completed","payload":{"name":"Trend Radar","status":"done"}}'
+```
+
+The feed is transport-agnostic: any trusted producer can push the same typed events.
+
+---
 
 ## Dev workflow (mandatory)
 
-- **No direct merges to `main`** — everything lands via PR, reviewed by Jay.
+- **No direct merges to `main`** — everything lands via PR, reviewed by Jay. (Exception:
+  hotfixes + docs explicitly requested by Jay, e.g. the Aug 10 bring-up commit.)
 - PRs are kept small (2–3 logical PRs per feature batch) for readability.
 - Heavy inline comments on all new code.
-- Run the development skills before committing: `vibe-dev-workflow`
-  (PLAN/ACT, Design Doc, LOG.md, acceptance checklist) and
-  `task-development-workflow` (TDD, task tracking, PR review).
-- Security red lines from `vibe-dev-workflow`: auth, DB schema, secrets are
-  human-reviewed line by line. No secrets in code, ever.
+- Run the development skills before committing: `vibe-dev-workflow` (PLAN/ACT, Design Doc,
+  LOG.md, acceptance checklist) and `task-development-workflow` (TDD, task tracking, PR review).
+- Security red lines: auth, DB schema, secrets are human-reviewed line by line.
 
-## Verify before commit
+## Roadmap
 
-```bash
-cd apps/web && npx tsc --noEmit && npm run build
-cd apps/api && npm run build
-```
-
-## Roadmap PRs
-
-1. `feat/1-web-scaffold` — monorepo + shell + tokens + Overview (this PR)
-2. `feat/2-api-foundation` — NestJS, Socket.IO gateway, Prisma schema, health
-3. `feat/3-live-feed` — web ↔ socket wiring, real activity feed
->>>>>>> 7fc1085 (feat(web): Overview shell with design tokens, heavy comments, README + LOG)
+1. ✅ `feat/1-web-scaffold` — monorepo + shell + tokens + Overview
+2. ✅ `feat/2-api-foundation` — NestJS, Socket.IO gateway, Prisma schema, health
+3. ✅ `feat/3-live-feed` — web ↔ socket wiring, real activity feed
+4. ✅ OpenClaw feed — ingest endpoint + health ticker + cron bridge (Aug 10)
+5. 🔜 Tasks / Agents screens, run persistence, approvals, Trend Radar

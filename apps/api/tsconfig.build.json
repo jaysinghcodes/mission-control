@@ -4,7 +4,11 @@
     // Keep nest build output flat (dist/main.js). Without rootDir, the
     // root-level prisma.config.ts (loaded by the Prisma CLI, not the app)
     // drags output to dist/src/main.js and breaks `node dist/main`.
-    "rootDir": "./src"
+    "rootDir": "./src",
+    // incremental must be OFF for the build config: nest's deleteOutDir
+    // wipes dist/, then tsc's stale .tsbuildinfo skips re-emitting files
+    // whose outputs were just deleted → broken dist after clean builds.
+    "incremental": false
   },
-  "exclude": ["node_modules", "test", "dist", "**/*spec.ts"]
+  "exclude": ["node_modules", "test", "dist", "**/*spec.ts", "prisma.config.ts"]
 }
