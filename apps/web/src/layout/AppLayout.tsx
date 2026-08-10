@@ -48,7 +48,7 @@ export default function AppLayout() {
       {/* ── Sidebar (220px, wireframe sidebar()) ─────────────────────────── */}
       <aside className="w-[220px] shrink-0 bg-mc-sidebar border-r border-mc-sideborder flex flex-col">
         <div className="flex items-center gap-2.5 px-5 pt-[22px] pb-4">
-          <div className="w-[26px] h-[26px] rounded-lg bg-mc-primary flex items-center justify-center text-white text-[15px] font-semibold">◈</div>
+          <img src="/logo.svg" alt="Mission Control" className="w-[26px] h-[26px] rounded-lg" />
           <div className="text-[15px] font-semibold text-mc-text">Mission Control</div>
         </div>
 
@@ -134,7 +134,9 @@ export default function AppLayout() {
                 </svg>
               )}
             </button>
-            <div className="w-8 h-8 rounded-full bg-mc-primary text-white flex items-center justify-center text-[13px] font-semibold">J</div>
+            <div className="w-8 h-8 rounded-full overflow-hidden ring-1 ring-mc-border">
+              <img src="/logo.svg" alt="J" className="w-full h-full" />
+            </div>
           </div>
         </header>
 

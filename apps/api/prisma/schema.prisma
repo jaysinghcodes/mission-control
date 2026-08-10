@@ -1,8 +1,9 @@
-// Mission Control — Prisma schema (v1: foundation only).
+// Mission Control — Prisma schema (v2: live data layer).
 //
 // SECURITY (vibe-dev-workflow red line): database schema is a never-vibe
-// domain. This is the initial structural proposal; migrations and any column
-// changes get human review before landing on main.
+// domain. v2 adds the tables the live feed needs (activity events, sessions,
+// tickets, cron jobs, usage, approvals) and extends Agent/Run. Human review
+// before landing on main.
 
 generator client {
   provider = "prisma-client-js"
@@ -13,19 +14,98 @@ datasource db {
   provider = "postgresql"
 }
 
-/// Scheduled runs / jobs observed by the dashboard (Morning Brief, Trend Radar, ...).
-model Run {
+/// Agent roster — pushed as a snapshot by the OpenClaw bridge (agents.snapshot).
+/// Parent links form the family tree (Jarvis Singh on top, sub-agents below).
+model Agent {
   id        String   @id @default(cuid())
-  name      String // e.g. "Trend Radar"
-  status    String   @default("queued") // queued | running | done | failed
-  startedAt DateTime?
+  name      String   @unique
+  color     String   @default("#58A6FF")
+  role      String?
+  status    String   @default("idle") // working | idle
+  parentId  String?
+  parent    Agent?   @relation("AgentTree", fields: [parentId], references: [id])
+  children  Agent[]  @relation("AgentTree")
+  updatedAt DateTime @updatedAt
+}
+
+/// Scheduled runs / jobs observed by the dashboard (Morning Brief, Trend Radar, ...).
+/// v2: agent + progress added so Tasks can show live, per-agent work.
+model Run {
+  id         String    @id @default(cuid())
+  name       String
+  agent      String?
+  status     String    @default("queued") // queued | running | done | failed | needs_approval
+  progress   Int       @default(0)
+  startedAt  DateTime?
   finishedAt DateTime?
+  createdAt  DateTime  @default(now())
+}
+
+/// Kanban/backlog items. Status: backlog | todo | inprogress | done.
+model Ticket {
+  id        String   @id @default(cuid())
+  key       String?
+  title     String
+  status    String   @default("backlog")
+  priority  String   @default("med") // high | med | low
+  assignee  String?
+  tags      Json?
+  points    Int?
   createdAt DateTime @default(now())
 }
 
-/// Agent roster — color-coded in the UI (Henry, Ralph, Scout, Echo).
-model Agent {
-  id    String @id @default(cuid())
-  name  String @unique
-  color String // matches design tokens: purple | amber | green | teal
+/// Active agent sessions — pushed by the bridge (sessions.snapshot).
+model Session {
+  id           String   @id @default(cuid())
+  name         String
+  agent        String
+  model        String?
+  ctx          Int      @default(0)
+  lastActivity String?
+  hot          Boolean  @default(false)
+  updatedAt    DateTime @updatedAt
+}
+
+/// Cron jobs / scheduled routines — pushed by the bridge (calendar.snapshot).
+model CronJob {
+  id        String   @id @default(cuid())
+  name      String
+  schedule  String?
+  day       Int?
+  time      String?
+  color     String?
+  enabled   Boolean  @default(true)
+  updatedAt DateTime @updatedAt
+}
+
+/// Usage & cost snapshots — pushed by the bridge (usage.snapshot), one per period.
+model UsageSnapshot {
+  id        String   @id @default(cuid())
+  period    String   @unique // 24h | 7d | 30d | month
+  totalCost Float    @default(0)
+  tokensIn  Int      @default(0)
+  tokensOut Int      @default(0)
+  providers Json?
+  updatedAt DateTime @updatedAt
+}
+
+/// Every ingested/broadcast event — persisted so pages can load history.
+model ActivityEvent {
+  id      String   @id @default(cuid())
+  type    String
+  payload Json?
+  source  String   @default("openclaw")
+  ts      DateTime @default(now())
+
+  @@index([ts])
+}
+
+/// Approval requests — pushed by the bridge (approvals.snapshot) and decided here.
+model Approval {
+  id        String   @id @default(cuid())
+  kind      String   // exec | pair | msg | sess
+  tag       String
+  desc      String
+  status    String   @default("pending") // pending | approved | rejected
+  createdAt DateTime @default(now())
 }

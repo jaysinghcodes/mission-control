@@ -5,22 +5,49 @@ import { LiveActivityGateway } from './live-activity/live-activity.gateway';
 import { HealthController } from './health/health.controller';
 import { HealthTickerService } from './health/health.ticker';
 import { IngestController } from './ingest/ingest.controller';
+import { SnapshotsService } from './snapshots/snapshots.service';
+import { AgentsController } from './agents/agents.controller';
+import { RunsController } from './runs/runs.controller';
+import { TicketsController } from './tickets/tickets.controller';
+import { SessionsController } from './sessions/sessions.controller';
+import { CalendarController } from './calendar/calendar.controller';
+import { UsageController } from './usage/usage.controller';
+import { ActivityController } from './activity/activity.controller';
+import { LogsController } from './logs/logs.controller';
+import { ApprovalsController } from './approvals/approvals.controller';
 import { PrismaService } from './prisma/prisma.service';
 
 /**
  * AppModule — root module for the Mission Control API.
  *
- * Imports stay minimal at this stage: the live activity gateway (WebSocket
- * transport for the dashboard), the health probe, the health ticker (periodic
- * `health.tick` broadcasts), and the ingest controller (OpenClaw → feed door).
- * PrismaService is global so future feature modules can inject it without
- * re-importing.
+ * v2: full live-data surface — resource controllers backed by the real
+ * OpenClaw state that the bridge syncs via *.snapshot events, plus the
+ * ingest door, health probe and ticker, and the Socket.IO gateway.
  */
 @Global()
 @Module({
   imports: [],
-  controllers: [AppController, HealthController, IngestController],
-  providers: [AppService, LiveActivityGateway, PrismaService, HealthTickerService],
+  controllers: [
+    AppController,
+    HealthController,
+    IngestController,
+    AgentsController,
+    RunsController,
+    TicketsController,
+    SessionsController,
+    CalendarController,
+    UsageController,
+    ActivityController,
+    LogsController,
+    ApprovalsController,
+  ],
+  providers: [
+    AppService,
+    LiveActivityGateway,
+    PrismaService,
+    HealthTickerService,
+    SnapshotsService,
+  ],
   exports: [PrismaService, LiveActivityGateway],
 })
 export class AppModule {}

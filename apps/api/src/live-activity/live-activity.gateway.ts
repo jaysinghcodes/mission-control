@@ -9,13 +9,26 @@ import { Server, Socket } from 'socket.io';
 /**
  * Event types the gateway may broadcast. Union type so callers can't
  * invent arbitrary event names (GLM review 🟡 #4).
+ *
+ * v2 additions: run.queued / run.progress (task lifecycle), approval.*
+ * (review & gate), and the * .snapshot events the OpenClaw bridge pushes
+ * to sync real state (agents, sessions, calendar, usage, approvals).
  */
 export type ActivityEventType =
   | 'run.started'
+  | 'run.queued'
+  | 'run.progress'
   | 'run.completed'
   | 'run.failed'
   | 'health.tick'
-  | 'hello';
+  | 'hello'
+  | 'approval.new'
+  | 'approval.decided'
+  | 'agents.snapshot'
+  | 'sessions.snapshot'
+  | 'calendar.snapshot'
+  | 'usage.snapshot'
+  | 'approvals.snapshot';
 
 /**
  * LiveActivityGateway — realtime event bus for Mission Control.
