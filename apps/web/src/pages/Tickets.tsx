@@ -1,11 +1,14 @@
 import { useState } from 'react'
 import { useApi, apiPost } from '../hooks/useApi'
+import { useLiveActivity } from '../hooks/useLiveActivity'
+import { useEffect } from 'react'
 import { Bot, Card, Chip, Inner, PillButton, SectionLabel } from '../components/ui'
 
 /**
- * Tickets — full-page kanban fed by the API. Columns flex to fill the whole
- * width (Jay's feedback), cards are roomy, and "+ New ticket" creates real
- * tickets (backlog) the bridge can pick up.
+ * Tickets — full-page kanban, fully functional (Jay fix #9).
+ *  - New tickets land in TO-DO and are visible instantly
+ *  - Cards move To-Do → In Progress → Done via Start/Done actions (PATCH)
+ *  - Socket events trigger instant refetch; status changes persist + broadcast
  */
 
 interface Ticket { id: string; key: string | null; title: string; status: string; priority: string; assignee: string | null; tags: string[] | null; createdAt: string }
@@ -23,11 +26,21 @@ const COLUMNS = [
   { title: 'Done', status: 'done' },
 ]
 
+async function patchTicket(id: string, status: string): Promise<boolean> {
+  return (await apiPost(`/tickets/${id}`, { status })) !== null
+}
+
 export default function Tickets() {
-  const { data, refetch } = useApi<TicketsResp>('/tickets', { pollMs: 15000 })
+  const { data, refetch } = useApi<TicketsResp>('/tickets', { pollMs: 10000 })
+  const { events } = useLiveActivity()
   const [title, setTitle] = useState('')
   const [busy, setBusy] = useState(false)
   const tickets = data?.tickets ?? []
+
+  // Instant refresh on any ticket/run activity event.
+  useEffect(() => {
+    if (events.some((e) => e.type.startsWith('run.') || e.type.includes('ticket'))) void refetch()
+  }, [events, refetch])
 
   async function create() {
     const t = title.trim()
@@ -39,11 +52,16 @@ export default function Tickets() {
     void refetch()
   }
 
+  async function move(id: string, status: string) {
+    await patchTicket(id, status)
+    void refetch()
+  }
+
   const metrics = [
     { label: 'Shipped Today', value: String(tickets.filter((t) => t.status === 'done').length) },
     { label: 'In Progress', value: String(tickets.filter((t) => t.status === 'inprogress').length) },
+    { label: 'To-Do', value: String(tickets.filter((t) => t.status === 'todo').length) },
     { label: 'Backlog', value: String(tickets.filter((t) => t.status === 'backlog').length) },
-    { label: 'Blocked', value: '0' },
     { label: 'Total Tickets', value: String(tickets.length) },
   ]
 
@@ -52,7 +70,7 @@ export default function Tickets() {
       <div className="flex items-start justify-between gap-4">
         <div>
           <div className="text-[22px] font-semibold">Tickets</div>
-          <div className="mt-1 text-[13px] text-mc-sub">Kanban board — pipeline stages as columns, live from the API.</div>
+          <div className="mt-1 text-[13px] text-mc-sub">Kanban — create a ticket, then move it To-Do → In Progress → Done.</div>
         </div>
         <div className="flex items-center gap-3">
           <input
@@ -66,7 +84,6 @@ export default function Tickets() {
         </div>
       </div>
 
-      {/* Kanban — columns fill the full width (Jay's feedback) */}
       <div className="grid grid-cols-3 gap-4 mt-6">
         {COLUMNS.map((col) => {
           const rows = tickets.filter((t) => t.status === col.status)
@@ -93,13 +110,39 @@ export default function Tickets() {
                       <Bot color={t.assignee ? 'var(--mc-primary)' : 'var(--mc-faint)'} scale={0.8} />
                       <span className="text-[11px] text-mc-sub truncate">{t.assignee ?? 'unassigned'}</span>
                     </div>
-                    {t.tags && t.tags.length > 0 && (
-                      <div className="mt-2 flex gap-3">
-                        {t.tags.map((tag) => (
-                          <span key={tag} className="text-[10.5px] text-mc-faint">#{tag}</span>
-                        ))}
-                      </div>
-                    )}
+                    {/* Pipeline actions — functional movement */}
+                    <div className="mt-2.5 flex items-center gap-2">
+                      {t.status === 'todo' && (
+                        <button
+                          type="button"
+                          onClick={() => void move(t.id, 'inprogress')}
+                          className="h-6 px-3 rounded-full bg-mc-bluebg text-mc-bluetext text-[10.5px] font-semibold hover:opacity-80 transition-opacity"
+                        >
+                          ▶ Start
+                        </button>
+                      )}
+                      {t.status === 'inprogress' && (
+                        <>
+                          <button
+                            type="button"
+                            onClick={() => void move(t.id, 'done')}
+                            className="h-6 px-3 rounded-full bg-mc-greenbg text-mc-greentext text-[10.5px] font-semibold hover:opacity-80 transition-opacity"
+                          >
+                            ✓ Done
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => void move(t.id, 'todo')}
+                            className="h-6 px-3 rounded-full bg-mc-inner text-mc-sub text-[10.5px] font-semibold hover:opacity-80 transition-opacity"
+                          >
+                            ↺ To-Do
+                          </button>
+                        </>
+                      )}
+                      {t.status === 'done' && (
+                        <span className="text-[10.5px] text-mc-greentext font-semibold">✓ shipped</span>
+                      )}
+                    </div>
                   </Inner>
                 ))}
               </div>
