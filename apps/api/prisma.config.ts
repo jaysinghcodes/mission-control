@@ -14,7 +14,7 @@ function resolveDbUrl(): string {
   if (process.env.NODE_ENV === 'production') {
     throw new Error('DATABASE_URL is required in production');
   }
-  return 'postgresql://postgres:***@localhost:5432/mission_control';
+  return 'postgresql://postgres:postgres@localhost:5432/mission_control';
 }
 
 export default defineConfig({

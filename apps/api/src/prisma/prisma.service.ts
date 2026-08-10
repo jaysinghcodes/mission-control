@@ -7,7 +7,7 @@ import { PrismaPg } from '@prisma/adapter-pg';
  *
  * Prisma 7 requires a driver adapter (no more embedded url in schema).
  * The connection string comes from DATABASE_URL at runtime; for local dev
- * that's `postgresql://postgres:***@localhost:5432/mission_control`
+ * that's `postgresql://postgres:postgres@localhost:5432/mission_control`
  * (see prisma.config.ts fallback).
  *
  * Failure policy (fixes GLM review 🔴): if the DB is unreachable at boot we do
@@ -30,7 +30,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
       throw new Error('DATABASE_URL is required in production');
     }
     const adapter = new PrismaPg({
-      connectionString: url ?? 'postgresql://postgres:***@localhost:5432/mission_control',
+      connectionString: url ?? 'postgresql://postgres:postgres@localhost:5432/mission_control',
     });
     super({ adapter });
   }

@@ -1,12 +1,15 @@
 import { Body, Controller, Headers, HttpCode, HttpException, HttpStatus, Post } from '@nestjs/common';
 import { LiveActivityGateway, ActivityEventType } from '../live-activity/live-activity.gateway';
+import { PrismaService } from '../prisma/prisma.service';
+import { SnapshotsService } from '../snapshots/snapshots.service';
 
 /**
  * IngestController — external event intake for the live feed.
  *
  * This is the door OpenClaw (and any other trusted producer) uses to push
  * real activity into the dashboard: producers POST a typed event, the
- * gateway broadcasts it to every connected client over Socket.IO.
+ * gateway broadcasts it to every connected client over Socket.IO, and the
+ * event is PERSISTED so pages can load history (v2).
  *
  * Security (vibe-dev-workflow red lines — same posture as the socket guard):
  *  - Production REQUIRES `INGEST_TOKEN` and refuses requests without a
@@ -18,15 +21,19 @@ import { LiveActivityGateway, ActivityEventType } from '../live-activity/live-ac
  */
 @Controller('events')
 export class IngestController {
-  constructor(private readonly gateway: LiveActivityGateway) {}
+  constructor(
+    private readonly gateway: LiveActivityGateway,
+    private readonly prisma: PrismaService,
+    private readonly snapshots: SnapshotsService,
+  ) {}
 
   /**
-   * POST /events — accept one activity event and broadcast it to the feed.
+   * POST /events — accept one activity event, persist it, broadcast it.
    * Body: { type: ActivityEventType, payload?: Record<string, unknown> }
    */
   @Post()
   @HttpCode(HttpStatus.ACCEPTED)
-  ingest(
+  async ingest(
     @Headers('x-ingest-token') token: string | undefined,
     @Body() body: { type?: string; payload?: Record<string, unknown> },
   ) {
@@ -39,12 +46,44 @@ export class IngestController {
         HttpStatus.BAD_REQUEST,
       );
     }
-    if (body.payload !== undefined && (typeof body.payload !== 'object' || body.payload === null || Array.isArray(body.payload))) {
+    const payload = body.payload ?? {};
+    if (typeof payload !== 'object' || payload === null || Array.isArray(payload)) {
       throw new HttpException('payload must be a JSON object', HttpStatus.BAD_REQUEST);
     }
 
-    this.gateway.broadcast(type, { ...(body.payload ?? {}), source: 'openclaw' });
+    // Persist for history (Activity page loads recent events on mount).
+    await this.prisma.activityEvent.create({
+      data: { type, payload: payload as object, source: 'openclaw' },
+    });
+
+    // Snapshot events sync tables instead of just broadcasting.
+    await this.applySnapshot(type, payload);
+
+    this.gateway.broadcast(type, { ...payload, source: 'openclaw' });
     return { accepted: true, type, ts: Date.now() };
+  }
+
+  /** Route snapshot events to their table sync handlers. */
+  private async applySnapshot(type: ActivityEventType, payload: Record<string, unknown>): Promise<void> {
+    switch (type) {
+      case 'agents.snapshot':
+        await this.snapshots.applyAgents(payload);
+        break;
+      case 'sessions.snapshot':
+        await this.snapshots.applySessions(payload);
+        break;
+      case 'calendar.snapshot':
+        await this.snapshots.applyCalendar(payload);
+        break;
+      case 'usage.snapshot':
+        await this.snapshots.applyUsage(payload);
+        break;
+      case 'approvals.snapshot':
+        await this.snapshots.applyApprovals(payload);
+        break;
+      default:
+        break;
+    }
   }
 
   /** Production fails closed: a missing INGEST_TOKEN means no intake at all. */
@@ -70,8 +109,17 @@ export class IngestController {
 /** Single source of truth for accepted event names (mirrors the gateway union). */
 const KNOWN_TYPES: ActivityEventType[] = [
   'run.started',
+  'run.queued',
+  'run.progress',
   'run.completed',
   'run.failed',
   'health.tick',
   'hello',
+  'approval.new',
+  'approval.decided',
+  'agents.snapshot',
+  'sessions.snapshot',
+  'calendar.snapshot',
+  'usage.snapshot',
+  'approvals.snapshot',
 ];
