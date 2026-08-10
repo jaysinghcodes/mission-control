@@ -171,6 +171,8 @@ The feed is transport-agnostic: any trusted producer can push the same typed eve
 
 - **No direct merges to `main`** — everything lands via PR, reviewed by Jay. (Exception:
   hotfixes + docs explicitly requested by Jay, e.g. the Aug 10 bring-up commit.)
+- **Merge → delete branch** — immediately after a PR merges, delete the source branch
+  (local AND remote). No lingering branches; `main` is the only long-lived branch.
 - PRs are kept small (2–3 logical PRs per feature batch) for readability.
 - Heavy inline comments on all new code.
 - Run the development skills before committing: `vibe-dev-workflow` (PLAN/ACT, Design Doc,
