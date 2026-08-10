@@ -1,0 +1,356 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="820" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<rect x="0" y="0" width="1280" height="820" fill="#F2F4F6"/>
+<rect x="0" y="0" width="220" height="820" rx="0" fill="#E4E6E8" opacity="1"/>
+<line x1="220" y1="0" x2="220" y2="820" stroke="#D5D9DE" stroke-width="1" opacity="1"/>
+<rect x="20" y="22" width="26" height="26" rx="7" fill="#1D4ED8" opacity="1"/>
+<text x="22" y="40" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#FFFFFF" text-anchor="middle" opacity="1">◈</text>
+<text x="56" y="40" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#161A1F" text-anchor="start" opacity="1">Mission Control</text>
+<text x="20" y="78" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#4E565F" text-anchor="start" opacity="1" letter-spacing="0.08em">WORKSPACE</text>
+<text x="42" y="114" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#161A1F" text-anchor="start" opacity="1">Overview</text>
+<rect x="19" y="103" width="12" height="12" rx="3.5" fill="none" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<line x1="22" y1="109.0" x2="28" y2="109.0" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<line x1="25.0" y1="106" x2="25.0" y2="112" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<text x="42" y="156" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#161A1F" text-anchor="start" opacity="1">Tasks</text>
+<line x1="19.5" y1="147.0" x2="30.5" y2="147.0" stroke="#4E565F" stroke-width="1.8" opacity="1"/>
+<line x1="19.5" y1="151.5" x2="30.5" y2="151.5" stroke="#4E565F" stroke-width="1.8" opacity="1"/>
+<line x1="19.5" y1="156.0" x2="30.5" y2="156.0" stroke="#4E565F" stroke-width="1.8" opacity="1"/>
+<line x1="19.5" y1="147" x2="22.5" y2="147" stroke="#4E565F" stroke-width="1.8" opacity="1"/>
+<line x1="19.5" y1="151.5" x2="22.5" y2="151.5" stroke="#4E565F" stroke-width="1.8" opacity="1"/>
+<line x1="19.5" y1="156" x2="22.5" y2="156" stroke="#4E565F" stroke-width="1.8" opacity="1"/>
+<text x="42" y="198" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#161A1F" text-anchor="start" opacity="1">Tickets</text>
+<rect x="19.5" y="187.5" width="11" height="11" rx="3" fill="none" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<line x1="22" y1="191.5" x2="28" y2="191.5" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<line x1="22" y1="195.5" x2="28" y2="195.5" stroke="#4E565F" stroke-width="1.4" opacity="0.5"/>
+<text x="42" y="240" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#161A1F" text-anchor="start" opacity="1">Backlog</text>
+<line x1="20" y1="230" x2="30" y2="230" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<line x1="20" y1="235" x2="30" y2="235" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<line x1="20" y1="240" x2="30" y2="240" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<line x1="20" y1="230" x2="20" y2="240" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<text x="42" y="282" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#161A1F" text-anchor="start" opacity="1">Calendar</text>
+<rect x="19.5" y="272" width="11" height="11" rx="3" fill="none" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<line x1="19.5" y1="276.5" x2="30.5" y2="276.5" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<line x1="22.5" y1="270.5" x2="22.5" y2="273.5" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<line x1="27.5" y1="270.5" x2="27.5" y2="273.5" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<text x="42" y="324" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#161A1F" text-anchor="start" opacity="1">Approvals</text>
+<path d="M19.5,319.0 l3.5,3.5 l7.5,-8" stroke="#4E565F" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="20" y="360" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#4E565F" text-anchor="start" opacity="1" letter-spacing="0.08em">TEAM</text>
+<text x="42" y="396" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#161A1F" text-anchor="start" opacity="1">Agents</text>
+<line x1="24.2" y1="385" x2="24.2" y2="387.88" stroke="#4E565F" stroke-width="1.2" opacity="1"/>
+<circle cx="24.2" cy="384" r="1.1700000000000002" fill="#4E565F" opacity="1"/>
+<rect x="19.7" y="387.88" width="9.0" height="6.84" rx="2.3400000000000003" fill="#4E565F" opacity="1"/>
+<circle cx="22.490000000000002" cy="390.76" r="1.215" fill="#FFFFFF" opacity="1"/>
+<circle cx="25.91" cy="390.76" r="1.215" fill="#FFFFFF" opacity="1"/>
+<rect x="21.68" y="396.34" width="5.04" height="5.9399999999999995" rx="1.71" fill="#4E565F" opacity="0.72"/>
+<rect x="12" y="416" width="196" height="34" rx="8" fill="#1D4ED8" opacity="1"/>
+<text x="42" y="438" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="600" fill="#FFFFFF" text-anchor="start" opacity="1">Factory</text>
+<line x1="24.2" y1="427" x2="24.2" y2="429.88" stroke="#FFFFFF" stroke-width="1.2" opacity="1"/>
+<circle cx="24.2" cy="426" r="1.1700000000000002" fill="#FFFFFF" opacity="1"/>
+<rect x="19.7" y="429.88" width="9.0" height="6.84" rx="2.3400000000000003" fill="#FFFFFF" opacity="1"/>
+<circle cx="22.490000000000002" cy="432.76" r="1.215" fill="#FFFFFF" opacity="1"/>
+<circle cx="25.91" cy="432.76" r="1.215" fill="#FFFFFF" opacity="1"/>
+<rect x="21.68" y="438.34" width="5.04" height="5.9399999999999995" rx="1.71" fill="#FFFFFF" opacity="0.72"/>
+<text x="42" y="480" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#161A1F" text-anchor="start" opacity="1">Live Activity</text>
+<path d="M18.5,475.0 L21,475.0 L23,470.0 L26,480.0 L28,475.0 L31.5,475.0" stroke="#4E565F" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="20" y="516" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#4E565F" text-anchor="start" opacity="1" letter-spacing="0.08em">OBSERVE</text>
+<text x="42" y="552" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#161A1F" text-anchor="start" opacity="1">Health</text>
+<path d="M25.0,541.5 l-6,7 l4,0 l-2,6 l7,-8 l-4,0 z" stroke="#4E565F" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="42" y="594" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#161A1F" text-anchor="start" opacity="1">Sessions</text>
+<rect x="19" y="584.5" width="11" height="11" rx="3" fill="none" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<rect x="21.5" y="587" width="11" height="11" rx="3" fill="none" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<text x="42" y="636" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#161A1F" text-anchor="start" opacity="1">Usage &amp; Cost</text>
+<rect x="19.5" y="631" width="3.2" height="5" rx="1" fill="#4E565F" opacity="1"/>
+<rect x="24.0" y="628" width="3.2" height="8" rx="1" fill="#4E565F" opacity="1"/>
+<rect x="28.5" y="625" width="3.2" height="11" rx="1" fill="#4E565F" opacity="1"/>
+<line x1="19" y1="637.5" x2="31" y2="637.5" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<text x="42" y="678" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="400" fill="#161A1F" text-anchor="start" opacity="1">Logs</text>
+<line x1="19.5" y1="669.0" x2="30.5" y2="669.0" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<line x1="19.5" y1="672.6" x2="30.5" y2="672.6" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<line x1="19.5" y1="676.2" x2="30.5" y2="676.2" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<line x1="19.5" y1="679.8" x2="30.5" y2="679.8" stroke="#4E565F" stroke-width="1.6" opacity="1"/>
+<circle cx="28.5" cy="669" r="1.6" fill="#4E565F" opacity="1"/>
+<line x1="20" y1="728" x2="200" y2="728" stroke="#D5D9DE" stroke-width="1" opacity="1"/>
+<rect x="12" y="744" width="196" height="40" rx="10" fill="#D8DBDE" opacity="1"/>
+<text x="24" y="767" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="500" fill="#161A1F" text-anchor="start" opacity="1">⚙  Settings</text>
+<circle cx="26" cy="796" r="5" fill="#15803D" opacity="1"/>
+<text x="38" y="800" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#4E565F" text-anchor="start" opacity="1">Connected · 74ms</text>
+<text x="120" y="800" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#57606B" text-anchor="start" opacity="1">ws://…:18789</text>
+<rect x="220" y="0" width="1060" height="56" rx="0" fill="#FFFFFF" opacity="1"/>
+<line x1="220" y1="56" x2="1280" y2="56" stroke="#DDE1E6" stroke-width="1" opacity="1"/>
+<text x="244" y="35" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="17" font-weight="600" fill="#161A1F" text-anchor="start" opacity="1">Factory</text>
+<rect x="860" y="12" width="200" height="32" rx="16.0" fill="#E9ECEF" stroke="#CDD3DA" stroke-width="1" opacity="1"/>
+<circle cx="876" cy="28.0" r="4" fill="none" stroke="#57606B" stroke-width="1.5" opacity="1"/>
+<line x1="879" y1="31.5" x2="883" y2="35.5" stroke="#57606B" stroke-width="1.5" opacity="1"/>
+<text x="892" y="32.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#57606B" text-anchor="start" opacity="1">Search</text>
+<circle cx="1090" cy="28" r="5" fill="#15803D" opacity="1"/>
+<text x="1100" y="32" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="500" fill="#3B4149" text-anchor="start" opacity="1">Connected</text>
+<line x1="1148" y1="16" x2="1148" y2="40" stroke="#DDE1E6" stroke-width="1" opacity="1"/>
+<rect x="1148" y="12" width="40" height="32" rx="16" fill="#EEF0F3" stroke="#CDD3DA" stroke-width="1" opacity="1"/>
+<circle cx="1165" cy="27" r="5.6" fill="none" stroke="#4E565F" stroke-width="1.7" opacity="1"/>
+<circle cx="1168.5" cy="30.5" r="5.1" fill="#EEF0F3" opacity="1"/>
+<rect x="1196" y="12" width="32" height="32" rx="16" fill="#161A1F" opacity="1"/>
+<text x="1212" y="33" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#FFFFFF" text-anchor="middle" opacity="1">J</text>
+<text x="244" y="92" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="22" font-weight="600" fill="#161A1F" text-anchor="start" opacity="1">Factory</text>
+<text x="244" y="114" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#3B4149" text-anchor="start" opacity="1">Live view — your agents moving between stations, building for real.</text>
+<rect x="900" y="118" width="124" height="32" rx="16.0" fill="#FFFFFF" stroke="#CDD3DA" stroke-width="1" opacity="1"/>
+<text x="962.0" y="138.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#161A1F" text-anchor="middle" opacity="1">❚❚  Pause</text>
+<rect x="760" y="118" width="38" height="32" rx="16.0" fill="#161A1F" stroke="none" stroke-width="1" opacity="1"/>
+<text x="779.0" y="138.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#FFFFFF" text-anchor="middle" opacity="1">1x</text>
+<rect x="804" y="118" width="38" height="32" rx="16.0" fill="#FFFFFF" stroke="#CDD3DA" stroke-width="1" opacity="1"/>
+<text x="823.0" y="138.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#3B4149" text-anchor="middle" opacity="1">2x</text>
+<rect x="848" y="118" width="38" height="32" rx="16.0" fill="#FFFFFF" stroke="#CDD3DA" stroke-width="1" opacity="1"/>
+<text x="867.0" y="138.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#3B4149" text-anchor="middle" opacity="1">4x</text>
+<rect x="244" y="152" width="780" height="400" rx="14" fill="#EDE9E2" stroke="#D8D2C8" stroke-width="1" opacity="1"/>
+<line x1="274" y1="164" x2="274" y2="540" stroke="#E0DAD0" stroke-width="1" opacity="1"/>
+<line x1="314" y1="164" x2="314" y2="540" stroke="#E0DAD0" stroke-width="1" opacity="1"/>
+<line x1="354" y1="164" x2="354" y2="540" stroke="#E0DAD0" stroke-width="1" opacity="1"/>
+<line x1="394" y1="164" x2="394" y2="540" stroke="#E0DAD0" stroke-width="1" opacity="1"/>
+<line x1="434" y1="164" x2="434" y2="540" stroke="#E0DAD0" stroke-width="1" opacity="1"/>
+<line x1="474" y1="164" x2="474" y2="540" stroke="#E0DAD0" stroke-width="1" opacity="1"/>
+<line x1="514" y1="164" x2="514" y2="540" stroke="#E0DAD0" stroke-width="1" opacity="1"/>
+<line x1="554" y1="164" x2="554" y2="540" stroke="#E0DAD0" stroke-width="1" opacity="1"/>
+<line x1="594" y1="164" x2="594" y2="540" stroke="#E0DAD0" stroke-width="1" opacity="1"/>
+<line x1="634" y1="164" x2="634" y2="540" stroke="#E0DAD0" stroke-width="1" opacity="1"/>
+<line x1="674" y1="164" x2="674" y2="540" stroke="#E0DAD0" stroke-width="1" opacity="1"/>
+<line x1="714" y1="164" x2="714" y2="540" stroke="#E0DAD0" stroke-width="1" opacity="1"/>
+<line x1="754" y1="164" x2="754" y2="540" stroke="#E0DAD0" stroke-width="1" opacity="1"/>
+<line x1="794" y1="164" x2="794" y2="540" stroke="#E0DAD0" stroke-width="1" opacity="1"/>
+<line x1="834" y1="164" x2="834" y2="540" stroke="#E0DAD0" stroke-width="1" opacity="1"/>
+<line x1="874" y1="164" x2="874" y2="540" stroke="#E0DAD0" stroke-width="1" opacity="1"/>
+<line x1="914" y1="164" x2="914" y2="540" stroke="#E0DAD0" stroke-width="1" opacity="1"/>
+<line x1="954" y1="164" x2="954" y2="540" stroke="#E0DAD0" stroke-width="1" opacity="1"/>
+<line x1="994" y1="164" x2="994" y2="540" stroke="#E0DAD0" stroke-width="1" opacity="1"/>
+<line x1="256" y1="182" x2="1012" y2="182" stroke="#E0DAD0" stroke-width="1" opacity="1"/>
+<line x1="256" y1="222" x2="1012" y2="222" stroke="#E0DAD0" stroke-width="1" opacity="1"/>
+<line x1="256" y1="262" x2="1012" y2="262" stroke="#E0DAD0" stroke-width="1" opacity="1"/>
+<line x1="256" y1="302" x2="1012" y2="302" stroke="#E0DAD0" stroke-width="1" opacity="1"/>
+<line x1="256" y1="342" x2="1012" y2="342" stroke="#E0DAD0" stroke-width="1" opacity="1"/>
+<line x1="256" y1="382" x2="1012" y2="382" stroke="#E0DAD0" stroke-width="1" opacity="1"/>
+<line x1="256" y1="422" x2="1012" y2="422" stroke="#E0DAD0" stroke-width="1" opacity="1"/>
+<line x1="256" y1="462" x2="1012" y2="462" stroke="#E0DAD0" stroke-width="1" opacity="1"/>
+<line x1="256" y1="502" x2="1012" y2="502" stroke="#E0DAD0" stroke-width="1" opacity="1"/>
+<line x1="256" y1="542" x2="1012" y2="542" stroke="#E0DAD0" stroke-width="1" opacity="1"/>
+<text x="258" y="176" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="600" fill="#57606B" text-anchor="start" opacity="1" letter-spacing="0.1em">FLOOR 01 · LIVE</text>
+<circle cx="382" cy="171" r="4" fill="#15803D" opacity="1"/>
+<rect x="876" y="164" width="132" height="22" rx="6" fill="#161A1F" opacity="1"/>
+<text x="942" y="179" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="600" fill="#FFFFFF" text-anchor="middle" opacity="1">ANDON · 0</text>
+<line x1="264" y1="208" x2="1004" y2="208" stroke="#B9B4AA" stroke-width="2" opacity="1"/>
+<line x1="304" y1="208" x2="304" y2="216" stroke="#B9B4AA" stroke-width="1.5" opacity="1"/>
+<line x1="964" y1="208" x2="964" y2="216" stroke="#B9B4AA" stroke-width="1.5" opacity="1"/>
+<rect x="266" y="248" width="60" height="44" rx="8" fill="#D9D4CB" stroke="#B9B4AA" stroke-width="1" opacity="1"/>
+<text x="296" y="276" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="9.5" font-weight="600" fill="#3B4149" text-anchor="middle" opacity="1">PARTS</text>
+<rect x="280" y="238" width="10" height="8" rx="2" fill="#B45309" opacity="1"/>
+<rect x="292" y="238" width="10" height="8" rx="2" fill="#1D4ED8" opacity="1"/>
+<rect x="304" y="238" width="10" height="8" rx="2" fill="#8A939E" opacity="1"/>
+<text x="296" y="308" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="600" fill="#3B4149" text-anchor="middle" opacity="1">BREAK ROOM</text>
+<rect x="449.5" y="214" width="5" height="26" rx="0" fill="#8A939E" opacity="1"/>
+<circle cx="452" cy="210" r="3.6" fill="#B91C1C" opacity="0.3"/>
+<circle cx="452" cy="201" r="3.6" fill="#B45309" opacity="0.3"/>
+<circle cx="452" cy="192" r="3.6" fill="#6D28D9" opacity="1"/>
+<rect x="408" y="240" width="88" height="56" rx="8" fill="#E4E0D8" stroke="#B9B4AA" stroke-width="1" opacity="1"/>
+<rect x="420" y="248" width="64" height="18" rx="4" fill="#FFFFFF" stroke="#D8D2C8" stroke-width="1" opacity="1"/>
+<text x="452" y="261" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="10" font-weight="600" fill="#161A1F" text-anchor="middle" opacity="1">RUN · 62%</text>
+<text x="452" y="286" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="600" fill="#3B4149" text-anchor="middle" opacity="1">BUILD</text>
+<rect x="605.5" y="214" width="5" height="26" rx="0" fill="#8A939E" opacity="1"/>
+<circle cx="608" cy="210" r="3.6" fill="#B91C1C" opacity="0.3"/>
+<circle cx="608" cy="201" r="3.6" fill="#B45309" opacity="0.3"/>
+<circle cx="608" cy="192" r="3.6" fill="#B45309" opacity="1"/>
+<rect x="564" y="240" width="88" height="56" rx="8" fill="#E4E0D8" stroke="#B9B4AA" stroke-width="1" opacity="1"/>
+<rect x="576" y="248" width="64" height="18" rx="4" fill="#FFFFFF" stroke="#D8D2C8" stroke-width="1" opacity="1"/>
+<text x="608" y="261" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="10" font-weight="600" fill="#161A1F" text-anchor="middle" opacity="1">TEST · 34%</text>
+<text x="608" y="286" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="600" fill="#3B4149" text-anchor="middle" opacity="1">QA</text>
+<rect x="761.5" y="214" width="5" height="26" rx="0" fill="#8A939E" opacity="1"/>
+<circle cx="764" cy="210" r="3.6" fill="#B91C1C" opacity="0.3"/>
+<circle cx="764" cy="201" r="3.6" fill="#B45309" opacity="0.3"/>
+<circle cx="764" cy="192" r="3.6" fill="#1D4ED8" opacity="1"/>
+<rect x="720" y="240" width="88" height="56" rx="8" fill="#E4E0D8" stroke="#B9B4AA" stroke-width="1" opacity="1"/>
+<rect x="732" y="248" width="64" height="18" rx="4" fill="#FFFFFF" stroke="#D8D2C8" stroke-width="1" opacity="1"/>
+<text x="764" y="261" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="10" font-weight="600" fill="#161A1F" text-anchor="middle" opacity="1">REV · 40%</text>
+<text x="764" y="286" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="600" fill="#3B4149" text-anchor="middle" opacity="1">REVIEW</text>
+<rect x="917.5" y="214" width="5" height="26" rx="0" fill="#8A939E" opacity="1"/>
+<circle cx="920" cy="210" r="3.6" fill="#B91C1C" opacity="0.3"/>
+<circle cx="920" cy="201" r="3.6" fill="#B45309" opacity="0.3"/>
+<circle cx="920" cy="192" r="3.6" fill="#15803D" opacity="1"/>
+<rect x="876" y="240" width="88" height="56" rx="8" fill="#E4E0D8" stroke="#B9B4AA" stroke-width="1" opacity="1"/>
+<rect x="888" y="248" width="64" height="18" rx="4" fill="#FFFFFF" stroke="#D8D2C8" stroke-width="1" opacity="1"/>
+<text x="920" y="261" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="10" font-weight="600" fill="#161A1F" text-anchor="middle" opacity="1">DONE</text>
+<text x="920" y="286" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="600" fill="#3B4149" text-anchor="middle" opacity="1">SHIP</text>
+<rect x="284" y="348" width="700" height="14" rx="7" fill="#CBC5BB" stroke="#B0A99D" stroke-width="1" opacity="1"/>
+<circle cx="296" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="314" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="332" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="350" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="368" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="386" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="404" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="422" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="440" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="458" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="476" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="494" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="512" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="530" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="548" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="566" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="584" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="602" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="620" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="638" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="656" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="674" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="692" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="710" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="728" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="746" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="764" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="782" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="800" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="818" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="836" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="854" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="872" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="890" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="908" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="926" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="944" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<circle cx="962" cy="355" r="2.6" fill="#FFFFFF" stroke="#9AA3AD" stroke-width="0.8" opacity="1"/>
+<rect x="334" y="349" width="12" height="12" rx="2.5" fill="#B45309" opacity="1"/>
+<rect x="336" y="352" width="8" height="2" rx="0" fill="#FFFFFF" opacity="0.55"/>
+<rect x="444" y="349" width="12" height="12" rx="2.5" fill="#1D4ED8" opacity="1"/>
+<rect x="446" y="352" width="8" height="2" rx="0" fill="#FFFFFF" opacity="0.55"/>
+<rect x="564" y="349" width="12" height="12" rx="2.5" fill="#6D28D9" opacity="1"/>
+<rect x="566" y="352" width="8" height="2" rx="0" fill="#FFFFFF" opacity="0.55"/>
+<rect x="714" y="349" width="12" height="12" rx="2.5" fill="#15803D" opacity="1"/>
+<rect x="716" y="352" width="8" height="2" rx="0" fill="#FFFFFF" opacity="0.55"/>
+<text x="990" y="359" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#57606B" text-anchor="start" opacity="1">▸</text>
+<line x1="452.8" y1="372" x2="452.8" y2="375.52" stroke="#6D28D9" stroke-width="1.2" opacity="1"/>
+<circle cx="452.8" cy="371" r="1.4300000000000002" fill="#6D28D9" opacity="1"/>
+<rect x="447.3" y="375.52" width="11.0" height="8.36" rx="2.8600000000000003" fill="#6D28D9" opacity="1"/>
+<circle cx="450.71" cy="379.04" r="1.4850000000000003" fill="#FFFFFF" opacity="1"/>
+<circle cx="454.89" cy="379.04" r="1.4850000000000003" fill="#FFFFFF" opacity="1"/>
+<rect x="449.72" y="385.86" width="6.16" height="7.26" rx="2.09" fill="#6D28D9" opacity="0.72"/>
+<text x="448" y="404" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#161A1F" text-anchor="start" opacity="1">Henry</text>
+<text x="448" y="418" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#3B4149" text-anchor="start" opacity="1">task-executor · 62%</text>
+<rect x="448" y="424" width="64.19999999999999" height="16" rx="8.0" fill="#E4ECF8" opacity="1"/>
+<text x="480.1" y="436.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="8.5" font-weight="600" fill="#1D4ED8" text-anchor="middle" opacity="1">WORKING</text>
+<line x1="608.8" y1="372" x2="608.8" y2="375.52" stroke="#B45309" stroke-width="1.2" opacity="1"/>
+<circle cx="608.8" cy="371" r="1.4300000000000002" fill="#B45309" opacity="1"/>
+<rect x="603.3" y="375.52" width="11.0" height="8.36" rx="2.8600000000000003" fill="#B45309" opacity="1"/>
+<circle cx="606.71" cy="379.04" r="1.4850000000000003" fill="#FFFFFF" opacity="1"/>
+<circle cx="610.89" cy="379.04" r="1.4850000000000003" fill="#FFFFFF" opacity="1"/>
+<rect x="605.72" y="385.86" width="6.16" height="7.26" rx="2.09" fill="#B45309" opacity="0.72"/>
+<text x="604" y="404" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#161A1F" text-anchor="start" opacity="1">Ralph</text>
+<text x="604" y="418" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#3B4149" text-anchor="start" opacity="1">review · 34%</text>
+<rect x="604" y="424" width="64.19999999999999" height="16" rx="8.0" fill="#E4ECF8" opacity="1"/>
+<text x="636.1" y="436.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="8.5" font-weight="600" fill="#1D4ED8" text-anchor="middle" opacity="1">WORKING</text>
+<line x1="764.8" y1="372" x2="764.8" y2="375.52" stroke="#6D28D9" stroke-width="1.2" opacity="1"/>
+<circle cx="764.8" cy="371" r="1.4300000000000002" fill="#6D28D9" opacity="1"/>
+<rect x="759.3" y="375.52" width="11.0" height="8.36" rx="2.8600000000000003" fill="#6D28D9" opacity="1"/>
+<circle cx="762.71" cy="379.04" r="1.4850000000000003" fill="#FFFFFF" opacity="1"/>
+<circle cx="766.89" cy="379.04" r="1.4850000000000003" fill="#FFFFFF" opacity="1"/>
+<rect x="761.72" y="385.86" width="6.16" height="7.26" rx="2.09" fill="#6D28D9" opacity="0.72"/>
+<text x="760" y="404" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#161A1F" text-anchor="start" opacity="1">Violet</text>
+<text x="760" y="418" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#3B4149" text-anchor="start" opacity="1">checklist</text>
+<line x1="920.8" y1="372" x2="920.8" y2="375.52" stroke="#B91C1C" stroke-width="1.2" opacity="1"/>
+<circle cx="920.8" cy="371" r="1.4300000000000002" fill="#B91C1C" opacity="1"/>
+<rect x="915.3" y="375.52" width="11.0" height="8.36" rx="2.8600000000000003" fill="#B91C1C" opacity="1"/>
+<circle cx="918.71" cy="379.04" r="1.4850000000000003" fill="#FFFFFF" opacity="1"/>
+<circle cx="922.89" cy="379.04" r="1.4850000000000003" fill="#FFFFFF" opacity="1"/>
+<rect x="917.72" y="385.86" width="6.16" height="7.26" rx="2.09" fill="#B91C1C" opacity="0.72"/>
+<text x="916" y="404" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#161A1F" text-anchor="start" opacity="1">Pixel</text>
+<text x="916" y="418" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="9.5" font-weight="400" fill="#3B4149" text-anchor="start" opacity="1">og images · done</text>
+<rect x="916" y="424" width="64.19999999999999" height="16" rx="8.0" fill="#E4ECF8" opacity="1"/>
+<text x="948.1" y="436.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="8.5" font-weight="600" fill="#1D4ED8" text-anchor="middle" opacity="1">WORKING</text>
+<line x1="502.0" y1="338" x2="502.0" y2="341.2" stroke="#15803D" stroke-width="1.2" opacity="1"/>
+<circle cx="502.0" cy="337" r="1.3" fill="#15803D" opacity="1"/>
+<rect x="497.0" y="341.2" width="10.0" height="7.6" rx="2.6" fill="#15803D" opacity="1"/>
+<circle cx="500.1" cy="344.4" r="1.35" fill="#FFFFFF" opacity="1"/>
+<circle cx="503.9" cy="344.4" r="1.35" fill="#FFFFFF" opacity="1"/>
+<rect x="499.2" y="350.6" width="5.6" height="6.6" rx="1.9" fill="#15803D" opacity="0.72"/>
+<rect x="480" y="316" width="44.4" height="16" rx="8.0" fill="#E2F1E7" opacity="1"/>
+<text x="502.2" y="328.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="9" font-weight="600" fill="#157A3C" text-anchor="middle" opacity="1">→ QA</text>
+<text x="480" y="310" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="600" fill="#161A1F" text-anchor="start" opacity="1">Scout</text>
+<line x1="637.0" y1="338" x2="637.0" y2="341.2" stroke="#0F766E" stroke-width="1.2" opacity="1"/>
+<circle cx="637.0" cy="337" r="1.3" fill="#0F766E" opacity="1"/>
+<rect x="632.0" y="341.2" width="10.0" height="7.6" rx="2.6" fill="#0F766E" opacity="1"/>
+<circle cx="635.1" cy="344.4" r="1.35" fill="#FFFFFF" opacity="1"/>
+<circle cx="638.9" cy="344.4" r="1.35" fill="#FFFFFF" opacity="1"/>
+<rect x="634.2" y="350.6" width="5.6" height="6.6" rx="1.9" fill="#0F766E" opacity="0.72"/>
+<rect x="615" y="316" width="70.8" height="16" rx="8.0" fill="#DFF0F0" opacity="1"/>
+<text x="650.4" y="328.0" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="9" font-weight="600" fill="#0F766E" text-anchor="middle" opacity="1">→ REVIEW</text>
+<text x="615" y="310" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="600" fill="#161A1F" text-anchor="start" opacity="1">Quill</text>
+<rect x="256" y="538" width="7" height="5" rx="0" fill="#A16207" opacity="1"/>
+<rect x="270" y="538" width="7" height="5" rx="0" fill="#1A1A1A" opacity="1"/>
+<rect x="284" y="538" width="7" height="5" rx="0" fill="#A16207" opacity="1"/>
+<rect x="298" y="538" width="7" height="5" rx="0" fill="#1A1A1A" opacity="1"/>
+<rect x="312" y="538" width="7" height="5" rx="0" fill="#A16207" opacity="1"/>
+<rect x="326" y="538" width="7" height="5" rx="0" fill="#1A1A1A" opacity="1"/>
+<rect x="340" y="538" width="7" height="5" rx="0" fill="#A16207" opacity="1"/>
+<rect x="354" y="538" width="7" height="5" rx="0" fill="#1A1A1A" opacity="1"/>
+<rect x="368" y="538" width="7" height="5" rx="0" fill="#A16207" opacity="1"/>
+<rect x="382" y="538" width="7" height="5" rx="0" fill="#1A1A1A" opacity="1"/>
+<rect x="396" y="538" width="7" height="5" rx="0" fill="#A16207" opacity="1"/>
+<rect x="410" y="538" width="7" height="5" rx="0" fill="#1A1A1A" opacity="1"/>
+<rect x="424" y="538" width="7" height="5" rx="0" fill="#A16207" opacity="1"/>
+<rect x="438" y="538" width="7" height="5" rx="0" fill="#1A1A1A" opacity="1"/>
+<rect x="452" y="538" width="7" height="5" rx="0" fill="#A16207" opacity="1"/>
+<rect x="466" y="538" width="7" height="5" rx="0" fill="#1A1A1A" opacity="1"/>
+<rect x="480" y="538" width="7" height="5" rx="0" fill="#A16207" opacity="1"/>
+<rect x="494" y="538" width="7" height="5" rx="0" fill="#1A1A1A" opacity="1"/>
+<rect x="508" y="538" width="7" height="5" rx="0" fill="#A16207" opacity="1"/>
+<rect x="522" y="538" width="7" height="5" rx="0" fill="#1A1A1A" opacity="1"/>
+<rect x="536" y="538" width="7" height="5" rx="0" fill="#A16207" opacity="1"/>
+<rect x="550" y="538" width="7" height="5" rx="0" fill="#1A1A1A" opacity="1"/>
+<rect x="564" y="538" width="7" height="5" rx="0" fill="#A16207" opacity="1"/>
+<rect x="578" y="538" width="7" height="5" rx="0" fill="#1A1A1A" opacity="1"/>
+<rect x="592" y="538" width="7" height="5" rx="0" fill="#A16207" opacity="1"/>
+<rect x="606" y="538" width="7" height="5" rx="0" fill="#1A1A1A" opacity="1"/>
+<rect x="620" y="538" width="7" height="5" rx="0" fill="#A16207" opacity="1"/>
+<rect x="634" y="538" width="7" height="5" rx="0" fill="#1A1A1A" opacity="1"/>
+<rect x="648" y="538" width="7" height="5" rx="0" fill="#A16207" opacity="1"/>
+<rect x="662" y="538" width="7" height="5" rx="0" fill="#1A1A1A" opacity="1"/>
+<rect x="676" y="538" width="7" height="5" rx="0" fill="#A16207" opacity="1"/>
+<rect x="690" y="538" width="7" height="5" rx="0" fill="#1A1A1A" opacity="1"/>
+<rect x="704" y="538" width="7" height="5" rx="0" fill="#A16207" opacity="1"/>
+<rect x="718" y="538" width="7" height="5" rx="0" fill="#1A1A1A" opacity="1"/>
+<rect x="732" y="538" width="7" height="5" rx="0" fill="#A16207" opacity="1"/>
+<rect x="746" y="538" width="7" height="5" rx="0" fill="#1A1A1A" opacity="1"/>
+<rect x="760" y="538" width="7" height="5" rx="0" fill="#A16207" opacity="1"/>
+<rect x="774" y="538" width="7" height="5" rx="0" fill="#1A1A1A" opacity="1"/>
+<rect x="788" y="538" width="7" height="5" rx="0" fill="#A16207" opacity="1"/>
+<rect x="802" y="538" width="7" height="5" rx="0" fill="#1A1A1A" opacity="1"/>
+<rect x="816" y="538" width="7" height="5" rx="0" fill="#A16207" opacity="1"/>
+<rect x="830" y="538" width="7" height="5" rx="0" fill="#1A1A1A" opacity="1"/>
+<rect x="844" y="538" width="7" height="5" rx="0" fill="#A16207" opacity="1"/>
+<rect x="858" y="538" width="7" height="5" rx="0" fill="#1A1A1A" opacity="1"/>
+<rect x="872" y="538" width="7" height="5" rx="0" fill="#A16207" opacity="1"/>
+<rect x="886" y="538" width="7" height="5" rx="0" fill="#1A1A1A" opacity="1"/>
+<rect x="900" y="538" width="7" height="5" rx="0" fill="#A16207" opacity="1"/>
+<rect x="914" y="538" width="7" height="5" rx="0" fill="#1A1A1A" opacity="1"/>
+<rect x="928" y="538" width="7" height="5" rx="0" fill="#A16207" opacity="1"/>
+<rect x="942" y="538" width="7" height="5" rx="0" fill="#1A1A1A" opacity="1"/>
+<rect x="956" y="538" width="7" height="5" rx="0" fill="#A16207" opacity="1"/>
+<rect x="970" y="538" width="7" height="5" rx="0" fill="#1A1A1A" opacity="1"/>
+<rect x="984" y="538" width="7" height="5" rx="0" fill="#A16207" opacity="1"/>
+<rect x="998" y="538" width="7" height="5" rx="0" fill="#1A1A1A" opacity="1"/>
+<text x="258" y="518" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="16" font-weight="600" fill="#161A1F" text-anchor="start" opacity="1">3</text>
+<text x="258" y="534" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="9.5" font-weight="600" fill="#57606B" text-anchor="start" opacity="1" letter-spacing="0.06em">SHIPPED TODAY</text>
+<text x="406" y="518" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="16" font-weight="600" fill="#161A1F" text-anchor="start" opacity="1">5</text>
+<text x="406" y="534" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="9.5" font-weight="600" fill="#57606B" text-anchor="start" opacity="1" letter-spacing="0.06em">ACTIVE BOTS</text>
+<text x="554" y="518" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="16" font-weight="600" fill="#161A1F" text-anchor="start" opacity="1">4h 12m</text>
+<text x="554" y="534" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="9.5" font-weight="600" fill="#57606B" text-anchor="start" opacity="1" letter-spacing="0.06em">CYCLE TIME</text>
+<text x="702" y="518" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="16" font-weight="600" fill="#161A1F" text-anchor="start" opacity="1">0.8/h</text>
+<text x="702" y="534" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="9.5" font-weight="600" fill="#57606B" text-anchor="start" opacity="1" letter-spacing="0.06em">THROUGHPUT</text>
+<text x="850" y="518" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="16" font-weight="600" fill="#161A1F" text-anchor="start" opacity="1">1</text>
+<text x="850" y="534" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="9.5" font-weight="600" fill="#57606B" text-anchor="start" opacity="1" letter-spacing="0.06em">BLOCKED</text>
+<rect x="244" y="570" width="780" height="110" rx="12" fill="#FFFFFF" stroke="#CDD3DA" stroke-width="1" opacity="1"/>
+<text x="262" y="592" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="600" fill="#57606B" text-anchor="start" opacity="1" letter-spacing="0.1em">BUILD LOG</text>
+<text x="262" y="612" font-family="SF Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#57606B" text-anchor="start" opacity="1">12:04:33</text>
+<text x="330" y="612" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#161A1F" text-anchor="start" opacity="1">Henry</text>
+<text x="384" y="612" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11" font-weight="400" fill="#3B4149" text-anchor="start" opacity="1">committed 8f3a2c1 · task-executor v0.2</text>
+<text x="262" y="633" font-family="SF Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#57606B" text-anchor="start" opacity="1">12:04:19</text>
+<text x="330" y="633" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#161A1F" text-anchor="start" opacity="1">Charlie</text>
+<text x="384" y="633" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11" font-weight="400" fill="#3B4149" text-anchor="start" opacity="1">scaffold modules wired → BUILD</text>
+<text x="262" y="654" font-family="SF Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#57606B" text-anchor="start" opacity="1">12:03:41</text>
+<text x="330" y="654" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11" font-weight="600" fill="#161A1F" text-anchor="start" opacity="1">Scout</text>
+<text x="384" y="654" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11" font-weight="400" fill="#3B4149" text-anchor="start" opacity="1">passed QA gate → moving to REVIEW</text>
+</svg>
