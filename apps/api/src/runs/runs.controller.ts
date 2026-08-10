@@ -35,6 +35,7 @@ export class RunsController {
     const run = await this.prisma.run.create({
       data: { name, agent: body.agent ?? 'Jarvis Singh', status: 'queued' },
     });
+    await this.persist('run.queued', { id: run.id, name: run.name });
     this.gateway.broadcast('run.queued', { id: run.id, name: run.name });
     return { run, ts: Date.now() };
   }
@@ -68,7 +69,20 @@ export class RunsController {
           : status === 'failed'
             ? 'run.failed'
             : 'run.queued';
-    this.gateway.broadcast(eventType, { id: run.id, name: run.name, status, progress: run.progress });
+    const payload = { id: run.id, name: run.name, status, progress: run.progress };
+    // Persist too — the Activity page / Factory build log load history from the
+    // DB, so a run that moves fast must still leave a visible trail (Jay's fix #3/#6).
+    await this.persist(eventType, payload);
+    this.gateway.broadcast(eventType, payload);
     return { run, ts: Date.now() };
+  }
+
+  /** Write a run.* event to the persisted activity stream. */
+  private async persist(type: string, payload: Record<string, unknown>): Promise<void> {
+    try {
+      await this.prisma.activityEvent.create({ data: { type, payload: payload as object, source: 'api' } });
+    } catch {
+      // Persistence is best-effort — never fail a state transition over it.
+    }
   }
 }
