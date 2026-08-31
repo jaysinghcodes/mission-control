@@ -176,26 +176,46 @@ export default function Usage() {
       </Card>
 
       <div className="flex gap-[18px] mt-6 flex-wrap">
-        {providers.map((p, i) => (
-          <Card key={p.name ?? `provider-${i}`} className="w-[248px] px-4 py-3">
-            <div className="flex items-center gap-2">
-              <span className="w-4 h-4 rounded-full" style={{ backgroundColor: 'var(--mc-blue)' }} />
-              <span className="text-[14.5px] font-semibold">{p.name ?? 'Provider'}</span>
-            </div>
-            <div className="mt-2 font-mono text-[12px] text-mc-sub">{p.model ?? '—'}</div>
-            <div className="mt-2 text-[24px] font-semibold">{p.balance != null ? fmt(p.balance) : fmt(p.cost)}</div>
-            <div className="text-[11px] text-mc-sub">{p.balance != null ? 'account balance' : p.detail ?? '—'}</div>
-            {typeof p.pct === 'number' && (
-              <div className="flex items-center gap-2 mt-3">
-                <Progress pct={p.pct} color="var(--mc-blue)" w="flex-1" />
-                <span className="text-[10.5px] text-mc-faint">{p.pct}%</span>
+        {providers.map((p, i) => {
+          const unfetchable = p.balance == null && p.cost == null
+          const cfg = configured.find((c) => c.provider === p.name?.toLowerCase() || c.model === p.model)
+          return (
+            <Card key={p.name ?? `provider-${i}`} className="w-[248px] px-4 py-3 relative">
+              {cfg && (
+                <button
+                  type="button"
+                  title="Delete model config"
+                  onClick={() => void removeModel(cfg.id)}
+                  className="absolute top-2 right-2 w-6 h-6 rounded-full bg-mc-inner border border-mc-border flex items-center justify-center text-[11px] text-mc-redtext hover:bg-mc-redbg"
+                >
+                  🗑
+                </button>
+              )}
+              <div className="flex items-center gap-2">
+                <span className="w-4 h-4 rounded-full" style={{ backgroundColor: 'var(--mc-blue)' }} />
+                <span className="text-[14.5px] font-semibold">{p.name ?? 'Provider'}</span>
               </div>
-            )}
-            {typeof p.tokensIn === 'number' && (
-              <div className="mt-2 text-[11px] text-mc-faint">{num(p.tokensIn)} in · {num(p.tokensOut)} out</div>
-            )}
-          </Card>
-        ))}
+              <div className="mt-2 font-mono text-[12px] text-mc-sub">{p.model ?? '—'}</div>
+              {unfetchable ? (
+                <div className="mt-2 rounded-lg bg-mc-orangebg px-2.5 py-1.5 text-[11px] font-semibold text-mc-orangetext inline-block">
+                  Unable to fetch
+                </div>
+              ) : (
+                <div className="mt-2 text-[24px] font-semibold">{p.balance != null ? fmt(p.balance) : fmt(p.cost)}</div>
+              )}
+              <div className="text-[11px] text-mc-sub">{p.balance != null ? 'account balance' : (unfetchable ? (p.detail ?? 'no data source') : p.detail ?? '—')}</div>
+              {typeof p.pct === 'number' && !unfetchable && (
+                <div className="flex items-center gap-2 mt-3">
+                  <Progress pct={p.pct} color="var(--mc-blue)" w="flex-1" />
+                  <span className="text-[10.5px] text-mc-faint">{p.pct}%</span>
+                </div>
+              )}
+              {typeof p.tokensIn === 'number' && !unfetchable && (
+                <div className="mt-2 text-[11px] text-mc-faint">{num(p.tokensIn)} in · {num(p.tokensOut)} out</div>
+              )}
+            </Card>
+          )
+        })}
         {providers.length === 0 && !error && (
           <Card className="w-full px-4 py-6 text-[12.5px] text-mc-faint">
             No provider breakdown yet — the bridge pushes balances/tokens every few minutes. Want exact billing? Add your

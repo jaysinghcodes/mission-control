@@ -100,21 +100,24 @@ export class SnapshotsService {
     });
   }
 
-  /** Replace pending approvals. */
+  /** Sync pending approvals — PRESERVES decided ones (approve/reject history). */
   async applyApprovals(payload: Record<string, unknown>): Promise<void> {
     const approvals = Array.isArray(payload.approvals) ? (payload.approvals as Record<string, unknown>[]) : [];
-    await this.prisma.$transaction([
-      this.prisma.approval.deleteMany({}),
-      ...approvals.map((a) =>
-        this.prisma.approval.create({
-          data: {
-            kind: String(a.kind ?? 'exec'),
-            tag: String(a.tag ?? 'Request'),
-            desc: String(a.desc ?? ''),
-            status: String(a.status ?? 'pending'),
-          },
-        }),
-      ),
-    ]);
+    // Drop stale pending rows; keep approved/rejected history.
+    await this.prisma.approval.deleteMany({ where: { status: 'pending' } });
+    const existing = await this.prisma.approval.findMany({ select: { tag: true, status: true } });
+    const decided = new Set(existing.filter((a) => a.status !== 'pending').map((a) => a.tag));
+    const fresh = approvals.filter((a) => !decided.has(String(a.tag ?? '')));
+    if (fresh.length > 0) {
+      await this.prisma.approval.createMany({
+        data: fresh.map((a) => ({
+          kind: String(a.kind ?? 'exec'),
+          tag: String(a.tag ?? 'Request'),
+          desc: String(a.desc ?? ''),
+          status: String(a.status ?? 'pending'),
+          meta: a.meta ? (a.meta as object) : undefined,
+        })),
+      });
+    }
   }
 }

@@ -76,8 +76,10 @@ export default function AppLayout() {
       {/* ── Sidebar (220px, wireframe sidebar()) ─────────────────────────── */}
       <aside className="w-[220px] shrink-0 bg-mc-sidebar border-r border-mc-sideborder flex flex-col">
         <div className="flex items-center gap-2.5 px-5 pt-[22px] pb-4">
-          <img src="/logo.svg" alt="Mission Control" className="w-[26px] h-[26px] rounded-lg" />
-          <div className="text-[15px] font-semibold text-mc-text">Mission Control</div>
+          <Link to="/" className="flex items-center gap-2.5" title="Back to Overview">
+            <img src="/logo.svg" alt="Mission Control" className="w-[26px] h-[26px] rounded-lg" />
+            <div className="text-[15px] font-semibold text-mc-text">Mission Control</div>
+          </Link>
         </div>
 
         <nav className="flex-1 overflow-y-auto px-3">

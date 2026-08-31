@@ -101,12 +101,14 @@ model ActivityEvent {
 }
 
 /// Approval requests — pushed by the bridge (approvals.snapshot) and decided here.
+/// meta holds structured details (e.g. PR number/url/branch for kind='pr').
 model Approval {
   id        String   @id @default(cuid())
-  kind      String   // exec | pair | msg | sess
+  kind      String   // exec | pair | msg | sess | pr
   tag       String
   desc      String
   status    String   @default("pending") // pending | approved | rejected
+  meta      Json?
   createdAt DateTime @default(now())
 }
 

@@ -60,13 +60,17 @@ export default function Health() {
 
   // Provider balances — one card PER provider (DeepSeek + GLM + any added
   // models), each with its own live balance. Never just the first one.
-  const providerCards = providers.map((p) => ({
-    name: p.name ?? 'provider',
-    balance: p.balance != null ? `$${Number(p.balance).toFixed(2)}` : p.cost != null ? `$${Number(p.cost).toFixed(4)}` : '—',
-    pct: typeof p.pct === 'number' ? p.pct : p.balance != null ? 100 : 0,
-    sub: p.balance != null ? (p.model ?? p.detail ?? p.name) : (p.detail ?? p.model ?? p.name),
-    model: p.model ?? null,
-  }))
+  const providerCards = providers.map((p) => {
+    const unfetchable = p.balance == null && p.cost == null
+    return {
+      name: p.name ?? 'provider',
+      balance: !unfetchable && p.balance != null ? `$${Number(p.balance).toFixed(2)}` : !unfetchable && p.cost != null ? `$${Number(p.cost).toFixed(4)}` : null,
+      unfetchable,
+      pct: typeof p.pct === 'number' ? p.pct : !unfetchable && p.balance != null ? 100 : 0,
+      sub: p.balance != null ? (p.model ?? p.detail ?? p.name) : (p.detail ?? p.model ?? p.name),
+      model: p.model ?? null,
+    }
+  })
 
   return (
     <div className="p-6">
@@ -117,7 +121,13 @@ export default function Health() {
                 <span className="w-[10px] h-[10px] rounded-full" style={{ backgroundColor: 'var(--mc-blue)' }} />
                 <span className="text-[12.5px] font-semibold capitalize">{p.name}</span>
               </div>
-              <div className="mt-2 text-[22px] font-semibold font-mono">{p.balance}</div>
+              {p.unfetchable ? (
+                <div className="mt-2 rounded-lg bg-mc-orangebg px-2.5 py-1.5 text-[11px] font-semibold text-mc-orangetext inline-block">
+                  Unable to fetch
+                </div>
+              ) : (
+                <div className="mt-2 text-[22px] font-semibold font-mono">{p.balance}</div>
+              )}
               <Progress pct={p.pct} color="var(--mc-blue)" className="mt-2" />
               <div className="mt-2 text-[10.5px] text-mc-sub truncate" title={p.sub}>{p.model ?? p.sub}</div>
             </Card>
