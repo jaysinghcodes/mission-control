@@ -62,9 +62,9 @@ export default function Health() {
   // models), each with its own live balance. Never just the first one.
   const providerCards = providers.map((p) => ({
     name: p.name ?? 'provider',
-    balance: p.balance != null ? `$${Number(p.balance).toFixed(2)}` : '—',
+    balance: p.balance != null ? `$${Number(p.balance).toFixed(2)}` : p.cost != null ? `$${Number(p.cost).toFixed(4)}` : '—',
     pct: typeof p.pct === 'number' ? p.pct : p.balance != null ? 100 : 0,
-    sub: p.detail ?? p.name ?? 'balance via bridge',
+    sub: p.balance != null ? (p.model ?? p.detail ?? p.name) : (p.detail ?? p.model ?? p.name),
     model: p.model ?? null,
   }))
 
