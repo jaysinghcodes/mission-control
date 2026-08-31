@@ -5,6 +5,7 @@ import {
   OnGatewayDisconnect,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
+import { webOrigins } from '../cors-origins';
 
 /**
  * Event types the gateway may broadcast. Union type so callers can't
@@ -47,7 +48,7 @@ export type ActivityEventType =
  */
 @WebSocketGateway({
   cors: {
-    origin: process.env.WEB_ORIGIN ?? 'http://localhost:5173',
+    origin: webOrigins(),
     credentials: false,
   },
 })
