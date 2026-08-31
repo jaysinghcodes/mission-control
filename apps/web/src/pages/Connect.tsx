@@ -117,7 +117,7 @@ export default function Connect() {
         <p className="mt-2 text-[12.5px] text-mc-sub">
           Run the tunnel, then press the button. If the API answers, you're in.
         </p>
-        <div className="flex items-center gap-3 mt-4">
+        <div className="flex items-center gap-3 mt-4 flex-wrap">
           <PillButton label={checking ? 'Checking…' : 'I ran the tunnel — check connection'} on onClick={() => void verify()} />
           {result === 'ok' && (
             <>

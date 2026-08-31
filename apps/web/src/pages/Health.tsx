@@ -51,14 +51,22 @@ export default function Health() {
     : usage.data?.usage?.providers
       ? Object.values(usage.data.usage.providers)
       : []
-  const provider = providers[0]
 
   const metrics = [
     { label: 'CPU', big: s ? `${s.cpu.pct}%` : '—', pct: s?.cpu.pct ?? 0, color: s && s.cpu.pct > 80 ? 'var(--mc-red)' : 'var(--mc-green)', sub: s ? `load ${s.cpu.load1} · ${s.cpu.cores} core(s)` : 'loading…' },
     { label: 'Memory', big: s ? `${s.memory.pct}%` : '—', pct: s?.memory.pct ?? 0, color: s && s.memory.pct > 80 ? 'var(--mc-red)' : 'var(--mc-green)', sub: s ? `${s.memory.totalGb - s.memory.freeGb} / ${s.memory.totalGb} GB` : 'loading…' },
     { label: 'Disk', big: s ? `${s.disk.pct}%` : '—', pct: s?.disk.pct ?? 0, color: s && s.disk.pct > 80 ? 'var(--mc-red)' : 'var(--mc-green)', sub: s ? `${s.disk.usedGb} / ${s.disk.totalGb} GB` : 'loading…' },
-    { label: 'Provider', big: provider?.balance != null ? `$${Number(provider.balance).toFixed(2)}` : '—', pct: 100, color: 'var(--mc-blue)', sub: provider?.name ?? 'balance via bridge' },
   ]
+
+  // Provider balances — one card PER provider (DeepSeek + GLM + any added
+  // models), each with its own live balance. Never just the first one.
+  const providerCards = providers.map((p) => ({
+    name: p.name ?? 'provider',
+    balance: p.balance != null ? `$${Number(p.balance).toFixed(2)}` : '—',
+    pct: typeof p.pct === 'number' ? p.pct : p.balance != null ? 100 : 0,
+    sub: p.detail ?? p.name ?? 'balance via bridge',
+    model: p.model ?? null,
+  }))
 
   return (
     <div className="p-6">
@@ -82,7 +90,7 @@ export default function Health() {
         <Chip label={h?.database === 'connected' ? 'DB · OK' : 'DB · DOWN'} bg={h?.database === 'connected' ? 'var(--mc-greenbg)' : 'var(--mc-redbg)'} fg={h?.database === 'connected' ? 'var(--mc-greentext)' : 'var(--mc-redtext)'} h={24} fs="text-[11px]" />
       </Card>
 
-      {/* Real metric cards */}
+      {/* Real metric cards — CPU / Memory / Disk */}
       <div className="flex gap-[10px] mt-5 flex-wrap">
         {metrics.map((m) => (
           <Card key={m.label} className="w-[148px] px-3 py-2.5">
@@ -92,6 +100,29 @@ export default function Health() {
             <div className="mt-2 text-[10.5px] text-mc-sub truncate">{m.sub}</div>
           </Card>
         ))}
+      </div>
+
+      {/* Provider balances — one card per provider (DeepSeek + GLM + added models) */}
+      <div className="mt-6">
+        <SectionLabel>Provider Balances</SectionLabel>
+        <div className="flex gap-[10px] mt-3 flex-wrap">
+          {providerCards.length === 0 && (
+            <Card className="w-full px-4 py-4 text-[12px] text-mc-faint">
+              No balance data yet — the bridge syncs every few minutes.
+            </Card>
+          )}
+          {providerCards.map((p) => (
+            <Card key={p.name} className="w-[190px] px-4 py-3">
+              <div className="flex items-center gap-2">
+                <span className="w-[10px] h-[10px] rounded-full" style={{ backgroundColor: 'var(--mc-blue)' }} />
+                <span className="text-[12.5px] font-semibold capitalize">{p.name}</span>
+              </div>
+              <div className="mt-2 text-[22px] font-semibold font-mono">{p.balance}</div>
+              <Progress pct={p.pct} color="var(--mc-blue)" className="mt-2" />
+              <div className="mt-2 text-[10.5px] text-mc-sub truncate" title={p.sub}>{p.model ?? p.sub}</div>
+            </Card>
+          ))}
+        </div>
       </div>
 
       {/* Host details — real */}
