@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { NavLink, Outlet, useLocation } from 'react-router-dom'
+import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { NAV_GROUPS } from '../data/mock'
 import { Glyph, type GlyphKind } from '../components/glyphs'
 import { Dot } from '../components/ui'
@@ -42,7 +42,20 @@ export default function AppLayout() {
   const { light, toggle } = useTheme()
   const { connected } = useLiveActivity()
   const { pathname } = useLocation()
+  const nav = useNavigate()
   const title = TITLES[pathname] ?? 'Mission Control'
+
+  // Onboarding gate: if the API is unreachable, send the user to the
+  // Connect page (it explains the SSH tunnel) instead of an empty shell.
+  useEffect(() => {
+    const ctrl = new AbortController()
+    const t = setTimeout(() => {
+      fetch(`${import.meta.env.VITE_API_URL ?? 'http://localhost:3000'}/health`, { signal: ctrl.signal })
+        .then((r) => { if (!r.ok) nav('/connect') })
+        .catch(() => nav('/connect'))
+    }, 1200)
+    return () => { clearTimeout(t); ctrl.abort() }
+  }, [nav])
 
   return (
     <div className="flex h-screen bg-mc-bg text-mc-text">
@@ -84,6 +97,9 @@ export default function AppLayout() {
         <div className="px-5 pb-5 pt-4 border-t border-mc-sideborder">
           <div className="rounded-[10px] bg-mc-sidebar2 px-3 py-2.5">
             <div className="text-[13px] font-medium text-mc-text">⚙ Settings</div>
+            <Link to="/connect" className="mt-1 block text-[11.5px] text-mc-sub hover:text-mc-text">
+              Setup guide · SSH tunnel
+            </Link>
             <div className="flex items-center justify-between mt-1.5">
               <span className="flex items-center gap-1.5 text-[11.5px] text-mc-sub">
                 <Dot color={connected ? 'var(--mc-green)' : 'var(--mc-red)'} size={5} />
@@ -135,9 +151,7 @@ export default function AppLayout() {
                 </svg>
               )}
             </button>
-            <div className="w-8 h-8 rounded-full overflow-hidden ring-1 ring-mc-border">
-              <img src="/logo.svg" alt="J" className="w-full h-full" />
-            </div>
+            <div className="w-8 h-8 rounded-full bg-mc-primary text-white flex items-center justify-center text-[13px] font-semibold ring-1 ring-mc-border">J</div>
           </div>
         </header>
 

@@ -1,5 +1,6 @@
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
 import AppLayout from './layout/AppLayout'
+import Connect from './pages/Connect'
 import Overview from './pages/Overview'
 import Tasks from './pages/Tasks'
 import Tickets from './pages/Tickets'
@@ -23,6 +24,8 @@ function App() {
   return (
     <HashRouter>
       <Routes>
+        {/* Onboarding gate — full page, outside the app shell */}
+        <Route path="/connect" element={<Connect />} />
         <Route element={<AppLayout />}>
           <Route path="/" element={<Overview />} />
           <Route path="/tasks" element={<Tasks />} />
