@@ -44,6 +44,20 @@ export default function AppLayout() {
   const { pathname } = useLocation()
   const nav = useNavigate()
   const title = TITLES[pathname] ?? 'Mission Control'
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  // Close the avatar menu on outside click / Escape.
+  useEffect(() => {
+    if (!menuOpen) return
+    const close = () => setMenuOpen(false)
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setMenuOpen(false) }
+    window.addEventListener('click', close)
+    window.addEventListener('keydown', onKey)
+    return () => {
+      window.removeEventListener('click', close)
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [menuOpen])
 
   // Onboarding gate: if the API is unreachable, send the user to the
   // Connect page (it explains the SSH tunnel) instead of an empty shell.
@@ -62,8 +76,10 @@ export default function AppLayout() {
       {/* ── Sidebar (220px, wireframe sidebar()) ─────────────────────────── */}
       <aside className="w-[220px] shrink-0 bg-mc-sidebar border-r border-mc-sideborder flex flex-col">
         <div className="flex items-center gap-2.5 px-5 pt-[22px] pb-4">
-          <img src="/logo.svg" alt="Mission Control" className="w-[26px] h-[26px] rounded-lg" />
-          <div className="text-[15px] font-semibold text-mc-text">Mission Control</div>
+          <Link to="/" className="flex items-center gap-2.5" title="Back to Overview">
+            <img src="/logo.svg" alt="Mission Control" className="w-[26px] h-[26px] rounded-lg" />
+            <div className="text-[15px] font-semibold text-mc-text">Mission Control</div>
+          </Link>
         </div>
 
         <nav className="flex-1 overflow-y-auto px-3">
@@ -151,7 +167,41 @@ export default function AppLayout() {
                 </svg>
               )}
             </button>
-            <div className="w-8 h-8 rounded-full bg-mc-primary text-white flex items-center justify-center text-[13px] font-semibold ring-1 ring-mc-border">J</div>
+            <div className="relative">
+              <button
+                type="button"
+                aria-label="Account menu"
+                onClick={(e) => { e.stopPropagation(); setMenuOpen((v) => !v) }}
+                className="w-8 h-8 rounded-full bg-mc-primary text-white flex items-center justify-center text-[13px] font-semibold ring-1 ring-mc-border hover:opacity-90 cursor-pointer"
+              >
+                J
+              </button>
+              {menuOpen && (
+                <div
+                  className="absolute right-0 top-10 z-50 w-48 rounded-xl border border-mc-border bg-mc-card shadow-lg py-1.5"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <button
+                    type="button"
+                    onClick={() => { setMenuOpen(false); nav('/settings') }}
+                    className="w-full text-left px-4 py-2 text-[13px] text-mc-text hover:bg-white/5 flex items-center gap-2"
+                  >
+                    ⚙ Settings
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMenuOpen(false)
+                      localStorage.removeItem('mc-connected')
+                      nav('/connect')
+                    }}
+                    className="w-full text-left px-4 py-2 text-[13px] text-mc-redtext hover:bg-white/5 flex items-center gap-2"
+                  >
+                    ⏻ Log out
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </header>
 

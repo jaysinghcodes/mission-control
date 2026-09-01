@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useApi } from '../hooks/useApi'
 import { useLiveActivity } from '../hooks/useLiveActivity'
-import { Bot, Card, Chip, PillButton, SectionLabel } from '../components/ui'
+import { Bot, Card, Chip, SectionLabel } from '../components/ui'
 
 /**
  * Factory — LIVE floor with REAL pipeline semantics (Jay fix #7).
@@ -58,7 +58,9 @@ export default function Factory() {
       prevRoster.current = rosterKey
       const next: Record<string, number> = {}
       roster.forEach((a, i) => {
-        next[a.id] = stageForAgent(a.role, i)
+        // Jay fix: idle agents hang out in the BREAK ROOM (station 0);
+        // only working agents stand at their role's station on the line.
+        next[a.id] = a.status === 'working' ? stageForAgent(a.role, i) : 0
       })
       setStations(next)
     }
@@ -109,12 +111,7 @@ export default function Factory() {
           <div className="text-[22px] font-semibold">Factory</div>
           <div className="mt-1 text-[13px] text-mc-sub">Build → QA → Review → Ship — agents physically move between stages.</div>
         </div>
-        <div className="flex items-center gap-2">
-          {['1x', '2x', '4x'].map((sp, i) => (
-            <PillButton key={sp} label={sp} on={i === 0} className="w-[38px] px-0" />
-          ))}
-          <PillButton label="❚❚  Pause" className="ml-2" />
-        </div>
+        <div className="flex items-center gap-2" />
       </div>
 
       <div className="relative mt-6 h-[400px] rounded-2xl border border-mc-border bg-mc-inner overflow-hidden">

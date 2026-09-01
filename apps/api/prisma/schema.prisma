@@ -101,11 +101,23 @@ model ActivityEvent {
 }
 
 /// Approval requests — pushed by the bridge (approvals.snapshot) and decided here.
+/// meta holds structured details (e.g. PR number/url/branch for kind='pr').
 model Approval {
   id        String   @id @default(cuid())
-  kind      String   // exec | pair | msg | sess
+  kind      String   // exec | pair | msg | sess | pr
   tag       String
   desc      String
   status    String   @default("pending") // pending | approved | rejected
+  meta      Json?
+  createdAt DateTime @default(now())
+}
+
+/// User-configured models for usage tracking — added from the Usage page (+).
+/// The bridge reads these and fetches a live balance/usage for each provider.
+model ModelConfig {
+  id        String   @id @default(cuid())
+  provider  String   // deepseek | zai | other
+  model     String   // model id, e.g. deepseek-v4-flash / glm-5.2
+  label     String?  // friendly name shown in the UI
   createdAt DateTime @default(now())
 }

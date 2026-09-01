@@ -60,23 +60,35 @@ export default function Connect() {
   async function verify() {
     setChecking(true)
     setResult(null)
-    try {
-      const res = await fetch(`${API}/health`, { signal: AbortSignal.timeout(5000) })
-      if (res.ok) {
-        const h = (await res.json()) as { status: string; database: string }
-        setResult('ok')
-        setDetail(`API ${h.status} · database ${h.database}`)
-        localStorage.setItem('mc-connected', 'true')
-      } else {
-        setResult('fail')
-        setDetail(`API responded with ${res.status} — the tunnel may be up but the API is unhappy.`)
+    // Try the configured API first, then the 127.0.0.1 spelling. Browsers can
+    // resolve `localhost` to ::1 while the SSH tunnel only binds IPv4, and a
+    // single-spelling CORS lockout made the gate fail in the browser even when
+    // the tunnel was fine (curl worked — curl ignores CORS). Try both before
+    // declaring failure.
+    const bases = [API, API.replace('localhost', '127.0.0.1')]
+    let detail = 'Could not reach the API on this port. Is the SSH tunnel running and is the session still open?'
+    let ok = false
+    for (const base of [...new Set(bases)]) {
+      try {
+        const res = await fetch(`${base}/health`, { signal: AbortSignal.timeout(5000) })
+        if (res.ok) {
+          const h = (await res.json()) as { status: string; database: string }
+          setResult('ok')
+          setDetail(`API ${h.status} · database ${h.database}`)
+          localStorage.setItem('mc-connected', 'true')
+          ok = true
+          break
+        }
+        detail = `API responded with ${res.status} — the tunnel may be up but the API is unhappy.`
+      } catch {
+        // try the next base
       }
-    } catch {
-      setResult('fail')
-      setDetail('Could not reach the API on this port. Is the SSH tunnel running and is the session still open?')
-    } finally {
-      setChecking(false)
     }
+    if (!ok) {
+      setResult('fail')
+      setDetail(detail)
+    }
+    setChecking(false)
   }
 
   const s = STEPS[os]
@@ -105,7 +117,7 @@ export default function Connect() {
         <p className="mt-2 text-[12.5px] text-mc-sub">
           Run the tunnel, then press the button. If the API answers, you're in.
         </p>
-        <div className="flex items-center gap-3 mt-4">
+        <div className="flex items-center gap-3 mt-4 flex-wrap">
           <PillButton label={checking ? 'Checking…' : 'I ran the tunnel — check connection'} on onClick={() => void verify()} />
           {result === 'ok' && (
             <>

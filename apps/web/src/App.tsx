@@ -11,6 +11,7 @@ import Agents from './pages/Agents'
 import Factory from './pages/Factory'
 import Activity from './pages/Activity'
 import Health from './pages/Health'
+import Settings from './pages/Settings'
 import Sessions from './pages/Sessions'
 import Usage from './pages/Usage'
 import Logs from './pages/Logs'
@@ -37,6 +38,7 @@ function App() {
           <Route path="/factory" element={<Factory />} />
           <Route path="/activity" element={<Activity />} />
           <Route path="/health" element={<Health />} />
+          <Route path="/settings" element={<Settings />} />
           <Route path="/sessions" element={<Sessions />} />
           <Route path="/usage" element={<Usage />} />
           <Route path="/logs" element={<Logs />} />

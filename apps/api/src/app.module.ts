@@ -17,6 +17,8 @@ import { LogsController } from './logs/logs.controller';
 import { ApprovalsController } from './approvals/approvals.controller';
 import { SearchController } from './search/search.controller';
 import { SystemController } from './system/system.controller';
+import { ModelsController } from './models/models.controller';
+import { GitHubService } from './github/github.service';
 import { PrismaService } from './prisma/prisma.service';
 
 /**
@@ -44,6 +46,7 @@ import { PrismaService } from './prisma/prisma.service';
     ApprovalsController,
     SearchController,
     SystemController,
+    ModelsController,
   ],
   providers: [
     AppService,
@@ -51,6 +54,7 @@ import { PrismaService } from './prisma/prisma.service';
     PrismaService,
     HealthTickerService,
     SnapshotsService,
+    GitHubService,
   ],
   exports: [PrismaService, LiveActivityGateway],
 })

@@ -1,18 +1,20 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { LiveActivityGateway } from '../live-activity/live-activity.gateway';
 import { PrismaService } from '../prisma/prisma.service';
+import { GitHubService } from '../github/github.service';
 
 /**
  * ApprovalsController — Review & Gate lane.
  *  - GET /approvals              → pending requests (synced via approvals.snapshot)
- *  - POST /approvals/:id/decide  → approve/reject (broadcasts approval.decided;
- *    the OpenClaw bridge executes the decision against the gateway)
+ *  - POST /approvals/:id/decide  → approve/reject; kind='pr' approvals are
+ *    merged on GitHub (and branch deleted, standing rule #6) when approved
  */
 @Controller('approvals')
 export class ApprovalsController {
   constructor(
     private readonly prisma: PrismaService,
     private readonly gateway: LiveActivityGateway,
+    private readonly github: GitHubService,
   ) {}
 
   @Get()
@@ -34,6 +36,18 @@ export class ApprovalsController {
     if (!existing) {
       return { error: 'approval not found' };
     }
+
+    // PR approvals: approving merges on GitHub + deletes the branch.
+    let mergeResult: { ok: boolean; message: string } | null = null;
+    if (action === 'approve' && existing.kind === 'pr') {
+      const meta = (existing.meta ?? {}) as { repo?: string; number?: number; branch?: string | null };
+      if (meta.repo && meta.number) {
+        mergeResult = await this.github.mergePr(meta.repo, meta.number, meta.branch);
+      } else {
+        mergeResult = { ok: false, message: 'PR metadata missing — cannot merge on GitHub' };
+      }
+    }
+
     const approval = await this.prisma.approval.update({
       where: { id },
       data: { status: action === 'approve' ? 'approved' : 'rejected' },
@@ -43,7 +57,8 @@ export class ApprovalsController {
       desc: approval.desc,
       action,
       status: approval.status,
+      merge: mergeResult,
     });
-    return { approval, ts: Date.now() };
+    return { approval, merge: mergeResult, ts: Date.now() };
   }
 }
