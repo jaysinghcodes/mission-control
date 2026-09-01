@@ -115,6 +115,22 @@ logos/                     Brand explorations
 
 ## Running locally
 
+### Quickest: Docker (clone-and-run)
+
+Prereqs: Docker + Docker Compose.
+
+```bash
+cp .env.example .env      # fill in INGEST_TOKEN at minimum
+cp apps/api/.env.example apps/api/.env 2>/dev/null || true
+docker compose up --build
+```
+
+- Postgres 16 on `127.0.0.1:5432` (volume `mc-db`)
+- API on `http://localhost:3000` (runs `prisma migrate deploy` on boot)
+- Web on `http://localhost:5173`
+
+### Manual (no Docker)
+
 Prereqs: Node 20+ (tested on 26), npm, Postgres 16.
 
 ```bash
@@ -126,11 +142,11 @@ cd apps/api && npx prisma generate
 sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'postgres';"
 sudo -u postgres psql -c "CREATE DATABASE mission_control;"
 
-# 3. Sync schema (dev only; migrations stay human-reviewed)
-cd apps/api && npx prisma db push
+# 3. Apply schema — use MIGRATIONS in shared/dev; db push is dev-only
+cd apps/api && npx prisma migrate deploy   # or: npx prisma db push (dev only)
 
-# 4. Env files (see apps/api/.env.example; never commit real values)
-#    apps/api/.env ← DATABASE_URL, PORT, WEB_ORIGIN, SOCKET_TOKEN, INGEST_TOKEN, HEALTH_TICK_MS
+# 4. Env files (see .env.example + apps/api/.env.example; never commit real values)
+#    apps/api/.env ← DATABASE_URL, PORT, HOST, WEB_ORIGIN, INGEST_TOKEN, GITHUB_TOKEN
 #    apps/web/.env  ← optional VITE_API_URL (default http://localhost:3000)
 
 # 5. Run both apps
@@ -140,6 +156,11 @@ npm run dev        # turbo: api (nest start --watch) + web (vite) in parallel
 Verify: `curl http://127.0.0.1:3000/health` → `{"status":"ok",...,"database":"connected"}`,
 then open **http://localhost:5173** — the topbar dot should be green and the Live Activity
 band fills with `hello`, periodic `health.tick`, and OpenClaw-run events.
+
+> **Shipping note:** the event bridge (`~/.openclaw/.mc-bridge-sync.py`) is the
+> OpenClaw-integration piece — it reads OpenClaw's own state (sessions, cron,
+> sqlite) and is optional for a standalone clone. Everything else runs on env
+> vars + Postgres alone.
 
 ### Build / test / lint
 
