@@ -34,6 +34,10 @@ services:
       HOST: 0.0.0.0
       WEB_ORIGIN: ${WEB_ORIGIN:-http://localhost:5173}
       INGEST_TOKEN: ${INGEST_TOKEN:-dev-ingest-token}
+      # Socket handshake guard (gateway requires SOCKET_TOKEN when NODE_ENV=production).
+      # Default matches the token baked into the web bundle (see web build args below),
+      # so a fresh clone's dashboard socket works out of the box.
+      SOCKET_TOKEN: ${SOCKET_TOKEN:-dev-socket-token}
       GITHUB_TOKEN: ${GITHUB_TOKEN:-}
       NODE_ENV: production
     ports:
@@ -43,6 +47,11 @@ services:
     build:
       context: .
       dockerfile: apps/web/Dockerfile
+      args:
+        # Baked into the static bundle at build time. Must match the api's
+        # SOCKET_TOKEN (same root .env value) or the socket guard rejects the
+        # dashboard in production.
+        VITE_SOCKET_TOKEN: ${SOCKET_TOKEN:-dev-socket-token}
     restart: unless-stopped
     depends_on:
       - api

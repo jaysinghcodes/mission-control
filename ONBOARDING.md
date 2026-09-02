@@ -33,7 +33,8 @@ Work through the steps in order:
 
 ### Step 1 — Confirm prerequisites
 Verify the operator has each of these; ask them to confirm or help them install:
-- **Node.js 20+** (`node -v`) and **git** (`git --version`)
+- **Node.js 20.17+ (or 22.9+)** (`node -v`) — the root `packageManager` is
+  `npm@11.17.0`, which requires `^20.17 || >=22.9` — and **git** (`git --version`)
 - **Docker** with the compose plugin (`docker compose version`) — used for
   Postgres (and optionally the api + web containers)
 - Their **OpenClaw instance** running (this dashboard is useless without it —
@@ -46,32 +47,59 @@ npm install
 ```
 Confirm `npm install` finished without errors.
 
-### Step 3 — Create the environment file
-Copy the template and fill it in together:
+### Step 3 — Create the environment file: the **root** `.env`
+Docker Compose reads exactly one env file: the **root `.env`** (next to
+`docker-compose.yml`). The api container never loads `apps/api/.env` — in Docker
+its environment comes entirely from compose (`environment:` in
+`docker-compose.yml`). `apps/api/.env.example` is only a template for non-Docker
+runs, so use the root template here:
 ```sh
-cp apps/api/.env.example apps/api/.env
+cp .env.example .env
 ```
 Go through each variable with the operator. For each one, ask them to paste the
 real value, then write it into `.env` — never invent one:
-- `DATABASE_URL` — Postgres connection string (the compose file provides one at
-  `localhost:5432/mission_control` with the default credentials)
-- `INGEST_TOKEN` — you MAY generate this one locally with
-  `openssl rand -hex 24` (it is a random secret, not an account credential),
-  then show it to the operator — it will also go into their OpenClaw bridge config
-- `WEB_ORIGIN` — `http://localhost:5173,http://127.0.0.1:5173` (add their tunnel
-  origin later if they access the dashboard remotely)
-- Optional: `GITHUB_TOKEN` (enables PR approvals → auto-merge from the Approvals
-  page), `DEEPSEEK_API_KEY` / `ZAI_API_KEY` (live balances on Health/Usage) — ask
-  the operator to paste these only if they want those features; everything else
-  works without them.
+- `DATABASE_URL` — leave the template default (compose's Postgres matches it);
+  change it only if the operator overrides `POSTGRES_PASSWORD` in `.env`
+- `INGEST_TOKEN` — shared secret for the event bridge. You MAY generate this one
+  locally with `openssl rand -hex 24` (it is a random secret, not an account
+  credential), then show it to the operator — it also goes into their OpenClaw
+  bridge config. If left blank, compose falls back to `dev-ingest-token`
+- `SOCKET_TOKEN` — optional; guards the dashboard's live socket when the api runs
+  in production mode. Leave blank to use the compose default `dev-socket-token`
+  (the stack is loopback-only). If the operator sets a real value, set it
+  **before the first `docker compose build`** — it is baked into the web bundle
+- `WEB_ORIGIN` — the template default covers `localhost` + `127.0.0.1`; add their
+  tunnel origin later if they access the dashboard remotely
+- Optional: `GITHUB_TOKEN` (PR approvals → auto-merge from the Approvals page),
+  `DEEPSEEK_API_KEY` / `ZAI_API_KEY` (live balances on Health/Usage) — ask the
+  operator to paste these only if they want those features; everything else works
+  without them.
+
+`.env` is git-ignored — never commit it.
 
 ### Step 4 — Start the stack
 ```sh
-docker compose up -d
+docker compose up -d --build
+docker compose ps
 ```
-Confirm all three services come up healthy (db, api, web). If they prefer running
-without Docker: `npm run dev -w apps/api` and `npm run dev -w apps/web` (Postgres
-still required).
+Wait for all three services to be up (db healthy, api, web). The first `--build`
+compiles the images, so it takes a while. Confirm the api is **not** crash-looping:
+`docker compose logs api` should end with the Prisma migrations applied and
+`mission-control api listening on 0.0.0.0:3000`.
+
+If they prefer running without Docker (Postgres still required — a local Postgres
+or just the compose `db` service):
+```sh
+# terminal 1 — export the root .env, migrate, then run the api in watch mode
+set -a; . ./.env; set +a
+cd apps/api && npx prisma migrate deploy && cd ..
+npm run start:dev -w apps/api
+# terminal 2 — web dev server
+npm run dev -w apps/web
+```
+The api reads `process.env` directly and has no `.env` loader of its own, so the
+`set -a; . ./.env` export above is required on the non-Docker path (the `dev`
+script name does not exist in `apps/api/package.json` — use `start:dev`).
 
 ### Step 5 — Verify the dashboard
 Ask the operator to open `http://localhost:5173`. Confirm:
@@ -79,14 +107,20 @@ Ask the operator to open `http://localhost:5173`. Confirm:
 - `/health` shows real uptime, client count, and database state
 - Empty states show actions, never fake numbers
 
+If the dot stays red on the Docker path, the api is down or the `SOCKET_TOKEN`
+baked into the web build does not match the api's — set it in `.env` and rebuild
+with `docker compose up -d --build`.
+
 ### Step 6 — Connect their OpenClaw (the bridge)
 The dashboard is only as live as the data it receives. The operator's OpenClaw
 instance must POST typed events to `http://127.0.0.1:3000/events` with header
-`x-ingest-token: <the INGEST_TOKEN from Step 3>`. The standard pattern is a
-60-second cron bridge in the OpenClaw workspace that pushes
+`x-ingest-token: <the INGEST_TOKEN from Step 3's root .env>`. The standard pattern
+is a cron bridge job in the OpenClaw workspace that pushes
 agents/sessions/calendar/usage/approvals snapshots + run events (see the repo
 README's "Event flow" section). Confirm the bridge is running and the Live
-Activity band starts showing real events within a minute.
+Activity band starts showing real events within a minute. If no events appear,
+check the bridge sends the **same** token compose sees — an unset `INGEST_TOKEN`
+in `.env` silently falls back to `dev-ingest-token`, and the bridge would get 401.
 
 ### Step 7 — Connect from another machine (optional)
 If the operator wants remote access, point them at the **/connect** page in the
@@ -95,8 +129,8 @@ connection live before handing off.
 
 ### Step 8 — Smoke test
 Walk the operator through the core loops so they trust the data:
-1. **Tickets:** create one → it lands in To-Do; move it Start/Done → it travels
-   the kanban and persists to the activity stream.
+1. **Tickets:** create one → it lands in To-Do; start it → it travels
+   Build → QA → Review → Done and persists to the activity stream.
 2. **Calendar:** all their OpenClaw cron jobs are listed (weekly grid, ‹ › week
    navigation works).
 3. **Office:** agents physically move between rooms when a `run.*` event fires.

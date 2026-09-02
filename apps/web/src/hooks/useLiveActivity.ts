@@ -39,6 +39,13 @@ export function useLiveActivity(maxEvents = 50): { events: ActivityEvent[]; conn
     // falls back to the NestJS default port. Never hardcode a prod URL.
     const socket: Socket = io(import.meta.env.VITE_API_URL ?? 'http://localhost:3000', {
       transports: ['websocket'],
+      // Production socket guard: the api gateway requires SOCKET_TOKEN in the
+      // handshake when NODE_ENV=production (docker compose). Compose bakes the
+      // same token into this bundle via VITE_SOCKET_TOKEN; local dev builds omit
+      // it and the dev-mode api does not enforce the guard.
+      auth: import.meta.env.VITE_SOCKET_TOKEN
+        ? { token: import.meta.env.VITE_SOCKET_TOKEN }
+        : undefined,
     });
 
     socket.on('connect', () => setConnected(true));
