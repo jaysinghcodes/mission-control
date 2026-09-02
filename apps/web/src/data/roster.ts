@@ -20,7 +20,7 @@
  *   Sentinel → Alerts         (alerts)
  *
  * MC-211 will consume the same identities when it wires Pixel's robot
- * avatars; MC-202 will extend with the channel deep-link fallback.
+ * avatars. MC-202 adds the channel deep-link helper below.
  */
 
 export interface RosterIdentity {
@@ -123,4 +123,63 @@ export function rosterDisplayName(name: string | null | undefined, role: string 
   const identity = rosterIdentity(name, role)
   if (!identity) return name?.trim() || 'agent'
   return isGenericName(name) ? identity.name : name!.trim()
+}
+
+/* ------------------------------------------------------------------ */
+/* MC-202 — per-agent Discord deep link                                */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Discord guild hosting the roster channels (Sage's deep-links research,
+ * `research/deep-links-chat.md`). Canonical deep-link shape:
+ * `https://discord.com/channels/<guild>/<channel>` — a thread's snowflake
+ * goes in the same slot, so no shape change is ever needed for threads.
+ */
+export const DISCORD_GUILD = '1361917070358347967'
+
+/**
+ * Static name → Discord channel snowflake fallback (MC-202 AC #4).
+ *
+ * Used ONLY while the OpenClaw bridge does not supply `agent.channel` — the
+ * agent's own `channel` field always wins (AC #3). Snowflakes verified
+ * 2026-09-02 against the live session keys in
+ * `~/.openclaw/agents/main/sessions/sessions.json` (each Discord channel
+ * session key is `agent:main:discord:channel:<snowflake>`; the trailing
+ * segment is the channel id — Sage's research). Keys are normalized
+ * (case/separator-insensitive) roster names + the chief's API name.
+ */
+export const CHANNEL_FALLBACK: Record<string, string> = {
+  'jarvis': '1533634789901471805',      // #general
+  'jarvis singh': '1533634789901471805', // #general (chief's raw API name)
+  'atlas': '1544192564280950794',       // #scrummaster
+  'nova': '1535129332442341489',        // #development
+  'nox': '1543846101260697620',         // #qa
+  'sage': '1533676159106289675',        // #research
+  'pixel': '1534416808042299444',       // #design
+  'scribe': '1544194893423968376',      // #summary
+  'sentinel': '1533669990673285141',    // #alerts
+}
+
+/**
+ * Resolve an agent's canonical Discord channel URL, or null when the agent
+ * has no reachable channel.
+ *
+ * Priority (Sage's research §3):
+ *  1. `channel` — the bridge's source of truth. Accepts either the full
+ *     canonical URL or a bare snowflake (both are wrapped/kept as-is).
+ *  2. Otherwise the static CHANNEL_FALLBACK map (roster display name).
+ *  3. Nothing usable → null: callers HIDE the link — never a dead link,
+ *     never `<#id>` mentions, never a URL guessed from a channel name.
+ */
+export function channelHref(channel: string | null | undefined, name: string | null | undefined): string | null {
+  const v = (channel ?? '').trim()
+  if (/^https?:\/\//i.test(v)) return v // full canonical URL from the bridge
+  if (/^\d{17,21}$/.test(v)) return `https://discord.com/channels/${DISCORD_GUILD}/${v}` // bare snowflake
+  // A present-but-unusable channel (e.g. a <#id> mention) → hide, never fall
+  // back and never render a dead/broken link (Sage's research §3).
+  if (v) return null
+  // Absent → documented roster fallback keyed by the display name.
+  const n = norm(name)
+  const snowflake = n ? (CHANNEL_FALLBACK[n] ?? null) : null
+  return snowflake ? `https://discord.com/channels/${DISCORD_GUILD}/${snowflake}` : null
 }

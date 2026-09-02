@@ -1,6 +1,10 @@
+import { useCallback, useRef, useState } from 'react'
+import type { MouseEvent as ReactMouseEvent } from 'react'
 import { useApi } from '../hooks/useApi'
 import type { Agent, AgentsResp } from '../types'
-import { Bot, Card, SectionLabel } from '../components/ui'
+import { Card, SectionLabel } from '../components/ui'
+import { AgentAvatar } from '../components/AgentAvatar'
+import { AgentProfileDrawer } from '../components/AgentProfileDrawer'
 import { rosterDisplayName, rosterIdentity } from '../data/roster'
 
 /**
@@ -20,33 +24,29 @@ import { rosterDisplayName, rosterIdentity } from '../data/roster'
  * null). MC-200 profile fields (emoji, currentTask, …) are all optional on
  * the wire and every render path is null-safe.
  *
- * MC-202: each member card is a <button> so the profile drawer can attach a
- * click handler without markup churn (drawer + deep links land next ticket).
+ * MC-202: each member card is a <button> wired to open the profile drawer
+ * for that agent (AgentProfileDrawer) — name/role/status, personality tags,
+ * current task, stats, recent activity, and the Discord deep link.
  * MC-211: Pixel's robot avatars replace the emoji/Bot glyph below.
  */
 
+/** Status dot color — live honest semantics: working = green, otherwise faint. */
 const statusColor = (status: string) => (status === 'working' ? 'var(--mc-green)' : 'var(--mc-faint)')
 
-/** Avatar: agent.emoji when the bridge supplies it, else the colored Bot glyph. */
-function Avatar({ agent, size = 1 }: { agent: Agent; size?: number }) {
-  if (agent.emoji) {
-    return (
-      <span
-        className="shrink-0 flex items-center justify-center rounded-md"
-        style={{ width: 18 * size, height: 18 * size, fontSize: 12 * size, lineHeight: 1 }}
-        aria-hidden
-      >
-        {agent.emoji}
-      </span>
-    )
-  }
-  return <Bot color={agent.color || 'var(--mc-primary)'} scale={size} />
-}
-
 /** Roster member card. Root (chief) variant gets the distinct org-header styling. */
-function MemberCard({ agent, chief = false, parentName = null }: { agent: Agent; chief?: boolean; parentName?: string | null }) {
-  // MC-202: add onClick here to open the agent profile drawer (name, tags,
-  // current task, stats, channel deep link). Deliberately no-op for now.
+function MemberCard({
+  agent,
+  chief = false,
+  parentName = null,
+  onOpen,
+}: {
+  agent: Agent
+  chief?: boolean
+  parentName?: string | null
+  onOpen?: (agent: Agent, e: ReactMouseEvent<HTMLButtonElement>) => void
+}) {
+  // MC-202: onClick opens the agent profile drawer. Focus return is handled
+  // by Team (trigger ref) so the card keeps keyboard focus after ESC/backdrop.
   const identity = rosterIdentity(agent.name, agent.role)
   const name = rosterDisplayName(agent.name, agent.role)
   const roleTitle = identity?.role ?? agent.role ?? 'agent'
@@ -57,10 +57,12 @@ function MemberCard({ agent, chief = false, parentName = null }: { agent: Agent;
       <button
         type="button"
         aria-label={`${name} — ${roleTitle}`}
-        className="rounded-xl bg-mc-card px-6 py-4 flex flex-col items-center gap-2 min-w-[220px] text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-mc-primary"
+        aria-haspopup="dialog"
+        onClick={(e) => onOpen?.(agent, e)}
+        className="cursor-pointer rounded-xl bg-mc-card px-6 py-4 flex flex-col items-center gap-2 min-w-[220px] text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-mc-primary transition-colors"
         style={{ border: '1px solid color-mix(in srgb, var(--mc-primary) 55%, transparent)' }}
       >
-        <Avatar agent={agent} size={1.9} />
+        <AgentAvatar agent={agent} size={1.9} />
         <div>
           <div className="text-[15px] font-semibold leading-tight">{name}</div>
           <div className="mt-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-mc-primary">{roleTitle}</div>
@@ -75,10 +77,12 @@ function MemberCard({ agent, chief = false, parentName = null }: { agent: Agent;
     <button
       type="button"
       aria-label={`${name} — ${roleTitle}${parentName ? `, reports to ${parentName}` : ''}`}
-      className="rounded-xl border border-mc-border bg-mc-card px-3 py-2.5 min-w-[160px] w-[170px] text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-mc-primary"
+      aria-haspopup="dialog"
+      onClick={(e) => onOpen?.(agent, e)}
+      className="cursor-pointer rounded-xl border border-mc-border bg-mc-card px-3 py-2.5 min-w-[160px] w-[170px] text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-mc-primary transition-colors hover:border-mc-primary/60"
     >
       <div className="flex items-center gap-2">
-        <Avatar agent={agent} size={1} />
+        <AgentAvatar agent={agent} size={1} />
         <div className="min-w-0 flex-1">
           <div className="text-[12.5px] font-semibold leading-tight truncate">{name}</div>
           <div className="text-[11px] text-mc-sub truncate">{roleTitle}</div>
@@ -105,6 +109,20 @@ export default function Team() {
 
   const workingCount = agents.filter((a) => a.status === 'working').length
 
+  // MC-202: selected agent feeds the profile drawer; the trigger button is
+  // remembered so focus returns to the card when the drawer closes (a11y).
+  const [selected, setSelected] = useState<Agent | null>(null)
+  const triggerRef = useRef<HTMLButtonElement | null>(null)
+  const openProfile = (agent: Agent, e: ReactMouseEvent<HTMLButtonElement>) => {
+    triggerRef.current = e.currentTarget
+    setSelected(agent)
+  }
+  const closeProfile = useCallback(() => {
+    setSelected(null)
+    // Focus return after the drawer unmounts (card stays mounted in the grid).
+    requestAnimationFrame(() => triggerRef.current?.focus())
+  }, [])
+
   return (
     <div className="p-6">
       <div className="text-[22px] font-semibold">Team</div>
@@ -123,7 +141,7 @@ export default function Team() {
       {!error && chief && (
         <div className="mt-10 flex flex-col items-center">
           {/* Org-chart header — Jarvis (Chief of Staff) on top */}
-          <MemberCard agent={chief} chief />
+          <MemberCard agent={chief} chief onOpen={openProfile} />
           {team.length === 0 ? (
             <div className="mt-8 text-[12px] text-mc-faint text-center max-w-sm">
               No sub-agents running right now. Spawn one (sessions_spawn or a task) and it appears here live.
@@ -138,7 +156,7 @@ export default function Team() {
                 {team.map((a) => {
                   const parent = a.parentId ? agents.find((p) => p.id === a.parentId) : null
                   const parentName = parent && parent.id !== chief.id ? displayNameById.get(parent.id) ?? null : null
-                  return <MemberCard key={a.id} agent={a} parentName={parentName} />
+                  return <MemberCard key={a.id} agent={a} parentName={parentName} onOpen={openProfile} />
                 })}
               </div>
             </>
@@ -168,6 +186,9 @@ export default function Team() {
           </div>
         </Card>
       )}
+
+      {/* MC-202: profile drawer — rendered for the clicked agent only */}
+      {selected && <AgentProfileDrawer agent={selected} onClose={closeProfile} />}
     </div>
   )
 }
