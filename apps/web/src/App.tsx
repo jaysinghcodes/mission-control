@@ -7,7 +7,7 @@ import Tickets from './pages/Tickets'
 import Backlog from './pages/Backlog'
 import Calendar from './pages/Calendar'
 import Approvals from './pages/Approvals'
-import Agents from './pages/Agents'
+import Team from './pages/Team'
 import Office from './pages/Office'
 import Activity from './pages/Activity'
 import Health from './pages/Health'
@@ -34,7 +34,9 @@ function App() {
           <Route path="/backlog" element={<Backlog />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/approvals" element={<Approvals />} />
-          <Route path="/agents" element={<Agents />} />
+          <Route path="/team" element={<Team />} />
+          {/* Legacy redirect: the roster moved from /agents → /team (old links keep working) */}
+          <Route path="/agents" element={<Navigate to="/team" replace />} />
           <Route path="/office" element={<Office />} />
           {/* Legacy redirect: the floor moved from /factory → /office (old links keep working) */}
           <Route path="/factory" element={<Navigate to="/office" replace />} />
