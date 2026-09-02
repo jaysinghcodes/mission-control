@@ -8,6 +8,10 @@ RUN npm ci --workspace web --include-workspace-root
 COPY apps/web ./apps/web
 ARG VITE_API_URL=http://localhost:3000
 ENV VITE_API_URL=$VITE_API_URL
+# Socket handshake token — must match the api's SOCKET_TOKEN (compose passes the
+# same root .env value as a build arg; default dev-socket-token matches compose).
+ARG VITE_SOCKET_TOKEN=dev-socket-token
+ENV VITE_SOCKET_TOKEN=$VITE_SOCKET_TOKEN
 RUN cd apps/web && npm run build
 
 FROM nginx:alpine
