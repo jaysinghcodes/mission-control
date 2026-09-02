@@ -14,9 +14,26 @@ import { PrismaService } from '../prisma/prisma.service';
 export class SnapshotsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  /** Replace the agent roster (family tree: main on top, sub-agents below). */
+  /**
+   * Replace the agent roster (family tree: main on top, sub-agents below).
+   *
+   * MC-200: accepts the new profile fields (emoji, personalityTags, currentTask,
+   * tasksCompleted, totalCost, recentActivity, channel). Every one of them is
+   * optional on the wire: absent fields fall back to schema defaults / null, so
+   * legacy snapshots that predate MC-200 keep working unchanged (backward
+   * compatible). personalityTags arrives as a JSON array of short strings and is
+   * coerced defensively (never trusted raw) before being stored in the Json column.
+   *
+   * Order-independent tree wiring: rows are created WITHOUT parentId first, then
+   * the parent links are set by name — a snapshot that lists children before
+   * their parent used to violate Agent_parentId_fkey (inserts run sequentially);
+   * two-phase wiring can't. The bridge already sends parents first, but relying
+   * on producer ordering is fragile (GET /agents itself returns children first).
+   */
   async applyAgents(payload: Record<string, unknown>): Promise<void> {
-    const agents = Array.isArray(payload.agents) ? (payload.agents as Record<string, unknown>[]) : [];
+    const agents = Array.isArray(payload.agents)
+      ? (payload.agents as Record<string, unknown>[])
+      : [];
     // Bridge sends parent as a NAME; the FK column needs an id, so resolve names first.
     const ids = new Map<string, string>();
     for (const a of agents) {
@@ -24,6 +41,7 @@ export class SnapshotsService {
     }
     await this.prisma.$transaction([
       this.prisma.agent.deleteMany({}),
+      // Phase 1 — create every row without a parent edge (FK-safe in any order).
       ...agents.map((a) =>
         this.prisma.agent.create({
           data: {
@@ -32,16 +50,36 @@ export class SnapshotsService {
             color: String(a.color ?? '#58A6FF'),
             role: a.role ? String(a.role) : null,
             status: String(a.status ?? 'idle'),
-            parentId: a.parent ? ids.get(String(a.parent)) ?? null : null,
+            parentId: null,
+            // MC-200 profile fields — optional on the wire; defaults/null when absent.
+            emoji: a.emoji ? String(a.emoji) : null,
+            personalityTags: toTags(a.personalityTags),
+            currentTask: a.currentTask ? String(a.currentTask) : null,
+            tasksCompleted:
+              a.tasksCompleted != null ? Number(a.tasksCompleted) : undefined,
+            totalCost: a.totalCost != null ? Number(a.totalCost) : undefined,
+            recentActivity: a.recentActivity ? String(a.recentActivity) : null,
+            channel: a.channel ? String(a.channel) : null,
           },
         }),
       ),
+      // Phase 2 — wire the tree now that every row exists (name → fresh id).
+      ...agents
+        .filter((a) => a.parent && ids.has(String(a.parent)))
+        .map((a) =>
+          this.prisma.agent.update({
+            where: { name: String(a.name ?? 'unknown') },
+            data: { parentId: ids.get(String(a.parent))! },
+          }),
+        ),
     ]);
   }
 
   /** Replace the active sessions table. */
   async applySessions(payload: Record<string, unknown>): Promise<void> {
-    const sessions = Array.isArray(payload.sessions) ? (payload.sessions as Record<string, unknown>[]) : [];
+    const sessions = Array.isArray(payload.sessions)
+      ? (payload.sessions as Record<string, unknown>[])
+      : [];
     await this.prisma.$transaction([
       this.prisma.session.deleteMany({}),
       ...sessions.map((s) =>
@@ -61,7 +99,9 @@ export class SnapshotsService {
 
   /** Replace the calendar (cron jobs) table. */
   async applyCalendar(payload: Record<string, unknown>): Promise<void> {
-    const jobs = Array.isArray(payload.jobs) ? (payload.jobs as Record<string, unknown>[]) : [];
+    const jobs = Array.isArray(payload.jobs)
+      ? (payload.jobs as Record<string, unknown>[])
+      : [];
     await this.prisma.$transaction([
       this.prisma.cronJob.deleteMany({}),
       ...jobs.map((j) =>
@@ -102,11 +142,17 @@ export class SnapshotsService {
 
   /** Sync pending approvals — PRESERVES decided ones (approve/reject history). */
   async applyApprovals(payload: Record<string, unknown>): Promise<void> {
-    const approvals = Array.isArray(payload.approvals) ? (payload.approvals as Record<string, unknown>[]) : [];
+    const approvals = Array.isArray(payload.approvals)
+      ? (payload.approvals as Record<string, unknown>[])
+      : [];
     // Drop stale pending rows; keep approved/rejected history.
     await this.prisma.approval.deleteMany({ where: { status: 'pending' } });
-    const existing = await this.prisma.approval.findMany({ select: { tag: true, status: true } });
-    const decided = new Set(existing.filter((a) => a.status !== 'pending').map((a) => a.tag));
+    const existing = await this.prisma.approval.findMany({
+      select: { tag: true, status: true },
+    });
+    const decided = new Set(
+      existing.filter((a) => a.status !== 'pending').map((a) => a.tag),
+    );
     const fresh = approvals.filter((a) => !decided.has(String(a.tag ?? '')));
     if (fresh.length > 0) {
       await this.prisma.approval.createMany({
@@ -115,9 +161,24 @@ export class SnapshotsService {
           tag: String(a.tag ?? 'Request'),
           desc: String(a.desc ?? ''),
           status: String(a.status ?? 'pending'),
-          meta: a.meta ? (a.meta as object) : undefined,
+          meta: a.meta ? a.meta : undefined,
         })),
       });
     }
   }
+}
+
+/**
+ * Coerce a snapshot's personalityTags into a stored Json value.
+ *
+ * Accepts an array of short strings (e.g. ["strategist","daily"]); anything
+ * else (absent, null, non-array, garbage) becomes undefined so the field is
+ * omitted from the insert (column → NULL) and the ingest never rejects a
+ * snapshot over an unexpected tags shape. Items are stringified and trimmed;
+ * empty strings are dropped.
+ */
+function toTags(value: unknown): string[] | undefined {
+  if (!Array.isArray(value)) return undefined;
+  const tags = value.map((t) => String(t).trim()).filter((t) => t.length > 0);
+  return tags.length > 0 ? tags : undefined;
 }
