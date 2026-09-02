@@ -42,7 +42,7 @@ const num = (n: number | undefined): string => (typeof n === 'number' ? n.toLoca
 
 export default function Usage() {
   const [range, setRange] = useState('24h')
-  const { data, error, refetch } = useApi<UsageResp>(`/usage?period=${range}`, { pollMs: 30000 })
+  const { data, error } = useApi<UsageResp>(`/usage?period=${range}`, { pollMs: 30000 })
   const usage = data?.usage
   const models = useApi<ModelsResp>('/models', { pollMs: 30000 })
   const [adding, setAdding] = useState(false)

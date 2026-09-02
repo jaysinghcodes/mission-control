@@ -18,7 +18,7 @@ interface SystemResp {
   apiUptimeSeconds: number
 }
 interface HealthResp { status: string; uptimeSeconds: number; connectedClients: number; database: string }
-interface UsageResp { usage: { providers: { name?: string; balance?: number; cost?: number }[] | Record<string, { name?: string; balance?: number; cost?: number }> | null } | null }
+interface UsageResp { usage: { providers: { name?: string; balance?: number; cost?: number; pct?: number; model?: string; detail?: string }[] | Record<string, { name?: string; balance?: number; cost?: number; pct?: number; model?: string; detail?: string }> | null } | null }
 
 const fmtUptime = (s: number): string => `${Math.floor(s / 86400)}d ${Math.floor((s % 86400) / 3600)}h ${Math.floor((s % 3600) / 60)}m`
 

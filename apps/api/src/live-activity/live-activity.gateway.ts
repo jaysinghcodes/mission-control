@@ -14,15 +14,26 @@ import { webOrigins } from '../cors-origins';
  * v2 additions: run.queued / run.progress (task lifecycle), approval.*
  * (review & gate), and the * .snapshot events the OpenClaw bridge pushes
  * to sync real state (agents, sessions, calendar, usage, approvals).
+ *
+ * v3 additions (MC-212, real-time bridge): message.sent / message.received
+ * (chat), session.patch (session edits), command.new (slash commands), and
+ * run.running / run.done aliases so hooks using the documented MC-212 names
+ * are accepted alongside the legacy run.started / run.completed.
  */
 export type ActivityEventType =
   | 'run.started'
   | 'run.queued'
+  | 'run.running'
   | 'run.progress'
   | 'run.completed'
+  | 'run.done'
   | 'run.failed'
   | 'health.tick'
   | 'hello'
+  | 'message.sent'
+  | 'message.received'
+  | 'session.patch'
+  | 'command.new'
   | 'approval.new'
   | 'approval.decided'
   | 'agents.snapshot'
