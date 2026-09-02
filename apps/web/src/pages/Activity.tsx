@@ -1,6 +1,7 @@
 import { useApi } from '../hooks/useApi'
 import { useLiveActivity } from '../hooks/useLiveActivity'
 import { Bot, Card, Chip, PillButton, SectionLabel } from '../components/ui'
+import { AgentAvatar } from '../components/AgentAvatar'
 
 /**
  * Live Activity — real event stream: persisted history on load + live
@@ -54,7 +55,7 @@ export default function Activity() {
             <div className="mt-3 flex items-start justify-between gap-2">
               <div className="min-w-0">
                 <div className="flex items-center gap-2">
-                  <Bot color={a.color} scale={0.9} />
+                  <AgentAvatar agent={a} size={0.8} />
                   <span className="text-[12px] font-semibold truncate">{a.name}</span>
                 </div>
                 <div className="text-[10.5px] text-mc-sub truncate mt-1">{a.role ?? 'agent'}</div>

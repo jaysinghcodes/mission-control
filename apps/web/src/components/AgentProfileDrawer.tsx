@@ -12,7 +12,8 @@ const statusColor = (status: string) => (status === 'working' ? 'var(--mc-green)
  *
  * Right-side drawer opened by clicking a Team page card (MC-201 wired the
  * cards as <button>s). Renders the agent's profile from the real agent
- * object: avatar (emoji/Bot glyph), roster display name + role title, live
+ * object: robot avatar (MC-211 — per-agent sprite w/ live state), roster
+ * display name + role title, live
  * status, personality tags, current task, tasks completed, total cost and
  * recent activity — every field nullable until the bridge pushes it, so all
  * values fall back to '—' and the personality/task rows collapse cleanly.
