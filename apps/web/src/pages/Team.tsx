@@ -27,7 +27,8 @@ import { rosterDisplayName, rosterIdentity } from '../data/roster'
  * MC-202: each member card is a <button> wired to open the profile drawer
  * for that agent (AgentProfileDrawer) — name/role/status, personality tags,
  * current task, stats, recent activity, and the Discord deep link.
- * MC-211: Pixel's robot avatars replace the emoji/Bot glyph below.
+ * MC-211: AgentAvatar now renders Pixel's robot sprites (unique per roster
+ * agent, live data-state) — see components/AgentAvatar.tsx + avatarAssets.ts.
  */
 
 /** Status dot color — live honest semantics: working = green, otherwise faint. */

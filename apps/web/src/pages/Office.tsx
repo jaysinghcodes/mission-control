@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useApi } from '../hooks/useApi'
 import { useLiveActivity } from '../hooks/useLiveActivity'
-import { Bot, Card, Chip, SectionLabel } from '../components/ui'
+import { Card, Chip, SectionLabel } from '../components/ui'
+import { AgentAvatar } from '../components/AgentAvatar'
 
 /**
  * Office — LIVE floor with REAL pipeline semantics (Jay fix #7).
@@ -176,8 +177,10 @@ export default function Office() {
                 className="absolute flex flex-col items-center -translate-x-1/2"
                 style={{ left: `${x}%`, transition: 'left 2.5s ease-in-out' }}
               >
-                <div className={isTransiting ? 'animate-bob' : isWorking ? 'animate-bob' : ''} style={isTransiting ? { animationDuration: '0.6s' } : { animationDuration: '1.4s' }}>
-                  <Bot color={a.color} scale={1.1} />
+                {/* MC-211: Pixel's robot avatar (state-driven bob/glow per tokens.css);
+                    the outer wrapper only adds the quick transit dash on run.* moves. */}
+                <div className={isTransiting ? 'animate-bob' : undefined} style={isTransiting ? { animationDuration: '0.6s' } : undefined}>
+                  <AgentAvatar agent={a} size={0.8} />
                 </div>
                 <div className="mt-1 text-[11px] font-semibold truncate max-w-[110px]">{a.name}</div>
                 <div className="text-[9px] text-mc-sub truncate max-w-[110px]">{a.role ?? 'agent'}</div>
