@@ -1,14 +1,17 @@
 import { useApi } from '../hooks/useApi'
+import type { AgentsResp } from '../types'
 import { Bot, Card, SectionLabel } from '../components/ui'
 
 /**
  * Agents — the REAL OpenClaw roster (synced via agents.snapshot): Jarvis
  * Singh (main) on top, real sub-agents below, live status dots. Empty
  * sub-agent state explains how to spawn one.
+ *
+ * MC-200: the roster shape now includes profile fields (emoji, currentTask,
+ * personalityTags, stats, channel). They are all null-able until the bridge
+ * pushes them, and this page does not render them yet (MC-201/202 do) — so
+ * cards are byte-identical whether the fields are null or populated.
  */
-
-interface Agent { id: string; name: string; role: string | null; color: string; status: string; parentId: string | null }
-interface AgentsResp { agents: Agent[] }
 
 function AgentCard({ name, role, color, status }: { name: string; role: string | null; color: string; status: string }) {
   return (

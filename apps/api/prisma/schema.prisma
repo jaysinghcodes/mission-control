@@ -16,16 +16,26 @@ datasource db {
 
 /// Agent roster — pushed as a snapshot by the OpenClaw bridge (agents.snapshot).
 /// Parent links form the family tree (Jarvis Singh on top, sub-agents below).
+/// v3 (MC-200): profile fields pushed by the bridge — emoji/avatar, personality
+/// tags, current task, task stats, recent activity, and a channel/thread link.
+/// All nullable/defaulted so legacy snapshots (and existing rows) stay valid.
 model Agent {
-  id        String   @id @default(cuid())
-  name      String   @unique
-  color     String   @default("#58A6FF")
-  role      String?
-  status    String   @default("idle") // working | idle
-  parentId  String?
-  parent    Agent?   @relation("AgentTree", fields: [parentId], references: [id])
-  children  Agent[]  @relation("AgentTree")
-  updatedAt DateTime @updatedAt
+  id              String   @id @default(cuid())
+  name            String   @unique
+  color           String   @default("#58A6FF")
+  role            String?
+  status          String   @default("idle") // working | idle
+  parentId        String?
+  parent          Agent?   @relation("AgentTree", fields: [parentId], references: [id])
+  children        Agent[]  @relation("AgentTree")
+  emoji           String? // avatar emoji, e.g. "🛠️"
+  personalityTags Json? // array of short tags, e.g. ["strategist","daily","integrator"]
+  currentTask     String?
+  tasksCompleted  Int      @default(0)
+  totalCost       Float    @default(0)
+  recentActivity  String?
+  channel         String? // Discord channel/thread link or handle (bridge-supplied)
+  updatedAt       DateTime @updatedAt
 }
 
 /// Scheduled runs / jobs observed by the dashboard (Morning Brief, Trend Radar, ...).
@@ -104,7 +114,7 @@ model ActivityEvent {
 /// meta holds structured details (e.g. PR number/url/branch for kind='pr').
 model Approval {
   id        String   @id @default(cuid())
-  kind      String   // exec | pair | msg | sess | pr
+  kind      String // exec | pair | msg | sess | pr
   tag       String
   desc      String
   status    String   @default("pending") // pending | approved | rejected
@@ -116,8 +126,8 @@ model Approval {
 /// The bridge reads these and fetches a live balance/usage for each provider.
 model ModelConfig {
   id        String   @id @default(cuid())
-  provider  String   // deepseek | zai | other
-  model     String   // model id, e.g. deepseek-v4-flash / glm-5.2
-  label     String?  // friendly name shown in the UI
+  provider  String // deepseek | zai | other
+  model     String // model id, e.g. deepseek-v4-flash / glm-5.2
+  label     String? // friendly name shown in the UI
   createdAt DateTime @default(now())
 }
