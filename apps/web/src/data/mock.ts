@@ -42,7 +42,7 @@ export const NAV_GROUPS: NavGroup[] = [
   {
     label: 'TEAM',
     items: [
-      { key: 'agents', label: 'Agents', path: '/agents' },
+      { key: 'team', label: 'Team', path: '/team' },
       { key: 'office', label: 'Office', path: '/office' },
       { key: 'activity', label: 'Live Activity', path: '/activity' },
     ],
