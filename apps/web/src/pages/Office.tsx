@@ -7,16 +7,16 @@ import { AgentAvatar } from '../components/AgentAvatar'
 /**
  * Office — LIVE floor with REAL pipeline semantics (Jay fix #7).
  *
- * Stages (standard CI/CD definitions):
- *  BREAK ROOM — parts/queue (no active work)
- *  BUILD      — compile/assemble: code written, artifacts produced
- *  QA         — testing & verification: find bugs before release
- *  REVIEW     — human/peer review gate before anything ships
- *  SHIP       — release/deploy to production
+ * The five stations read as office rooms (the board as a floor plan):
+ *  Break Room — team lounge & queue (idle agents rest, no active work)
+ *  Build Room — compile & assemble: code written, artifacts produced
+ *  QA Room    — testing & verification: find bugs before release
+ *  Review Room— the gate: human/approvals review before anything ships
+ *  Ship Room  — release/deploy to production
  *
  * Agents are placed by role: build/infra/eng → BUILD, qa/test/audit → QA,
  * review → REVIEW, else round-robin. When a real run.* event fires, a bot
- * PHYSICALLY moves along the belt to its next stage while bobbing.
+ * PHYSICALLY moves along the walkway to its next stage while bobbing.
  */
 
 interface Agent { id: string; name: string; role: string | null; color: string; status: string }
@@ -25,13 +25,29 @@ interface EventApi { type: string; payload: { name?: string; summary?: string } 
 interface ActivityResp { events: EventApi[] }
 
 const STATIONS = [
-  { label: 'BREAK ROOM', kind: 'bin' as const, def: 'Parts & queue — no active work' },
-  { label: 'BUILD', kind: 'machine' as const, def: 'Compile & assemble — code → artifacts' },
-  { label: 'QA', kind: 'machine' as const, def: 'Test & verify — find bugs pre-release' },
-  { label: 'REVIEW', kind: 'machine' as const, def: 'Human/peer review gate' },
-  { label: 'SHIP', kind: 'machine' as const, def: 'Release & deploy to production' },
+  { label: 'Break Room', def: 'Team lounge & queue — idle agents rest here' },
+  { label: 'Build Room', def: 'Compile & assemble — code → artifacts' },
+  { label: 'QA Room', def: 'Test & verify — find bugs pre-release' },
+  { label: 'Review Room', def: 'The gate — human/approvals review' },
+  { label: 'Ship Room', def: 'Release & deploy — completed runs visit' },
 ]
 const STAGE_X = [2, 27, 45, 63, 81] // % left for each station
+
+// MC-204 office chrome — one accent hue + door-plate monogram per room.
+const ROOM_ACCENT: Record<string, string> = {
+  'Break Room': 'var(--mc-border)', // neutral — lounge carries no hue
+  'Build Room': 'var(--mc-blue)',
+  'QA Room': 'var(--mc-green)',
+  'Review Room': 'var(--mc-purple)',
+  'Ship Room': 'var(--mc-teal)',
+}
+const ROOM_PLATE: Record<string, { bg: string; fg: string; mono: string }> = {
+  'Break Room': { bg: 'var(--mc-inner)', fg: 'var(--mc-faint)', mono: 'BR' },
+  'Build Room': { bg: 'var(--mc-bluebg)', fg: 'var(--mc-bluetext)', mono: 'BL' },
+  'QA Room': { bg: 'var(--mc-greenbg)', fg: 'var(--mc-greentext)', mono: 'QA' },
+  'Review Room': { bg: 'var(--mc-purplebg)', fg: 'var(--mc-purpletext)', mono: 'RV' },
+  'Ship Room': { bg: 'var(--mc-tealbg)', fg: 'var(--mc-tealtext)', mono: 'SH' },
+}
 
 function stageForAgent(role: string | null, index: number): number {
   const r = (role ?? '').toLowerCase()
@@ -110,7 +126,7 @@ export default function Office() {
       <div className="flex items-start justify-between">
         <div>
           <div className="text-[22px] font-semibold">Office</div>
-          <div className="mt-1 text-[13px] text-mc-sub">Build → QA → Review → Ship — agents physically move between rooms.</div>
+          <div className="mt-1 text-[13px] text-mc-sub">Break Room → Build → QA → Review → Ship — the board as a floor plan. Agents move when runs fire.</div>
         </div>
         <div className="flex items-center gap-2" />
       </div>
@@ -118,54 +134,54 @@ export default function Office() {
       <div className="relative mt-6 h-[400px] rounded-2xl border border-mc-border bg-mc-inner overflow-hidden">
         <div className="absolute inset-0 opacity-40" style={{ backgroundImage: 'linear-gradient(var(--mc-border) 1px, transparent 1px), linear-gradient(90deg, var(--mc-border) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
         <div className="absolute top-3 left-4 text-[10.5px] font-semibold uppercase tracking-[0.1em] text-mc-faint">
-          FLOOR 01 · LIVE <span className="ml-2 inline-block w-2 h-2 rounded-full bg-mc-green align-middle" />
+          OFFICE · LIVE <span className="ml-2 inline-block w-2 h-2 rounded-full bg-mc-green align-middle" />
         </div>
         <div className="absolute top-3 right-4 h-[22px] px-3 rounded-md bg-mc-primary text-white text-[10.5px] font-semibold flex items-center">
-          ANDON · {events.filter((e) => e.type.includes('fail')).length}
+          INCIDENTS · {events.filter((e) => e.type.includes('fail')).length}
         </div>
 
         <div className="absolute left-5 right-5 top-14 h-0.5 bg-mc-faint/40" />
 
-        {/* Stations — one BREAK ROOM bin + BUILD/QA/REVIEW/SHIP machines */}
-        <div className="absolute inset-x-4 top-[88px] flex justify-between">
-          {STATIONS.map((st) => (
-            <div key={st.label} className="flex flex-col items-center w-[100px]" title={st.def}>
-              {st.kind === 'machine' ? (
-                <>
-                  <div className="w-[5px] h-[26px] bg-mc-faint/60" />
-                  <div className="w-[100px] h-[56px] rounded-lg bg-mc-card border border-mc-border flex flex-col items-center justify-center">
-                    <div className="text-[10.5px] font-semibold">{st.label}</div>
-                    <div className="text-[8.5px] text-mc-faint uppercase tracking-wide mt-0.5 px-1 text-center">{st.def.split('—')[1] ?? ''}</div>
+        {/* Rooms — five office room cards, one per board column. Each room is centered on
+            its stage lane (Break Room hugs the left wall) so the desks below work in front
+            of their own room. Occupancy pills count agents standing at each station (live). */}
+        <div className="absolute inset-x-4 top-[88px]">
+          {STATIONS.map((st, i) => {
+            const occupants = roster.filter((a) => (stations[a.id] ?? 1) === i).length
+            const plate = ROOM_PLATE[st.label]
+            return (
+              <div
+                key={st.label}
+                title={st.def}
+                className={i === 0 ? 'absolute left-0 top-0' : 'absolute top-0 -translate-x-1/2'}
+                style={{ width: 'min(170px, 16.5%)', left: i === 0 ? undefined : `${STAGE_X[i]}%` }}
+              >
+                <div className="flex h-[80px] w-full flex-col overflow-hidden rounded-xl border border-mc-border bg-mc-card">
+                  {/* accent strip — the room's only color field (Break Room stays neutral) */}
+                  <div className="h-[3px] w-full" style={{ backgroundColor: ROOM_ACCENT[st.label] }} />
+                  <div className="flex items-center gap-1.5 px-2.5 pt-1.5">
+                    {/* door plate — accent-bg/-text pair + 2-letter monogram */}
+                    <span
+                      className="flex h-5 w-5 shrink-0 items-center justify-center rounded-md text-[9px] font-bold"
+                      style={{ backgroundColor: plate.bg, color: plate.fg }}
+                    >
+                      {plate.mono}
+                    </span>
+                    <span className="min-w-0 flex-1 truncate text-[13px] font-semibold text-mc-text">{st.label}</span>
+                    <Chip label={String(occupants)} bg="var(--mc-inner)" fg="var(--mc-sub)" h={16} fs="text-[9.5px]" className="shrink-0" />
                   </div>
-                </>
-              ) : (
-                <>
-                  <div className="w-[60px] h-[44px] rounded-lg bg-mc-card border border-mc-border flex flex-col items-center justify-center gap-1.5">
-                    <div className="flex gap-1.5">
-                      <span className="w-[10px] h-[8px] rounded bg-mc-ralph" />
-                      <span className="w-[10px] h-[8px] rounded bg-mc-charlie" />
-                      <span className="w-[10px] h-[8px] rounded bg-mc-faint" />
-                    </div>
-                    <div className="text-[9px] font-semibold text-mc-sub">PARTS</div>
-                  </div>
-                  <div className="mt-3 text-[10.5px] font-semibold text-mc-sub">{st.label}</div>
-                </>
-              )}
-            </div>
-          ))}
+                  <div className="line-clamp-2 px-2.5 pt-[3px] text-[10px] leading-[1.35] text-mc-faint">{st.def}</div>
+                </div>
+              </div>
+            )
+          })}
         </div>
 
-        {/* conveyor belt */}
-        <div className="absolute left-10 right-10 top-[200px] h-[14px] rounded-full bg-mc-track border border-mc-border flex items-center overflow-hidden">
-          <div className="absolute inset-y-0 left-0 flex items-center" style={{ animation: 'belt 8s linear infinite' }}>
-            {Array.from({ length: 40 }).map((_, i) => (
-              <span key={i} className="w-[10px] h-[10px] rounded-[2.5px] mx-4 bg-mc-blue/70" />
-            ))}
-          </div>
-        </div>
+        {/* Walkway — dashed office path threading under the room cards */}
+        <div className="absolute left-8 right-8 top-[184px] border-t-2 border-dashed border-mc-border" />
 
-        {/* Agents at stations — bobbing while working, physically moving on events */}
-        <div className="absolute inset-x-4 top-[230px] h-[110px]">
+        {/* Agents at their desks — bobbing while working, physically moving on events */}
+        <div className="absolute inset-x-4 top-[206px] h-[110px]">
           {roster.map((a) => {
             const st = stations[a.id] ?? 1
             const x = STAGE_X[st]
@@ -182,6 +198,8 @@ export default function Office() {
                 <div className={isTransiting ? 'animate-bob' : undefined} style={isTransiting ? { animationDuration: '0.6s' } : undefined}>
                   <AgentAvatar agent={a} size={0.8} />
                 </div>
+                {/* desk line — static 44px bar under the avatar slot; the desk stays put while the agent works at it */}
+                <div className="mt-[3px] h-[3px] w-[44px] rounded-full border border-mc-border2 bg-mc-inner" />
                 <div className="mt-1 text-[11px] font-semibold truncate max-w-[110px]">{a.name}</div>
                 <div className="text-[9px] text-mc-sub truncate max-w-[110px]">{a.role ?? 'agent'}</div>
                 {isTransiting && (
@@ -216,9 +234,9 @@ export default function Office() {
         </div>
       </div>
 
-      {/* Build log — real persisted run events */}
+      {/* Run log — real persisted run events */}
       <Card className="mt-6 px-4 py-3">
-        <SectionLabel>Build Log</SectionLabel>
+        <SectionLabel>Run Log</SectionLabel>
         <div className="mt-2">
           {buildLog.length === 0 && <div className="text-[12px] text-mc-faint py-2">No run events yet — they stream in live.</div>}
           {buildLog.map((l, i) => (
@@ -231,9 +249,9 @@ export default function Office() {
         </div>
       </Card>
 
-      <style>{`@keyframes belt { from { transform: translateX(0); } to { transform: translateX(-240px); } }
-        @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
-        .animate-bob { animation: bob 1.4s ease-in-out infinite; }`}</style>
+      <style>{`@keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+        .animate-bob { animation: bob 1.4s ease-in-out infinite; }
+        @media (prefers-reduced-motion: reduce) { .animate-bob { animation: none; } }`}</style>
     </div>
   )
 }
