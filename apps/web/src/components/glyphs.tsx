@@ -1,11 +1,11 @@
 /**
  * Sidebar nav glyphs — 16×16 stroke icons matching wireframes/gen_wireframes.py
  * `glyph()` (overview, tasks, tickets, backlog, calendar, approvals, agents,
- * factory, activity, health, sessions, usage, logs).
+ * office, activity, health, sessions, usage, logs).
  */
 export type GlyphKind =
   | 'overview' | 'tasks' | 'tickets' | 'backlog' | 'calendar' | 'approvals'
-  | 'agents' | 'factory' | 'office' | 'activity' | 'health' | 'sessions' | 'usage' | 'logs'
+  | 'agents' | 'office' | 'activity' | 'health' | 'sessions' | 'usage' | 'logs'
 
 export function Glyph({ kind, color = 'currentColor', size = 16 }: { kind: GlyphKind; color?: string; size?: number }) {
   const s = size
@@ -63,7 +63,6 @@ export function Glyph({ kind, color = 'currentColor', size = 16 }: { kind: Glyph
         </svg>
       )
     case 'agents':
-    case 'factory':
     case 'office':
       return (
         <svg width={s} height={s} viewBox="0 0 16 20" {...common}>
