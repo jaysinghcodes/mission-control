@@ -30,7 +30,7 @@ const TITLES: Record<string, string> = {
   '/calendar': 'Calendar',
   '/approvals': 'Approvals',
   '/agents': 'Agents',
-  '/factory': 'Factory',
+  '/office': 'Office',
   '/activity': 'Live Activity',
   '/health': 'Health',
   '/sessions': 'Sessions',

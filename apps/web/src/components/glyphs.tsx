@@ -5,7 +5,7 @@
  */
 export type GlyphKind =
   | 'overview' | 'tasks' | 'tickets' | 'backlog' | 'calendar' | 'approvals'
-  | 'agents' | 'factory' | 'activity' | 'health' | 'sessions' | 'usage' | 'logs'
+  | 'agents' | 'factory' | 'office' | 'activity' | 'health' | 'sessions' | 'usage' | 'logs'
 
 export function Glyph({ kind, color = 'currentColor', size = 16 }: { kind: GlyphKind; color?: string; size?: number }) {
   const s = size
@@ -64,6 +64,7 @@ export function Glyph({ kind, color = 'currentColor', size = 16 }: { kind: Glyph
       )
     case 'agents':
     case 'factory':
+    case 'office':
       return (
         <svg width={s} height={s} viewBox="0 0 16 20" {...common}>
           <line x1="8" y1="2" x2="8" y2="5.2" strokeWidth={1.2} />

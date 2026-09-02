@@ -8,7 +8,7 @@ import Backlog from './pages/Backlog'
 import Calendar from './pages/Calendar'
 import Approvals from './pages/Approvals'
 import Agents from './pages/Agents'
-import Factory from './pages/Factory'
+import Office from './pages/Office'
 import Activity from './pages/Activity'
 import Health from './pages/Health'
 import Settings from './pages/Settings'
@@ -35,7 +35,9 @@ function App() {
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/approvals" element={<Approvals />} />
           <Route path="/agents" element={<Agents />} />
-          <Route path="/factory" element={<Factory />} />
+          <Route path="/office" element={<Office />} />
+          {/* Legacy redirect: the floor moved from /factory → /office (old links keep working) */}
+          <Route path="/factory" element={<Navigate to="/office" replace />} />
           <Route path="/activity" element={<Activity />} />
           <Route path="/health" element={<Health />} />
           <Route path="/settings" element={<Settings />} />

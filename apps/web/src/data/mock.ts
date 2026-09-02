@@ -43,7 +43,7 @@ export const NAV_GROUPS: NavGroup[] = [
     label: 'TEAM',
     items: [
       { key: 'agents', label: 'Agents', path: '/agents' },
-      { key: 'factory', label: 'Factory', path: '/factory' },
+      { key: 'office', label: 'Office', path: '/office' },
       { key: 'activity', label: 'Live Activity', path: '/activity' },
     ],
   },
@@ -226,9 +226,9 @@ export const APPROVAL_ROWS: ApprovalRow[] = [
   { kind: 'sess', tag: 'Session fork', desc: 'Ralph wants to fork session \'wireframes\' into \'wireframes-v2\'', ago: '2 hrs ago', color: 'var(--mc-teal)' },
 ]
 
-/* ── Factory ─────────────────────────────────────────────────────────────── */
+/* ── Office ──────────────────────────────────────────────────────────────── */
 
-export const FACTORY_STATS = [
+export const OFFICE_STATS = [
   { label: 'Shipped Today', value: '3' },
   { label: 'Active Bots', value: '5' },
   { label: 'Cycle Time', value: '4h 12m' },
@@ -236,19 +236,19 @@ export const FACTORY_STATS = [
   { label: 'Blocked', value: '1' },
 ]
 
-export const FACTORY_BOTS = [
+export const OFFICE_BOTS = [
   { name: 'Henry', color: agentColor('Henry'), task: 'task-executor · 62%', status: 'working' },
   { name: 'Ralph', color: agentColor('Ralph'), task: 'review · 34%', status: 'working' },
   { name: 'Violet', color: agentColor('Violet'), task: 'checklist', status: 'idle' },
   { name: 'Pixel', color: agentColor('Pixel'), task: 'og images · done', status: 'working' },
 ]
 
-export const FACTORY_TRANSIT = [
+export const OFFICE_TRANSIT = [
   { name: 'Scout', color: agentColor('Scout'), chip: '→ QA', chipBg: 'var(--mc-greenbg)', chipFg: 'var(--mc-greentext)' },
   { name: 'Quill', color: agentColor('Quill'), chip: '→ REVIEW', chipBg: 'var(--mc-tealbg)', chipFg: 'var(--mc-tealtext)' },
 ]
 
-export const FACTORY_LOG = [
+export const OFFICE_LOG = [
   { tm: '12:04:33', agent: 'Henry', msg: 'committed 8f3a2c1 · task-executor v0.2', color: 'var(--mc-bluetext)' },
   { tm: '12:04:19', agent: 'Charlie', msg: 'scaffold modules wired → BUILD', color: 'var(--mc-bluetext)' },
   { tm: '12:03:41', agent: 'Scout', msg: 'passed QA gate → moving to REVIEW', color: 'var(--mc-greentext)' },

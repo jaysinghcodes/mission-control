@@ -4,7 +4,7 @@ import { useLiveActivity } from '../hooks/useLiveActivity'
 import { Bot, Card, Chip, SectionLabel } from '../components/ui'
 
 /**
- * Factory — LIVE floor with REAL pipeline semantics (Jay fix #7).
+ * Office — LIVE floor with REAL pipeline semantics (Jay fix #7).
  *
  * Stages (standard CI/CD definitions):
  *  BREAK ROOM — parts/queue (no active work)
@@ -40,7 +40,7 @@ function stageForAgent(role: string | null, index: number): number {
   return 1 + (index % 3) // round-robin across BUILD/QA/REVIEW
 }
 
-export default function Factory() {
+export default function Office() {
   const agents = useApi<AgentsResp>('/agents', { pollMs: 30000 })
   const history = useApi<ActivityResp>('/activity?limit=30', { pollMs: 15000 })
   const { events } = useLiveActivity()
@@ -108,8 +108,8 @@ export default function Factory() {
     <div className="p-6">
       <div className="flex items-start justify-between">
         <div>
-          <div className="text-[22px] font-semibold">Factory</div>
-          <div className="mt-1 text-[13px] text-mc-sub">Build → QA → Review → Ship — agents physically move between stages.</div>
+          <div className="text-[22px] font-semibold">Office</div>
+          <div className="mt-1 text-[13px] text-mc-sub">Build → QA → Review → Ship — agents physically move between rooms.</div>
         </div>
         <div className="flex items-center gap-2" />
       </div>
